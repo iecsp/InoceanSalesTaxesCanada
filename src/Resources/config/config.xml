@@ -6,14 +6,14 @@
         <title>Sales Channel</title>
         <title lang="de-DE">Sales Channel</title>
         <input-field type="bool">
-            <name>CanadaTaxProvider.useGlobally</name>
+            <name>CanadaTaxProviderUseGlobally</name>
             <label lang="en-GB">Apply to all Sales Channels?</label>
             <label lang="de-DE">Auf alle Vertriebskanäle anwenden?</label>
             <defaultValue>true</defaultValue>
         </input-field>
 
         <component name="sw-entity-multi-id-select">
-            <name>CanadaTaxProvider.allowedSalesChannels</name>
+            <name>CanadaTaxProviderAllowedSalesChannels</name>
             <entity>sales_channel</entity>
             <label>Enable for specific Sales Channels (only used if above is false)</label>
         </component>
@@ -24,68 +24,68 @@
         <title lang="de-DE">Canada Tax Settings</title>
 
         <input-field type="text">
-            <name>CanadaTaxProvider.AB</name>
+            <name>CanadaTaxProviderAB</name>
             <label>Alberta (AB)</label>
             <defaultValue>5</defaultValue>
             <placeholder>5</placeholder>
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProvider.BC</name>
+            <name>CanadaTaxProviderBC</name>
             <label>British Columbia (BC)</label>
             <placeholder>5,7</placeholder>
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProvider.MB</name>
+            <name>CanadaTaxProviderMB</name>
             <label>Manitoba (MB)</label>
             <placeholder>5,7</placeholder>
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProvider.NB</name>
+            <name>CanadaTaxProviderNB</name>
             <label>New Brunswick (NB)</label>
             <placeholder>15</placeholder>
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProvider.NL</name>
+            <name>CanadaTaxProviderNL</name>
             <label>Newfoundland (NL)</label>
             <placeholder>15</placeholder>
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProvider.NS</name>
+            <name>CanadaTaxProviderNS</name>
             <label>Nova Scotia (NS)</label>
             <placeholder>14</placeholder>
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProvider.ON</name>
+            <name>CanadaTaxProviderON</name>
             <label>Ontario (ON)</label>
             <placeholder>13</placeholder>
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProvider.PE</name>
+            <name>CanadaTaxProviderPE</name>
             <label>Prince Edward Island (PE)</label>
             <placeholder>15</placeholder>
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProvider.QC</name>
+            <name>CanadaTaxProviderQC</name>
             <label>Quebec (QC)</label>
             <placeholder>5,9.975</placeholder>
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProvider.SK</name>
+            <name>CanadaTaxProviderSK</name>
             <label>Saskatchewan (SK)</label>
             <placeholder>5,6</placeholder>
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProvider.YT</name>
+            <name>CanadaTaxProviderYT</name>
             <label>Yukon (YT)</label>
             <placeholder>5</placeholder>
         </input-field>

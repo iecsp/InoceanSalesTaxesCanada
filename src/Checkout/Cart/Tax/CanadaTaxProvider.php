@@ -60,7 +60,7 @@ class CanadaTaxProvider extends AbstractTaxProvider
 
     private function getTaxRatesByProvince(string $province): array
     {
-	$configValue = $this->systemConfigService->get("CanadaTaxProvider.$province");
+	$configValue = $this->systemConfigService->get("CanadaTaxProvider`$province`");
 
         if (!$configValue) {
             return [5];
@@ -73,12 +73,12 @@ class CanadaTaxProvider extends AbstractTaxProvider
     {
 	$salesChannelId = $context->getSalesChannelId();
 
-	$useGlobally = $this->systemConfigService->get('CanadaTaxProvider.useGlobally') ?? true;
+	$useGlobally = $this->systemConfigService->get('CanadaTaxProviderUuseGlobally') ?? true;
 	if ($useGlobally) {
 		return true;
   	}
 
-	$allowedChannels = $this->systemConfigService->get('CanadaTaxProvider.allowedSalesChannels') ?? [];
+	$allowedChannels = $this->systemConfigService->get('CanadaTaxProviderAllowedSalesChannels') ?? [];
 	return in_array($salesChannelId, $allowedChannels, true);
     }
 
