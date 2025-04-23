@@ -3,62 +3,90 @@
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
 
     <card>
-	<title>Sales Channel</title>
-	<input-field type="bool">
-	    <name>CanadaTaxProvider.useGlobally</name>
-	    <label>Apply to all Sales Channels?</label>
-	    <defaultValue>true</defaultValue>
-	</input-field>
+        <title>Sales Channel</title>
+        <title lang="de-DE">Sales Channel</title>
+        <input-field type="bool">
+            <name>CanadaTaxProvider.useGlobally</name>
+            <label lang="en-GB">Apply to all Sales Channels?</label>
+            <label lang="de-DE">Auf alle Vertriebskanäle anwenden?</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
 
-	<select-field name="CanadaTaxProvider.allowedSalesChannels" label="Enable for specific Sales Channels (only used if above is false)" multiple="true">
-    	    <entity>sales_channel</entity>
-	</select-field>
+        <component name="sw-entity-multi-id-select">
+            <name>CanadaTaxProvider.allowedSalesChannels</name>
+            <entity>sales_channel</entity>
+            <label>Enable for specific Sales Channels (only used if above is false)</label>
+        </component>
+
     </card>
     <card>
-	<title>Canada Tax Settings</title>
-        <title lang="zh-CN">加拿大税率配置</title>
+	    <title>Canada Tax Settings</title>
+        <title lang="de-DE">Canada Tax Settings</title>
 
-        <input-field type="text" name="CanadaTaxProvider.AB" label="Alberta (AB)">
+        <input-field type="text">
+            <name>CanadaTaxProvider.AB</name>
+            <label>Alberta (AB)</label>
+            <defaultValue>5</defaultValue>
             <placeholder>5</placeholder>
         </input-field>
 
-        <input-field type="text" name="CanadaTaxProvider.BC" label="British Columbia (BC)">
+        <input-field type="text">
+            <name>CanadaTaxProvider.BC</name>
+            <label>British Columbia (BC)</label>
             <placeholder>5,7</placeholder>
         </input-field>
 
-        <input-field type="text" name="CanadaTaxProvider.MB" label="Manitoba (MB)">
+        <input-field type="text">
+            <name>CanadaTaxProvider.MB</name>
+            <label>Manitoba (MB)</label>
             <placeholder>5,7</placeholder>
         </input-field>
 
-        <input-field type="text" name="CanadaTaxProvider.NB" label="New Brunswick (NB)">
+        <input-field type="text">
+            <name>CanadaTaxProvider.NB</name>
+            <label>New Brunswick (NB)</label>
             <placeholder>15</placeholder>
         </input-field>
 
-        <input-field type="text" name="CanadaTaxProvider.NL" label="Newfoundland (NL)">
+        <input-field type="text">
+            <name>CanadaTaxProvider.NL</name>
+            <label>Newfoundland (NL)</label>
             <placeholder>15</placeholder>
         </input-field>
 
-        <input-field type="text" name="CanadaTaxProvider.NS" label="Nova Scotia (NS)">
+        <input-field type="text">
+            <name>CanadaTaxProvider.NS</name>
+            <label>Nova Scotia (NS)</label>
             <placeholder>14</placeholder>
         </input-field>
 
-        <input-field type="text" name="CanadaTaxProvider.ON" label="Ontario (ON)">
+        <input-field type="text">
+            <name>CanadaTaxProvider.ON</name>
+            <label>Ontario (ON)</label>
             <placeholder>13</placeholder>
         </input-field>
 
-        <input-field type="text" name="CanadaTaxProvider.PE" label="Prince Edward Island (PE)">
+        <input-field type="text">
+            <name>CanadaTaxProvider.PE</name>
+            <label>Prince Edward Island (PE)</label>
             <placeholder>15</placeholder>
         </input-field>
 
-        <input-field type="text" name="CanadaTaxProvider.QC" label="Quebec (QC)">
+        <input-field type="text">
+            <name>CanadaTaxProvider.QC</name>
+            <label>Quebec (QC)</label>
             <placeholder>5,9.975</placeholder>
         </input-field>
 
-        <input-field type="text" name="CanadaTaxProvider.SK" label="Saskatchewan (SK)">
+        <input-field type="text">
+            <name>CanadaTaxProvider.SK</name>
+            <label>Saskatchewan (SK)</label>
             <placeholder>5,6</placeholder>
         </input-field>
 
-        <input-field type="text" name="CanadaTaxProvider.YT" label="Yukon (YT)">
+        <input-field type="text">
+            <name>CanadaTaxProvider.YT</name>
+            <label>Yukon (YT)</label>
             <placeholder>5</placeholder>
         </input-field>
     </card>
