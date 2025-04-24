@@ -33,12 +33,14 @@
         <input-field type="text">
             <name>CanadaTaxProviderBC</name>
             <label>British Columbia (BC)</label>
+            <defaultValue>5,7</defaultValue>
             <placeholder>5,7</placeholder>
         </input-field>
 
         <input-field type="text">
             <name>CanadaTaxProviderMB</name>
             <label>Manitoba (MB)</label>
+            <defaultValue>5,7</defaultValue>
             <placeholder>5,7</placeholder>
         </input-field>
 
@@ -51,42 +53,49 @@
         <input-field type="text">
             <name>CanadaTaxProviderNL</name>
             <label>Newfoundland (NL)</label>
+            <defaultValue>15</defaultValue>
             <placeholder>15</placeholder>
         </input-field>
 
         <input-field type="text">
             <name>CanadaTaxProviderNS</name>
             <label>Nova Scotia (NS)</label>
+            <defaultValue>14</defaultValue>
             <placeholder>14</placeholder>
         </input-field>
 
         <input-field type="text">
             <name>CanadaTaxProviderON</name>
             <label>Ontario (ON)</label>
+            <defaultValue>13</defaultValue>
             <placeholder>13</placeholder>
         </input-field>
 
         <input-field type="text">
             <name>CanadaTaxProviderPE</name>
             <label>Prince Edward Island (PE)</label>
+            <defaultValue>15</defaultValue>
             <placeholder>15</placeholder>
         </input-field>
 
         <input-field type="text">
             <name>CanadaTaxProviderQC</name>
             <label>Quebec (QC)</label>
+            <defaultValue>5,9.975</defaultValue>
             <placeholder>5,9.975</placeholder>
         </input-field>
 
         <input-field type="text">
             <name>CanadaTaxProviderSK</name>
             <label>Saskatchewan (SK)</label>
+            <defaultValue>5,6</defaultValue>
             <placeholder>5,6</placeholder>
         </input-field>
 
         <input-field type="text">
             <name>CanadaTaxProviderYT</name>
             <label>Yukon (YT)</label>
+            <defaultValue>5</defaultValue>
             <placeholder>5</placeholder>
         </input-field>
     </card>
