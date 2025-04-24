@@ -47,6 +47,7 @@
         <input-field type="text">
             <name>CanadaTaxProviderNB</name>
             <label>New Brunswick (NB)</label>
+            <defaultValue>15</defaultValue>
             <placeholder>15</placeholder>
         </input-field>
 
