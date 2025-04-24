@@ -10,8 +10,8 @@
                  public="true"
                  decorates="Shopware\Core\Checkout\Cart\TaxProvider\TaxProviderRegistry"
                  decoration-inner-name="canada.tax.inner">
-		<argument type="service" id="canada.tax.inner"/>
-		<argument type="service" id="Inoecan\SalesTaxesCanada\Checkout\Cart\Tax\CanadaTaxProvider"/>
+            <argument type="service" id="canada.tax.inner"/>
+            <argument type="service" id="Inoecan\SalesTaxesCanada\Checkout\Cart\Tax\CanadaTaxProvider"/>
         </service>
     </services>
 </container>
