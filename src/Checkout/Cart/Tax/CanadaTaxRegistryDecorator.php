@@ -6,7 +6,7 @@ use Shopware\Core\Checkout\Cart\Cart;
 use Shopware\Core\Checkout\Cart\TaxProvider\AbstractTaxProvider;
 use Shopware\Core\Checkout\Cart\TaxProvider\TaxProviderRegistry;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
-use Inoecan\SalesTaxesCanada\Checkout\Cart\Tax\CanadaTaxProvider;
+use Inocean\SalesTaxesCanada\Checkout\Cart\Tax\CanadaTaxProvider;
 
 class CanadaTaxRegistryDecorator extends TaxProviderRegistry
 {
