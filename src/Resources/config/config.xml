@@ -3,7 +3,7 @@
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
 
     <card>
-	    <title>Canada Tax Settings</title>
+        <title>Canada Tax Settings</title>
         <title lang="de-DE">Kanadische Steuereinstellungen</title>
 
         <input-field type="text">
