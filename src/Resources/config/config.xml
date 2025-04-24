@@ -3,29 +3,13 @@
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
 
     <card>
-        <title>Sales Channel</title>
-        <title lang="de-DE">Sales Channel</title>
-        <input-field type="bool">
-            <name>CanadaTaxProviderUseGlobally</name>
-            <label lang="en-GB">Apply to all Sales Channels?</label>
-            <label lang="de-DE">Auf alle Vertriebskanäle anwenden?</label>
-            <defaultValue>true</defaultValue>
-        </input-field>
-
-        <component name="sw-entity-multi-id-select">
-            <name>CanadaTaxProviderAllowedSalesChannels</name>
-            <entity>sales_channel</entity>
-            <label>Enable for specific Sales Channels (only used if above is false)</label>
-        </component>
-
-    </card>
-    <card>
 	    <title>Canada Tax Settings</title>
-        <title lang="de-DE">Canada Tax Settings</title>
+        <title lang="de-DE">Kanadische Steuereinstellungen</title>
 
         <input-field type="text">
             <name>CanadaTaxProviderAB</name>
             <label>Alberta (AB)</label>
+            <label lang="de-DE">Alberta (AB)</label>
             <defaultValue>5</defaultValue>
             <placeholder>5</placeholder>
         </input-field>
@@ -33,6 +17,7 @@
         <input-field type="text">
             <name>CanadaTaxProviderBC</name>
             <label>British Columbia (BC)</label>
+            <label lang="de-DE">British Columbia (BC)</label>
             <defaultValue>5,7</defaultValue>
             <placeholder>5,7</placeholder>
         </input-field>
@@ -40,6 +25,7 @@
         <input-field type="text">
             <name>CanadaTaxProviderMB</name>
             <label>Manitoba (MB)</label>
+            <label lang="de-DE">Manitoba (MB)</label>
             <defaultValue>5,7</defaultValue>
             <placeholder>5,7</placeholder>
         </input-field>
@@ -47,6 +33,7 @@
         <input-field type="text">
             <name>CanadaTaxProviderNB</name>
             <label>New Brunswick (NB)</label>
+            <label lang="de-DE">New Brunswick (NB)</label>
             <defaultValue>15</defaultValue>
             <placeholder>15</placeholder>
         </input-field>
@@ -54,6 +41,7 @@
         <input-field type="text">
             <name>CanadaTaxProviderNL</name>
             <label>Newfoundland (NL)</label>
+            <label lang="de-DE">Newfoundland (NL)</label>
             <defaultValue>15</defaultValue>
             <placeholder>15</placeholder>
         </input-field>
@@ -61,6 +49,7 @@
         <input-field type="text">
             <name>CanadaTaxProviderNS</name>
             <label>Nova Scotia (NS)</label>
+            <label lang="de-DE">Nova Scotia (NS)</label>
             <defaultValue>14</defaultValue>
             <placeholder>14</placeholder>
         </input-field>
@@ -68,6 +57,7 @@
         <input-field type="text">
             <name>CanadaTaxProviderON</name>
             <label>Ontario (ON)</label>
+            <label lang="de-DE">Ontario (ON)</label>
             <defaultValue>13</defaultValue>
             <placeholder>13</placeholder>
         </input-field>
@@ -75,6 +65,7 @@
         <input-field type="text">
             <name>CanadaTaxProviderPE</name>
             <label>Prince Edward Island (PE)</label>
+            <label lang="de-DE">Prince Edward Island (PE)</label>
             <defaultValue>15</defaultValue>
             <placeholder>15</placeholder>
         </input-field>
@@ -82,6 +73,7 @@
         <input-field type="text">
             <name>CanadaTaxProviderQC</name>
             <label>Quebec (QC)</label>
+            <label lang="de-DE">Quebec (QC)</label>
             <defaultValue>5,9.975</defaultValue>
             <placeholder>5,9.975</placeholder>
         </input-field>
@@ -89,6 +81,7 @@
         <input-field type="text">
             <name>CanadaTaxProviderSK</name>
             <label>Saskatchewan (SK)</label>
+            <label lang="de-DE">Saskatchewan (SK)</label>
             <defaultValue>5,6</defaultValue>
             <placeholder>5,6</placeholder>
         </input-field>
@@ -96,6 +89,7 @@
         <input-field type="text">
             <name>CanadaTaxProviderYT</name>
             <label>Yukon (YT)</label>
+            <label lang="de-DE">Yukon (YT)</label>
             <defaultValue>5</defaultValue>
             <placeholder>5</placeholder>
         </input-field>

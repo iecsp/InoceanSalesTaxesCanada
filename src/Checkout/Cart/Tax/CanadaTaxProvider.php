@@ -23,13 +23,9 @@ class CanadaTaxProvider extends AbstractTaxProvider
     public function provide(Cart $cart, SalesChannelContext $context): TaxProviderResult
     {
 
-	    if (!$this->isCanadaTaxEnabledForSalesChannel($context)) {
-    		    return new TaxProviderResult([]);
-	    }
-
 	    $address = $context->getCustomer()?->getActiveShippingAddress();
 	    if (!$address || strtoupper($address->getCountry()?->getIso()) !== 'CA') {
-     		   return new TaxProviderResult([]);
+     		return new TaxProviderResult([]);
  	    }
 
         $lineItemTaxes = [];
@@ -67,19 +63,6 @@ class CanadaTaxProvider extends AbstractTaxProvider
         }
 
         return array_map('floatval', explode(',', $configValue));
-    }
-
-    private function isCanadaTaxEnabledForSalesChannel(SalesChannelContext $context): bool
-    {
-	$salesChannelId = $context->getSalesChannelId();
-
-	$useGlobally = $this->systemConfigService->get('CanadaTaxProviderUuseGlobally') ?? true;
-	if ($useGlobally) {
-		return true;
-  	}
-
-	$allowedChannels = $this->systemConfigService->get('CanadaTaxProviderAllowedSalesChannels') ?? [];
-	return in_array($salesChannelId, $allowedChannels, true);
     }
 
 }
