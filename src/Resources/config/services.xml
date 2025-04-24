@@ -5,7 +5,10 @@
            http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <defaults autowire="true" autoconfigure="true" public="false"/>
+        <service id="Inocean\SalesTaxesCanada\Checkout\Cart\Tax\CanadaTaxProvider">
+            <tag name="shopware.tax.provider" />
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
+        </service>
         <service id="Inocean\SalesTaxesCanada\Checkout\Cart\Tax\CanadaTaxRegistryDecorator"
                  public="true"
                  decorates="Shopware\Core\Checkout\Cart\TaxProvider\TaxProviderRegistry"
