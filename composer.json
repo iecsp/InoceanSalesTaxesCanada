@@ -1,7 +1,7 @@
 {
   "name": "inocean/sales-taxes-canada",
   "description": "Shopware 6 plugin for Canadian taxes calculation",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "shopware-platform-plugin",
   "license": "proprietary",
   "authors": [
@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "shopware/core": "~v6.6.0"
+    "shopware/core": "~v6.7"
   },
   "extra": {
     "shopware-plugin-class": "Inocean\\SalesTaxesCanada\\SalesTaxesCanada",
