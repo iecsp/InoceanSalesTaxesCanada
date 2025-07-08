@@ -5,16 +5,12 @@
            http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="Inocean\SalesTaxesCanada\Checkout\Cart\Tax\CanadaTaxProvider">
+        <service id="Inocean\SalesTaxesCanada\Core\Checkout\Cart\Tax\CanadaTaxProvider">
             <tag name="shopware.tax.provider" />
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
         </service>
-        <service id="Inocean\SalesTaxesCanada\Checkout\Cart\Tax\CanadaTaxRegistryDecorator"
-                 public="true"
-                 decorates="Shopware\Core\Checkout\Cart\TaxProvider\TaxProviderRegistry"
-                 decoration-inner-name="canada.tax.inner">
-            <argument type="service" id="canada.tax.inner"/>
-            <argument type="service" id="Inocean\SalesTaxesCanada\Checkout\Cart\Tax\CanadaTaxProvider"/>
+        <service id="Inocean\SalesTaxesCanada\Twig\TaxNameExtension">
+            <tag name="twig.extension"/>
         </service>
     </services>
 </container>

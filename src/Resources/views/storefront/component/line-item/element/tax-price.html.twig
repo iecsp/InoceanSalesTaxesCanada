@@ -1,0 +1,29 @@
+{% sw_extends '@Storefront/storefront/component/line-item/element/tax-price.html.twig' %}
+
+{% set defaultBillingAddress = context.customer.defaultBillingAddress.country.name %}
+
+{% block component_line_item_tax_price_label %}
+    {% if defaultBillingAddress != 'Canada' %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_line_item_tax_price_inner %}
+    {% for calculatedTax in lineItem.price.calculatedTaxes %}
+        {% set calculatedTaxRate = calculatedTax.taxRate ?? 0 %}
+        <div class="line-item-product-number">
+        {% if defaultBillingAddress == 'Canada' %}
+            {% if calculatedTaxRate != 0 %}+{% endif %} {{ calculatedTaxRate | getTaxName(app.request.locale | slice(0, 2)) }}
+        {% endif %}
+
+        {% set calculatedTaxValue = calculatedTax.tax ?? 0 %}
+        {% if calculatedTaxValue < 0 %}
+            &minus;
+        {% endif %}
+
+        {% if calculatedTaxRate != 0 %}
+            {{ calculatedTaxValue|abs|currency }}
+        {% endif %}
+        </div>
+    {% endfor %}
+{% endblock %}

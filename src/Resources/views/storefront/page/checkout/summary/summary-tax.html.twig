@@ -1,0 +1,14 @@
+{% sw_extends '@Storefront/storefront/page/checkout/summary/summary-tax.html.twig' %}
+
+{% set defaultBillingAddress = context.customer.defaultBillingAddress.country.name %}
+
+{% block page_checkout_summary_tax_label %}
+    {% if defaultBillingAddress == 'Canada' %}
+        {% set calculatedTaxRate = taxItem.taxRate ?? 0 %}
+        <dt class="col-7 checkout-aside-summary-label summary-tax">
+            {% if calculatedTaxRate != 0 %}+ {{ calculatedTaxRate }}%{% endif %} {{ calculatedTaxRate | getTaxName(app.request.locale | slice(0, 2)) }}
+        </dt>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

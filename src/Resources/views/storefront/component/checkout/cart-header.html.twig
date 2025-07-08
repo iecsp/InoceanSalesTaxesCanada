@@ -1,0 +1,40 @@
+{% sw_extends '@Storefront/storefront/component/checkout/cart-header.html.twig' %}
+
+{% block component_checkout_cart_header_element %}
+        <li class="card-title cart-table-header" aria-hidden="true">
+            <div class="row cart-header-row">
+                {% block component_checkout_cart_header_product_info %}
+                    {{ parent() }}
+                {% endblock %}
+
+                {% block component_checkout_cart_header_quantity %}
+                    {{ parent() }}
+                {% endblock %}
+
+                {% if showTaxPrice %}
+                    <div class="col-2 cart-header-tax-price">
+                        {% if context.salesChannel.taxCalculationType == 'horizontal' %}
+                            {% set defaultBillingAddress = context.customer.defaultBillingAddress.country.name %}
+                            {% if defaultBillingAddress != 'Canada' %}
+                                {% if context.taxState == 'gross' %}
+                                    {{ 'checkout.cartHeaderTaxIncludeVat'|trans|sw_sanitize }}
+                                {% else %}
+                                    {{ 'checkout.cartHeaderTaxExcludeVat'|trans|sw_sanitize }}
+                                {% endif %}
+                            {% else %}
+                                Tax
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% else %}
+                    {% block component_checkout_cart_header_unit_price %}
+                        {{ parent() }}
+                    {% endblock %}
+                {% endif %}
+
+                {% block component_checkout_cart_header_total_price %}
+                    {{ parent() }}
+                {% endblock %}
+            </div>
+        </li>
+    {% endblock %}
