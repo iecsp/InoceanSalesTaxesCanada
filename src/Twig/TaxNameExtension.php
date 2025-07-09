@@ -15,19 +15,9 @@ class TaxNameExtension extends AbstractExtension
         ];
     }
 
-    public function getTaxName(float $value, string $language = 'en'): string
+    public function getTaxName(float $value, string $language = 'fr'): string
     {
-        $taxNames['en'] = [
-            0 => 'NO-TAX',
-            5 => 'GST',
-            6 => 'PST',
-            7 => 'PST',
-            9.975 => 'QST',
-            13 => 'HST',
-            14 => 'HST',
-            15 => 'HST',
-        ];
-
+        
         $taxNames['fr'] = [
             0 => 'Sans taxe',
             5 => 'TPS',
@@ -37,6 +27,17 @@ class TaxNameExtension extends AbstractExtension
             13 => 'TVH',
             14 => 'TVH',
             15 => 'TVH',
+        ];
+
+        $taxNames['en'] = [
+            0 => 'NO-TAX',
+            5 => 'GST',
+            6 => 'PST',
+            7 => 'PST',
+            9.975 => 'QST',
+            13 => 'HST',
+            14 => 'HST',
+            15 => 'HST',
         ];
 
         return $taxNames[$language][$value] ?? $taxNames['en'][$value] ?? 'Tax';

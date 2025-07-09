@@ -1,14 +1,3 @@
-{#
-
-Notice for plugins and theme developer:     Do not extend this template!
-
-This template will be rendered over the `block` function.
-Templates which are rendered over the `block` function can not be extended.
-Instead of extending this template, simply extend the `base.html.twig` (or the document specific template) and override the block you want.
-All blocks of this template are available in the template which renders this template over the `block` function.
-
-#}
-
 {% block summary %}
     {% block document_sum %}
         <div class="sum-container">
@@ -30,7 +19,13 @@ All blocks of this template are available in the template which renders this tem
                             {% for calculatedTax in order.price.calculatedTaxes.sortByTax %}
                                 <tr>
                                     {% block document_sum_tax_label %}
-                                        <td class="align-right">{{ 'document.lineItems.tax'|trans({'%taxRate%': calculatedTax.taxRate})|sw_sanitize }}</td>
+                                        {% set defaultBillingAddress = context.customer.defaultBillingAddress.country.name %}
+                                        {% if defaultBillingAddress == 'Canada' %}
+                                        {% set calculatedTaxRate = calculatedTax.taxRate ?? 0 %}
+                                            yyyy<td class="align-right">{% if calculatedTaxRate != 0 %}+ {{ calculatedTaxRate }}%{% endif %} {{ calculatedTaxRate | getTaxName(app.request.locale | slice(0, 2)) }}</td>
+                                        {% else %}
+                                            88888<td class="align-right">{{ 'document.lineItems.tax'|trans({'%taxRate%': calculatedTax.taxRate})|sw_sanitize }}</td>
+                                        {% endif %}
                                     {% endblock %}
                                     {% block document_sum_tax_rate %}
                                         <td class="align-right">{{ calculatedTax.tax|currency(currencyIsoCode, languageId) }}</td>
