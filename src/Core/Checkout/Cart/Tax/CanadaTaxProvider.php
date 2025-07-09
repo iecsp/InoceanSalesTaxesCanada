@@ -53,15 +53,28 @@ class CanadaTaxProvider extends AbstractTaxProvider
             $price = $lineItem->getPrice()->getTotalPrice();
             $calculatedTaxes = [];
             $totalPrice += $price;
+
             foreach ($taxRates as $taxRate) {
                 $tax = $price * $taxRate / 100;
-                $calculatedTaxes[] = new CalculatedTax($tax, $taxRate, $price);
-
-                $totalTax = $totalPrice * $taxRate / 100;
-                $cartPriceTaxes[] = new CalculatedTax($totalTax, $taxRate, $totalPrice);
+                $calculatedTaxes[] = new CalculatedTax($tax, $taxRate, $price);   
             }
-            
+
             $lineItemTaxes[$lineItem->getUniqueIdentifier()] = new CalculatedTaxCollection($calculatedTaxes);
+            
+            foreach ($calculatedTaxes as $calculatedTax) {
+                $existingTax = null;
+                foreach ($cartPriceTaxes as $cartPriceTax) {
+                    if ($cartPriceTax->getTaxRate() === $calculatedTax->getTaxRate()) {
+                        $existingTax = $cartPriceTax;
+                        break;
+                    }
+                }
+                if ($existingTax) {
+                    $existingTax->setTax($existingTax->getTax() + $calculatedTax->getTax());
+                } else {
+                    $cartPriceTaxes[] = new CalculatedTax($calculatedTax->getTax(), $calculatedTax->getTaxRate(), $totalPrice);
+                }
+            }
 
         }
 
@@ -75,7 +88,7 @@ class CanadaTaxProvider extends AbstractTaxProvider
     private function getTaxRatesByProvince(string $province): array
     {
         $provinceCode = substr(strtoupper($province), -2);
-	    $configValue = str_replace(' ', '', (string)$this->systemConfigService->get('SalesTaxesCanada.config.CanadaTaxProvider'.$provinceCode));
+	    $configValue = str_replace(' ', '', (string)$this->systemConfigService->get('SalesTaxesCanada.config.CanadaTax'.$provinceCode));
         if (!$configValue) {
             return [$this->getTaxRateByName('GST only')];
         }

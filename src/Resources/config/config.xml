@@ -7,7 +7,7 @@
         <title lang="de-DE">Kanadische Steuereinstellungen</title>
 
         <input-field type="text">
-            <name>CanadaTaxProviderAB</name>
+            <name>CanadaTaxAB</name>
             <label>Alberta (AB)</label>
             <label lang="de-DE">Alberta (AB)</label>
             <defaultValue>5</defaultValue>
@@ -15,7 +15,7 @@
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProviderBC</name>
+            <name>CanadaTaxBC</name>
             <label>British Columbia (BC)</label>
             <label lang="de-DE">British Columbia (BC)</label>
             <defaultValue>5,7</defaultValue>
@@ -23,7 +23,7 @@
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProviderMB</name>
+            <name>CanadaTaxMB</name>
             <label>Manitoba (MB)</label>
             <label lang="de-DE">Manitoba (MB)</label>
             <defaultValue>5,7</defaultValue>
@@ -31,7 +31,7 @@
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProviderNB</name>
+            <name>CanadaTaxNB</name>
             <label>New Brunswick (NB)</label>
             <label lang="de-DE">New Brunswick (NB)</label>
             <defaultValue>15</defaultValue>
@@ -39,7 +39,7 @@
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProviderNL</name>
+            <name>CanadaTaxNL</name>
             <label>Newfoundland (NL)</label>
             <label lang="de-DE">Newfoundland (NL)</label>
             <defaultValue>15</defaultValue>
@@ -47,7 +47,7 @@
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProviderNS</name>
+            <name>CanadaTaxNS</name>
             <label>Nova Scotia (NS)</label>
             <label lang="de-DE">Nova Scotia (NS)</label>
             <defaultValue>14</defaultValue>
@@ -55,7 +55,7 @@
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProviderON</name>
+            <name>CanadaTaxON</name>
             <label>Ontario (ON)</label>
             <label lang="de-DE">Ontario (ON)</label>
             <defaultValue>13</defaultValue>
@@ -63,7 +63,7 @@
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProviderPE</name>
+            <name>CanadaTaxPE</name>
             <label>Prince Edward Island (PE)</label>
             <label lang="de-DE">Prince Edward Island (PE)</label>
             <defaultValue>15</defaultValue>
@@ -71,7 +71,7 @@
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProviderQC</name>
+            <name>CanadaTaxQC</name>
             <label>Quebec (QC)</label>
             <label lang="de-DE">Quebec (QC)</label>
             <defaultValue>5,9.975</defaultValue>
@@ -79,7 +79,7 @@
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProviderSK</name>
+            <name>CanadaTaxSK</name>
             <label>Saskatchewan (SK)</label>
             <label lang="de-DE">Saskatchewan (SK)</label>
             <defaultValue>5,6</defaultValue>
@@ -87,7 +87,7 @@
         </input-field>
 
         <input-field type="text">
-            <name>CanadaTaxProviderYT</name>
+            <name>CanadaTaxYT</name>
             <label>Yukon (YT)</label>
             <label lang="de-DE">Yukon (YT)</label>
             <defaultValue>5</defaultValue>
