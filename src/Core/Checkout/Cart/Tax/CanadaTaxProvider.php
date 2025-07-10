@@ -78,9 +78,39 @@ class CanadaTaxProvider extends AbstractTaxProvider
 
         }
 
+        $calculatedDeliveryTaxes = [];
+        $deliveryTaxes = [];
+
+        foreach ($cart->getDeliveries() as $delivery) {
+            $shippingMethod = $delivery->getShippingMethod();
+            $taxId = $shippingMethod->getTaxId();
+            $originalDeliveryTaxRate = $shippingMethod->getTax()->getTaxRate();
+            $deliveryPrice = 0;
+            $taxId = $delivery->getShippingMethod()->getTaxId();
+            if ($taxId === Constants::TAXES[3]['id']) {
+                $deliveryTaxRates = [$this->getTaxRateByName('TAX-FREE')];
+            } else if ($taxId === Constants::TAXES[2]['id']) {
+                $deliveryTaxRates = [$this->getTaxRateByName('GST only')];
+            } elseif ($taxId === Constants::TAXES[1]['id']) {
+                $deliveryTaxRates = $this->getTaxRatesByProvince($province);
+            } elseif ($taxId === Constants::TAXES[0]['id']) {
+                $deliveryTaxRates = $this->getTaxRatesByProvince($province);
+            } else {
+                $deliveryTaxRates = [$originalDeliveryTaxRate];
+            }
+            foreach ($deliveryTaxRates as $deliveryTaxRate) {
+                $deliveryTaxedPrice = $deliveryPrice * $deliveryTaxRate / 100;
+                $calculatedDeliveryTaxes[] = new CalculatedTax($deliveryTaxedPrice, $deliveryTaxRate, $deliveryPrice);   
+            }
+
+            foreach ($delivery->getPositions() as $position) {
+                $deliveryTaxes[] = new CalculatedTaxCollection($calculatedDeliveryTaxes);
+            }
+        }
+
         return new TaxProviderResult(
             $lineItemTaxes,
-            [],
+            $deliveryTaxes,
             new CalculatedTaxCollection($cartPriceTaxes)
         );
     }

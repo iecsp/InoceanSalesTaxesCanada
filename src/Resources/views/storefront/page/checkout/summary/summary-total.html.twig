@@ -2,5 +2,5 @@
 
 {% block page_checkout_summary_total %}
     {{ parent() }}
-    <dt class="col-12 checkout-aside-summary-label">税率可能因为地址变更在结算的时候而不同</dt>
+    <dt class="col-12 checkout-aside-summary-label">{{ 'checkout.summary.taxRateNotice'|trans }}</dt>
 {% endblock %}
