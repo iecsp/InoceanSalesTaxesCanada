@@ -2,5 +2,7 @@
 
 {% block page_checkout_summary_total %}
     {{ parent() }}
-    <dt class="col-12 checkout-aside-summary-label">{{ 'checkout.summary.taxRateNotice'|trans }}</dt>
+    {% if app.request.attributes.get('_route') == 'frontend.checkout.cart.page' %}
+        <dt class="col-12 checkout-aside-summary-label">{{ 'salseTaxCanada.checkout.summary.taxRateNotice'|trans }}</dt>
+    {% endif %}
 {% endblock %}

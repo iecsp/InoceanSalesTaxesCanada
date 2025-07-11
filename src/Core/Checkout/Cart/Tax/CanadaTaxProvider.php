@@ -80,12 +80,12 @@ class CanadaTaxProvider extends AbstractTaxProvider
 
         $calculatedDeliveryTaxes = [];
         $deliveryTaxes = [];
-
+        $shippingTotalPrice = $cart->getShippingCosts()->getTotalPrice() ?? 0;
         foreach ($cart->getDeliveries() as $delivery) {
+            
             $shippingMethod = $delivery->getShippingMethod();
             $taxId = $shippingMethod->getTaxId();
             $originalDeliveryTaxRate = $shippingMethod->getTax()->getTaxRate();
-            $deliveryPrice = 0;
             $taxId = $delivery->getShippingMethod()->getTaxId();
             if ($taxId === Constants::TAXES[3]['id']) {
                 $deliveryTaxRates = [$this->getTaxRateByName('TAX-FREE')];
@@ -99,8 +99,8 @@ class CanadaTaxProvider extends AbstractTaxProvider
                 $deliveryTaxRates = [$originalDeliveryTaxRate];
             }
             foreach ($deliveryTaxRates as $deliveryTaxRate) {
-                $deliveryTaxedPrice = $deliveryPrice * $deliveryTaxRate / 100;
-                $calculatedDeliveryTaxes[] = new CalculatedTax($deliveryTaxedPrice, $deliveryTaxRate, $deliveryPrice);   
+                $deliveryTaxedPrice = $shippingTotalPrice * $deliveryTaxRate / 100;
+                $calculatedDeliveryTaxes[] = new CalculatedTax($deliveryTaxedPrice, $deliveryTaxRate, $shippingTotalPrice);   
             }
 
             foreach ($delivery->getPositions() as $position) {
@@ -111,7 +111,7 @@ class CanadaTaxProvider extends AbstractTaxProvider
         return new TaxProviderResult(
             $lineItemTaxes,
             $deliveryTaxes,
-            new CalculatedTaxCollection($cartPriceTaxes)
+            // new CalculatedTaxCollection($cartPriceTaxes)
         );
     }
 
