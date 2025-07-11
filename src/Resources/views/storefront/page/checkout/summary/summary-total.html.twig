@@ -4,5 +4,20 @@
     {{ parent() }}
     {% if app.request.attributes.get('_route') == 'frontend.checkout.cart.page' %}
         <dt class="col-12 checkout-aside-summary-label">{{ 'salseTaxCanada.checkout.summary.taxRateNotice'|trans }}</dt>
+    {% else %}
+        <dt class="col-12 checkout-aside-summary-label">
+            {% for delivery in page.cart.deliveries %}
+                <h5>配送方式: {{ delivery.shippingMethod.name }}</h5>
+                <p>配送费用: {{ delivery.shippingCosts.totalPrice|currency }}</p>
+                <p>
+                    {% for tax in delivery.shippingCosts.calculatedTaxes %}
+                        税率: {{ tax.taxRate }}%
+                        配送税额: {{ tax.tax|currency }}<br>
+                    {% endfor %}
+                </p>
+                <p>预计送达: {{ delivery.deliveryDate.earliest|date('Y-m-d') }} - {{ delivery.deliveryDate.latest|date('Y-m-d') }}</p>
+            {% endfor %}
+        </dt>
+        <dt class="col-12 checkout-aside-summary-label">{{ 'salseTaxCanada.checkout.summary.deliveryTaxesIncluded'|trans }}</dt>
     {% endif %}
 {% endblock %}

@@ -61,20 +61,20 @@ class CanadaTaxProvider extends AbstractTaxProvider
 
             $lineItemTaxes[$lineItem->getUniqueIdentifier()] = new CalculatedTaxCollection($calculatedTaxes);
             
-            foreach ($calculatedTaxes as $calculatedTax) {
-                $existingTax = null;
-                foreach ($cartPriceTaxes as $cartPriceTax) {
-                    if ($cartPriceTax->getTaxRate() === $calculatedTax->getTaxRate()) {
-                        $existingTax = $cartPriceTax;
-                        break;
-                    }
-                }
-                if ($existingTax) {
-                    $existingTax->setTax($existingTax->getTax() + $calculatedTax->getTax());
-                } else {
-                    $cartPriceTaxes[] = new CalculatedTax($calculatedTax->getTax(), $calculatedTax->getTaxRate(), $totalPrice);
-                }
-            }
+            // foreach ($calculatedTaxes as $calculatedTax) {
+            //     $existingTax = null;
+            //     foreach ($cartPriceTaxes as $cartPriceTax) {
+            //         if ($cartPriceTax->getTaxRate() === $calculatedTax->getTaxRate()) {
+            //             $existingTax = $cartPriceTax;
+            //             break;
+            //         }
+            //     }
+            //     if ($existingTax) {
+            //         $existingTax->setTax($existingTax->getTax() + $calculatedTax->getTax());
+            //     } else {
+            //         $cartPriceTaxes[] = new CalculatedTax($calculatedTax->getTax(), $calculatedTax->getTaxRate(), $totalPrice);
+            //     }
+            // }
 
         }
 
@@ -82,30 +82,30 @@ class CanadaTaxProvider extends AbstractTaxProvider
         $deliveryTaxes = [];
         $shippingTotalPrice = $cart->getShippingCosts()->getTotalPrice() ?? 0;
         foreach ($cart->getDeliveries() as $delivery) {
-            
-            $shippingMethod = $delivery->getShippingMethod();
-            $taxId = $shippingMethod->getTaxId();
-            $originalDeliveryTaxRate = $shippingMethod->getTax()->getTaxRate();
-            $taxId = $delivery->getShippingMethod()->getTaxId();
-            if ($taxId === Constants::TAXES[3]['id']) {
-                $deliveryTaxRates = [$this->getTaxRateByName('TAX-FREE')];
-            } else if ($taxId === Constants::TAXES[2]['id']) {
-                $deliveryTaxRates = [$this->getTaxRateByName('GST only')];
-            } elseif ($taxId === Constants::TAXES[1]['id']) {
-                $deliveryTaxRates = $this->getTaxRatesByProvince($province);
-            } elseif ($taxId === Constants::TAXES[0]['id']) {
-                $deliveryTaxRates = $this->getTaxRatesByProvince($province);
-            } else {
-                $deliveryTaxRates = [$originalDeliveryTaxRate];
-            }
-            foreach ($deliveryTaxRates as $deliveryTaxRate) {
-                $deliveryTaxedPrice = $shippingTotalPrice * $deliveryTaxRate / 100;
-                $calculatedDeliveryTaxes[] = new CalculatedTax($deliveryTaxedPrice, $deliveryTaxRate, $shippingTotalPrice);   
-            }
 
             foreach ($delivery->getPositions() as $position) {
-                $deliveryTaxes[] = new CalculatedTaxCollection($calculatedDeliveryTaxes);
+                $shippingMethod = $delivery->getShippingMethod();
+                $taxId = $shippingMethod->getTaxId();
+                $originalDeliveryTaxRate = $shippingMethod->getTax()?->getTaxRate() ?? $this->getTaxRateByName('TAX-FREE');
+                $taxId = $delivery->getShippingMethod()->getTaxId();
+                if ($taxId === Constants::TAXES[3]['id']) {
+                    $deliveryTaxRates = [$this->getTaxRateByName('TAX-FREE')];
+                } else if ($taxId === Constants::TAXES[2]['id']) {
+                    $deliveryTaxRates = [$this->getTaxRateByName('GST only')];
+                } elseif ($taxId === Constants::TAXES[1]['id']) {
+                    $deliveryTaxRates = $this->getTaxRatesByProvince($province);
+                } elseif ($taxId === Constants::TAXES[0]['id']) {
+                    $deliveryTaxRates = $this->getTaxRatesByProvince($province);
+                } else {
+                    $deliveryTaxRates = [$originalDeliveryTaxRate];
+                }
+                foreach ($deliveryTaxRates as $deliveryTaxRate) {
+                    $deliveryTaxedPrice = $shippingTotalPrice * $deliveryTaxRate / 100;
+                    $calculatedDeliveryTaxes[] = new CalculatedTax($deliveryTaxedPrice, $deliveryTaxRate, $shippingTotalPrice);
+                    $deliveryTaxes[$position->getIdentifier()] = new CalculatedTaxCollection($calculatedDeliveryTaxes);
+                }
             }
+
         }
 
         return new TaxProviderResult(
