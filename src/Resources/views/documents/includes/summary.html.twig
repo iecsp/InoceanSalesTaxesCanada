@@ -19,12 +19,12 @@
                             {% for calculatedTax in order.price.calculatedTaxes.sortByTax %}
                                 <tr>
                                     {% block document_sum_tax_label %}
-                                        {% set defaultBillingAddress = context.customer.defaultBillingAddress.country.name %}
-                                        {% if defaultBillingAddress == 'Canada' %}
-                                        {% set calculatedTaxRate = calculatedTax.taxRate ?? 0 %}
-                                            yyyy<td class="align-right">{% if calculatedTaxRate != 0 %}+ {{ calculatedTaxRate }}%{% endif %} {{ calculatedTaxRate | getTaxName(app.request.locale | slice(0, 2)) }}</td>
+                                        {% set shippingCountry = order.deliveries.first.getShippingOrderAddress.country.translated.name %}
+                                        {% if shippingCountry == 'Canada' %}
+                                            {% set calculatedTaxRate = calculatedTax.taxRate ?? 0 %}
+                                            <td class="align-right">{% if calculatedTaxRate != 0 %}+ {{ calculatedTaxRate }}%{% endif %} {{ calculatedTaxRate | getTaxName(app.request.locale | slice(0, 2)) }}</td>
                                         {% else %}
-                                            88888<td class="align-right">{{ 'document.lineItems.tax'|trans({'%taxRate%': calculatedTax.taxRate})|sw_sanitize }}</td>
+                                            <td class="align-right">{{ 'document.lineItems.tax'|trans({'%taxRate%': calculatedTax.taxRate})|sw_sanitize }}</td>
                                         {% endif %}
                                     {% endblock %}
                                     {% block document_sum_tax_rate %}

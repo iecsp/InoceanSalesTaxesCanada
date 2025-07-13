@@ -2,22 +2,39 @@
 
 {% block page_checkout_summary_total %}
     {{ parent() }}
-    {% if app.request.attributes.get('_route') == 'frontend.checkout.cart.page' %}
-        <dt class="col-12 checkout-aside-summary-label">{{ 'salseTaxCanada.checkout.summary.taxRateNotice'|trans }}</dt>
+    <dt class="col-12 checkout-summary-shipping-details">
+
+    {% if app.request.attributes.get('_route') === 'frontend.checkout.finish.page' %}
+        {% set deliveries = page.order.deliveries %}
     {% else %}
-        <dt class="col-12 checkout-aside-summary-label">
-            {% for delivery in page.cart.deliveries %}
-                <h5>配送方式: {{ delivery.shippingMethod.name }}</h5>
-                <p>配送费用: {{ delivery.shippingCosts.totalPrice|currency }}</p>
-                <p>
-                    {% for tax in delivery.shippingCosts.calculatedTaxes %}
-                        税率: {{ tax.taxRate }}%
-                        配送税额: {{ tax.tax|currency }}<br>
-                    {% endfor %}
-                </p>
-                <p>预计送达: {{ delivery.deliveryDate.earliest|date('Y-m-d') }} - {{ delivery.deliveryDate.latest|date('Y-m-d') }}</p>
-            {% endfor %}
-        </dt>
-        <dt class="col-12 checkout-aside-summary-label">{{ 'salseTaxCanada.checkout.summary.deliveryTaxesIncluded'|trans }}</dt>
+        {% set deliveries = page.cart.deliveries %}
     {% endif %}
+    {# {% if app.request.attributes.get('_route') != 'frontend.checkout.finish.page' %} #}
+        {% for delivery in deliveries %}
+            <h5>{{ 'salseTaxCanada.checkout.summary.shippingMethod'|trans }} {{ delivery.shippingMethod.name }}</h5>
+            <div>{{ 'salseTaxCanada.checkout.summary.shippingTotalPrice'|trans }} {{ delivery.shippingCosts.totalPrice|currency }}</div>
+            {% for tax in delivery.shippingCosts.calculatedTaxes %}
+                {% if tax.taxRate != 0 %}
+                <div>
+                    <span class="shipping-tax-rate">{{ 'salseTaxCanada.checkout.summary.shippingTaxRate'|trans }} {{ tax.taxRate }}% {{ tax.taxRate | getTaxName(tax.taxRate | slice(0, 2)) }}</span>
+                    <span class="shipping-tax-price">{{ 'salseTaxCanada.checkout.summary.shippingTax'|trans }} {{ tax.tax|currency }}</span>
+                </div>
+                {% endif %}
+            {% endfor %}
+            <div>{{ 'salseTaxCanada.checkout.summary.shippingDelivered'|trans }} {{ delivery.deliveryDate.earliest|date('Y-m-d') }} - {{ delivery.deliveryDate.latest|date('Y-m-d') }}</div>
+        {% endfor %}
+    </dt>
+    {# {% else %}
+            <h5>{{ 'salseTaxCanada.checkout.summary.shippingMethod'|trans }} </h5>
+            <div>{{ 'salseTaxCanada.checkout.summary.shippingTotalPrice'|trans }} </div>
+            {% for tax in page.order.shippingCosts.calculatedTaxes %}
+                {% if tax.taxRate != 0 %}
+                <div>
+                    <span class="shipping-tax-rate">{{ 'salseTaxCanada.checkout.summary.shippingTaxRate'|trans }} {{ tax.taxRate }}% {{ tax.taxRate | getTaxName(tax.taxRate | slice(0, 2)) }}</span>
+                    <span class="shipping-tax-price">{{ 'salseTaxCanada.checkout.summary.shippingTax'|trans }} {{ tax.tax|currency }}</span>
+                </div>
+                {% endif %}
+            {% endfor %}
+            <div>{{ 'salseTaxCanada.checkout.summary.shippingDelivered'|trans }} </div>
+    {% endif %} #}
 {% endblock %}

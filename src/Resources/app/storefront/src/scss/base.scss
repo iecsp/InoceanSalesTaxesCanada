@@ -1,0 +1,26 @@
+.checkout-aside-summary-notice {
+    padding: $spacer-lg 0 0;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+.checkout-aside-summary-value.summary-net,
+.checkout-aside-summary-label.summary-net {
+    border-top: 1px solid $border-color;
+    padding: $spacer-lg 0 0 0;
+    font-weight: $headings-font-weight;
+}
+.checkout-summary-shipping-details {
+    font-size: 0.75rem;
+    border: 1px solid #ccc;
+    padding: $spacer-sm;
+    margin-top: 0.85rem;
+    line-height: 1.25rem;
+    font-weight: normal;
+    background: #fff;
+    h5 {
+        font-size: 0.8rem;
+        border-bottom: 1px dotted #ccc;
+        padding-bottom: $spacer-sm;
+        margin-bottom: $spacer-sm;
+    }
+}

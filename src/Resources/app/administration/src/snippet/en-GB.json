@@ -1,0 +1,21 @@
+{
+  "sw-order": {
+    "createBase": {
+      "columnTax": "Tax",
+      "summaryLabelAmountWithoutTaxes": "Total excluding Tax",
+      "summaryLabelAmountTotal": "Total including Tax",
+      "summaryLabelAmountTotalRounded": "Rounded total including Tax",
+      "summaryLabelTaxes": "plus {taxRate}% Tax"
+    },
+    "detailBase": {
+      "columnTax": "Tax",
+      "summaryLabelAmountWithoutTaxes": "Total excluding Tax",
+      "summaryLabelAmountTotal": "Total including Tax",
+      "summaryLabelAmountTotalRounded": "Rounded total including Tax",
+      "summaryLabelTaxes": "plus {taxRate}% Tax"
+    },
+    "nestedLineItemsModal": {
+      "headerTax": "Tax"
+    }
+  }
+}

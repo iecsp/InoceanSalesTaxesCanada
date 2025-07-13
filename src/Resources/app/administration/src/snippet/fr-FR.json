@@ -1,0 +1,21 @@
+{
+  "sw-order": {
+    "createBase": {
+      "columnTax": "Taxe",
+      "summaryLabelAmountWithoutTaxes": "Total hors taxe",
+      "summaryLabelAmountTotal": "Total TTC",
+      "summaryLabelAmountTotalRounded": "Total arrondi TTC",
+      "summaryLabelTaxes": "plus {taxRate}% de taxe"
+    },
+    "detailBase": {
+      "columnTax": "Taxe",
+      "summaryLabelAmountWithoutTaxes": "Total hors taxe",
+      "summaryLabelAmountTotal": "Total TTC",
+      "summaryLabelAmountTotalRounded": "Total arrondi TTC",
+      "summaryLabelTaxes": "plus {taxRate}% de taxe"
+    },
+    "nestedLineItemsModal": {
+      "headerTax": "Taxe"
+    }
+  }
+}
