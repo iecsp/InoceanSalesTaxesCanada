@@ -35,7 +35,7 @@ class SalesTaxesCanada extends Plugin
     {
         parent::install($installContext);
 
-        $context = Context::createDefaultContext();
+        $context = $installContext->getContext();
         $container = $this->container;
 
         $ruleRepository = $container->get('rule.repository');
@@ -48,10 +48,10 @@ class SalesTaxesCanada extends Plugin
                 'name' => Constants::RULE_NAME,
                 'priority' => 1,
                 'createdAt' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
-            ]], $installContext->getContext());
+            ]], $context);
         }
 
-        $countryId = $this->getCountryIdByIso(Constants::DEFAULT_COUNTRY, $installContext->getContext());
+        $countryId = $this->getCountryIdByIso(Constants::DEFAULT_COUNTRY, $context);
         if ($countryId) {
             $ruleConditionRepository = $container->get('rule_condition.repository');
             $criteria = new Criteria();
@@ -64,7 +64,7 @@ class SalesTaxesCanada extends Plugin
                     'ruleId' => Constants::CANADA_RULE_ID,
                     'value' => ['operator' => '=', 'countryIds' => [$countryId]],
                     'createdAt' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
-                ]], $installContext->getContext());
+                ]], $context);
             }
         }
 
@@ -73,20 +73,40 @@ class SalesTaxesCanada extends Plugin
         $criteria->addFilter(new EqualsFilter('id', Constants::TAX_PROVIDER_ID));
         $taxProviderId = $taxProviderRepository->searchIds($criteria, $context)->firstId();
         if (!$taxProviderId) {
-            $taxProviderRepository->create([[
+            $languageRepository = $this->container->get('language.repository');
+
+            $deDeLangCriteria = (new Criteria())->addFilter(new EqualsFilter('locale.code', 'de-DE'));
+            $deDeLanguageId = $languageRepository->searchIds($deDeLangCriteria, $context)->firstId();
+
+            $enGbLangCriteria = (new Criteria())->addFilter(new EqualsFilter('locale.code', 'en-GB'));
+            $enGbLanguageId = $languageRepository->searchIds($enGbLangCriteria, $context)->firstId();
+
+            $taxProviderData = [
                 'id' => Constants::TAX_PROVIDER_ID,
                 'identifier' => CanadaTaxProvider::class,
+                'name' => 'Canada Sales Tax Provider',
                 'active' => true,
                 'priority' => 1,
                 'availabilityRuleId' => Constants::CANADA_RULE_ID,
                 'createdAt' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
-            ]], $installContext->getContext());
+                'translations' => [],
+            ];
+
+            if ($enGbLanguageId) {
+                $taxProviderData['translations'][$enGbLanguageId] = ['name' => 'Canada Sales Tax Provider'];
+            }
+
+            if ($deDeLanguageId) {
+                $taxProviderData['translations'][$deDeLanguageId] = ['name' => 'Kanada Umsatzsteuer-Anbieter'];
+            }
+
+            $taxProviderRepository->create([$taxProviderData], $context);
         }
         
         $taxRepository = $container->get('tax.repository');
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsAnyFilter('id', array_column(Constants::TAXES, 'id')));
-        $existingTaxIds = $taxRepository->searchIds($criteria, $installContext->getContext())->getIds();
+        $existingTaxIds = $taxRepository->searchIds($criteria, $context)->getIds();
 
         foreach (Constants::TAXES as $tax) {
             if (!in_array($tax['id'], $existingTaxIds)) {
@@ -96,7 +116,7 @@ class SalesTaxesCanada extends Plugin
                     'name' => $tax['name'],
                     'position' => $tax['position'],
                     'createdAt' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
-                ]], $installContext->getContext());
+                ]], $context);
             }
         }
 
