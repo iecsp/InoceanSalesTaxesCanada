@@ -9,12 +9,7 @@
 
 namespace InoceanSalesTaxesCanada;
 
-use Doctrine\DBAL\Connection;
 use Shopware\Core\Defaults;
-use Shopware\Core\Content\Rule\RuleDefinition;
-use Shopware\Core\Content\Rule\Aggregate\RuleCondition\RuleConditionDefinition;
-use Shopware\Core\Content\Tax\TaxDefinition;
-use Shopware\Core\Content\Tax\TaxProviderDefinition;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\Framework\Plugin\Context\InstallContext;
@@ -125,54 +120,6 @@ class InoceanSalesTaxesCanada extends Plugin
     public function uninstall(UninstallContext $uninstallContext): void
     {
         parent::uninstall($uninstallContext);
-
-        // Once the plugin has set product associations, it cannot be uninstalled, so the following delete methods are temporarily commented out.
-        // $context = Context::createDefaultContext();
-
-        // $taxRepo = $this->container->get('tax.repository');
-        // $criteria = new Criteria();
-        // $criteria->addFilter(new EqualsAnyFilter('id', array_column(Constants::TAXES, 'id')));
-        // $taxIds = $taxRepo->searchIds($criteria, $context);
-        // $taxIdsToDelete = array_map(function($id) {
-        //     return ['id' => $id];
-        // }, $taxIds->getIds());
-        // if (!empty($taxIdsToDelete)) {
-        //     $taxRepo->delete($taxIdsToDelete, $context);
-        // }
-
-        // $taxProviderRepo = $this->container->get('tax_provider.repository');
-        // $criteria = new Criteria();
-        // $criteria->addFilter(new EqualsFilter('id', Constants::TAX_PROVIDER_ID));
-        // $taxProviderIds = $taxProviderRepo->searchIds($criteria, $context);
-        // $taxProviderIdsToDelete = array_map(function($id) {
-        //     return ['id' => $id];
-        // }, $taxProviderIds->getIds());
-        // if (!empty($taxProviderIdsToDelete)) {
-        //     $taxProviderRepo->delete($taxProviderIdsToDelete, $context);
-        // }
-
-        // $ruleConditionRepo = $this->container->get('rule_condition.repository');        
-        // $criteria = new Criteria();
-        // $criteria->addFilter(new EqualsFilter('ruleId', Constants::CANADA_RULE_ID));
-        // $ruleConditionIds = $ruleConditionRepo->searchIds($criteria, $context);
-        // $ruleConditionIdsToDelete = array_map(function($id) {
-        //     return ['id' => $id];
-        // }, $ruleConditionIds->getIds());
-        // if (!empty($ruleConditionIdsToDelete)) {
-        //     $ruleConditionRepo->delete($ruleConditionIdsToDelete, $context);
-        // }
-        
-        // $ruleRepo = $this->container->get('rule.repository');
-        // $criteria = new Criteria();
-        // $criteria->addFilter(new EqualsFilter('id', Constants::CANADA_RULE_ID));
-        // $ruleIds = $ruleRepo->searchIds($criteria, $context);
-        // $ruleIdsToDelete = array_map(function($id) {
-        //     return ['id' => $id];
-        // }, $ruleIds->getIds());
-        // if (!empty($ruleIdsToDelete)) {
-        //     $ruleRepo->delete($ruleIdsToDelete, $context);
-        // }
-
     }
 
     public function activate(ActivateContext $activateContext): void
