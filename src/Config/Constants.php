@@ -7,7 +7,7 @@
  * holder, unless otherwise permitted by law.
  */
 
-namespace Inocean\SalesTaxesCanada\Config;
+namespace InoceanSalesTaxesCanada\Config;
 
 class Constants
 {

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Inocean\SalesTaxesCanada\Twig;
+namespace InoceanSalesTaxesCanada\Twig;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;

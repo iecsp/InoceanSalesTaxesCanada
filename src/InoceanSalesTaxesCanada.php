@@ -7,7 +7,7 @@
  * holder, unless otherwise permitted by law.
  */
 
-namespace Inocean\SalesTaxesCanada;
+namespace InoceanSalesTaxesCanada;
 
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Defaults;
@@ -25,10 +25,10 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Context;
-use Inocean\SalesTaxesCanada\Config\Constants;
-use Inocean\SalesTaxesCanada\Core\Checkout\Cart\Tax\CanadaTaxProvider;
+use InoceanSalesTaxesCanada\Config\Constants;
+use InoceanSalesTaxesCanada\Core\Checkout\Cart\Tax\CanadaTaxProvider;
 
-class SalesTaxesCanada extends Plugin
+class InoceanSalesTaxesCanada extends Plugin
 {
 
 	public function install(InstallContext $installContext): void
@@ -189,7 +189,6 @@ class SalesTaxesCanada extends Plugin
 
     private function setActiveFlagForTaxProvider(bool $active, Context $context): void
     {
-        /** @var EntityRepository $taxProviderRepository */
         $taxProviderRepository = $this->container->get('tax_provider.repository');
         $criteria = (new Criteria())->addFilter(new EqualsFilter('id', Constants::TAX_PROVIDER_ID));
         $taxProviderId = $taxProviderRepository->searchIds($criteria, $context)->firstId();

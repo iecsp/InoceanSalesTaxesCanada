@@ -7,7 +7,7 @@
  * holder, unless otherwise permitted by law.
  */
 
-namespace Inocean\SalesTaxesCanada\Core\Checkout\Cart\Tax;
+namespace InoceanSalesTaxesCanada\Core\Checkout\Cart\Tax;
 
 use Shopware\Core\Checkout\Cart\Cart;
 use Shopware\Core\Checkout\Cart\TaxProvider\AbstractTaxProvider;
@@ -16,7 +16,7 @@ use Shopware\Core\Checkout\Cart\Tax\Struct\CalculatedTax;
 use Shopware\Core\Checkout\Cart\Tax\Struct\CalculatedTaxCollection;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
-use Inocean\SalesTaxesCanada\Config\Constants;
+use InoceanSalesTaxesCanada\Config\Constants;
 
 class CanadaTaxProvider extends AbstractTaxProvider
 {
