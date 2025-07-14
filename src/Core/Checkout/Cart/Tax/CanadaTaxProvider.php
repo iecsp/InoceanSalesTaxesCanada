@@ -125,7 +125,7 @@ class CanadaTaxProvider extends AbstractTaxProvider
     private function getTaxRatesByProvince(string $province): array
     {
         $provinceCode = substr(strtoupper($province), -2);
-	    $configValue = str_replace(' ', '', (string)$this->systemConfigService->get('SalesTaxesCanada.config.CanadaTax'.$provinceCode));
+	    $configValue = str_replace(' ', '', (string)$this->systemConfigService->get('InoceanSalesTaxesCanada.config.CanadaTax'.$provinceCode));
         if (!$configValue) {
             return [$this->getTaxRateByName('GST only')];
         }
