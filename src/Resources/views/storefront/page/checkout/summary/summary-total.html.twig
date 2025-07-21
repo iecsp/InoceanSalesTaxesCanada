@@ -9,32 +9,21 @@
     {% else %}
         {% set deliveries = page.cart.deliveries %}
     {% endif %}
-    {# {% if app.request.attributes.get('_route') != 'frontend.checkout.finish.page' %} #}
-        {% for delivery in deliveries %}
-            <h5>{{ 'salseTaxCanada.checkout.summary.shippingMethod'|trans }} {{ delivery.shippingMethod.name }}</h5>
-            <div>{{ 'salseTaxCanada.checkout.summary.shippingTotalPrice'|trans }} {{ delivery.shippingCosts.totalPrice|currency }}</div>
+    {% for delivery in deliveries %}
+        <h5>{{ 'salseTaxCanada.checkout.summary.shippingMethod'|trans }} {{ delivery.shippingMethod.name }}</h5>
+        <div>{{ 'salseTaxCanada.checkout.summary.shippingTotalPrice'|trans }} {{ delivery.shippingCosts.totalPrice|currency }}</div>
+        {% if config('InoceanSalesTaxesCanada.config.FreightTaxable') %}
             {% for tax in delivery.shippingCosts.calculatedTaxes %}
                 {% if tax.taxRate != 0 %}
-                <div>
-                    <span class="shipping-tax-rate">{{ 'salseTaxCanada.checkout.summary.shippingTaxRate'|trans }} {{ tax.taxRate }}% {{ tax.taxRate | getTaxName(tax.taxRate | slice(0, 2)) }}</span>
-                    <span class="shipping-tax-price">{{ 'salseTaxCanada.checkout.summary.shippingTax'|trans }} {{ tax.tax|currency }}</span>
-                </div>
+                    <div>
+                        {% set taxName = (tax.extensions.taxName.name == 0 ? 'TAX' : tax.extensions.taxName.name) %}
+                        <span class="shipping-tax-rate">{{ 'salseTaxCanada.checkout.summary.shippingTaxRate'|trans }} {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': tax.taxRate})|sw_sanitize }}</span>
+                        <span class="shipping-tax-price">{{ 'salseTaxCanada.checkout.summary.shippingTax'|trans }} {{ tax.tax|currency }}</span>
+                    </div>
                 {% endif %}
             {% endfor %}
-            <div>{{ 'salseTaxCanada.checkout.summary.shippingDelivered'|trans }} {{ delivery.deliveryDate.earliest|date('Y-m-d') }} - {{ delivery.deliveryDate.latest|date('Y-m-d') }}</div>
-        {% endfor %}
+        {% endif %}
+        <div>{{ 'salseTaxCanada.checkout.summary.shippingDelivered'|trans }} {{ delivery.deliveryDate.earliest|date('Y-m-d') }} - {{ delivery.deliveryDate.latest|date('Y-m-d') }}</div>
+    {% endfor %}
     </dt>
-    {# {% else %}
-            <h5>{{ 'salseTaxCanada.checkout.summary.shippingMethod'|trans }} </h5>
-            <div>{{ 'salseTaxCanada.checkout.summary.shippingTotalPrice'|trans }} </div>
-            {% for tax in page.order.shippingCosts.calculatedTaxes %}
-                {% if tax.taxRate != 0 %}
-                <div>
-                    <span class="shipping-tax-rate">{{ 'salseTaxCanada.checkout.summary.shippingTaxRate'|trans }} {{ tax.taxRate }}% {{ tax.taxRate | getTaxName(tax.taxRate | slice(0, 2)) }}</span>
-                    <span class="shipping-tax-price">{{ 'salseTaxCanada.checkout.summary.shippingTax'|trans }} {{ tax.tax|currency }}</span>
-                </div>
-                {% endif %}
-            {% endfor %}
-            <div>{{ 'salseTaxCanada.checkout.summary.shippingDelivered'|trans }} </div>
-    {% endif %} #}
 {% endblock %}

@@ -12,6 +12,13 @@
                 "shippingTaxRate": "Tax Rate:",
                 "shippingTax": "Tax Amount:",
                 "shippingDelivered": "Estimated Delivery Time:"
+            },
+            "taxes": {
+                "taxGST": "+ GST (%taxRate%%)",
+                "taxPST": "+ PST (%taxRate%%)",
+                "taxQST": "+ QST (%taxRate%%)",
+                "taxHST": "+ HST (%taxRate%%)",
+                "taxTAX": "TAX (%taxRate%%)"
             }
         }
     },

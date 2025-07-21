@@ -2,97 +2,238 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
 
+    
     <card>
-        <title>Canada Tax Settings</title>
-        <title lang="de-DE">Kanadische Steuereinstellungen</title>
+        <title>Canada tax rate basic settings</title>
+        <title lang="de-DE">Grundeinstellungen für den Kanadische Steuersatz</title>
 
-        <input-field type="text">
-            <name>CanadaTaxAB</name>
-            <label>Alberta (AB)</label>
-            <label lang="de-DE">Alberta (AB)</label>
-            <defaultValue>5</defaultValue>
-            <placeholder>5</placeholder>
-        </input-field>
+        <!-- Maybe it will be added in the next version.
+        <input-field type="bool">
+            <name>TaxBreakdown</name>
+            <defaultValue>true</defaultValue>
+            <label>Show tax breakdown?</label>
+            <label lang="de-DE">wie ist die Steueraufschlüsselung?</label>
+        </input-field> -->
 
-        <input-field type="text">
-            <name>CanadaTaxBC</name>
-            <label>British Columbia (BC)</label>
-            <label lang="de-DE">British Columbia (BC)</label>
-            <defaultValue>5,7</defaultValue>
-            <placeholder>5,7</placeholder>
-        </input-field>
-
-        <input-field type="text">
-            <name>CanadaTaxMB</name>
-            <label>Manitoba (MB)</label>
-            <label lang="de-DE">Manitoba (MB)</label>
-            <defaultValue>5,7</defaultValue>
-            <placeholder>5,7</placeholder>
-        </input-field>
-
-        <input-field type="text">
-            <name>CanadaTaxNB</name>
-            <label>New Brunswick (NB)</label>
-            <label lang="de-DE">New Brunswick (NB)</label>
-            <defaultValue>15</defaultValue>
-            <placeholder>15</placeholder>
-        </input-field>
-
-        <input-field type="text">
-            <name>CanadaTaxNL</name>
-            <label>Newfoundland (NL)</label>
-            <label lang="de-DE">Newfoundland (NL)</label>
-            <defaultValue>15</defaultValue>
-            <placeholder>15</placeholder>
-        </input-field>
-
-        <input-field type="text">
-            <name>CanadaTaxNS</name>
-            <label>Nova Scotia (NS)</label>
-            <label lang="de-DE">Nova Scotia (NS)</label>
-            <defaultValue>14</defaultValue>
-            <placeholder>14</placeholder>
-        </input-field>
-
-        <input-field type="text">
-            <name>CanadaTaxON</name>
-            <label>Ontario (ON)</label>
-            <label lang="de-DE">Ontario (ON)</label>
-            <defaultValue>13</defaultValue>
-            <placeholder>13</placeholder>
-        </input-field>
-
-        <input-field type="text">
-            <name>CanadaTaxPE</name>
-            <label>Prince Edward Island (PE)</label>
-            <label lang="de-DE">Prince Edward Island (PE)</label>
-            <defaultValue>15</defaultValue>
-            <placeholder>15</placeholder>
-        </input-field>
-
-        <input-field type="text">
-            <name>CanadaTaxQC</name>
-            <label>Quebec (QC)</label>
-            <label lang="de-DE">Quebec (QC)</label>
-            <defaultValue>5,9.975</defaultValue>
-            <placeholder>5,9.975</placeholder>
-        </input-field>
-
-        <input-field type="text">
-            <name>CanadaTaxSK</name>
-            <label>Saskatchewan (SK)</label>
-            <label lang="de-DE">Saskatchewan (SK)</label>
-            <defaultValue>5,6</defaultValue>
-            <placeholder>5,6</placeholder>
-        </input-field>
-
-        <input-field type="text">
-            <name>CanadaTaxYT</name>
-            <label>Yukon (YT)</label>
-            <label lang="de-DE">Yukon (YT)</label>
-            <defaultValue>5</defaultValue>
-            <placeholder>5</placeholder>
+        <input-field type="bool">
+            <name>FreightTaxable</name>
+            <defaultValue>true</defaultValue>
+            <label>Freight is taxable?</label>
+            <label lang="de-DE">Fracht ist steuerpflichtig?</label>
         </input-field>
     </card>
+
+    <card>
+        <title>Tax rates in British Columbia(BC)</title>
+        <title lang="de-DE">Steuersätze in British Columbia(BC)</title>
+
+        <input-field type="float">
+            <name>TaxGstBC</name>
+            <defaultValue>5</defaultValue>
+            <label>GST</label>
+            <label lang="de-DE">GST</label>
+        </input-field>
+
+        <input-field type="float">
+            <name>TaxPstBC</name>
+            <defaultValue>7</defaultValue>
+            <label>PST</label>
+            <label lang="de-DE">PST</label>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Tax rates in Alberta(AB)</title>
+        <title lang="de-DE">Steuersätze in Alberta(AB)</title>
+
+        <input-field type="float">
+            <name>TaxGstAB</name>
+            <defaultValue>5</defaultValue>
+            <label>GST</label>
+            <label lang="de-DE">GST</label>
+        </input-field>
+
+        <input-field type="float">
+            <name>TaxPstAB</name>
+            <defaultValue>0</defaultValue>
+            <label>PST</label>
+            <label lang="de-DE">PST</label>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Tax rates in Saskatchewan(SK)</title>
+        <title lang="de-DE">Steuersätze in Saskatchewan(SK)</title>
+
+        <input-field type="float">
+            <name>TaxGstSK</name>
+            <defaultValue>5</defaultValue>
+            <label>GST</label>
+            <label lang="de-DE">GST</label>
+        </input-field>
+
+        <input-field type="float">
+            <name>TaxPstSK</name>
+            <defaultValue>6</defaultValue>
+            <label>PST</label>
+            <label lang="de-DE">PST</label>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Tax rates in Manitoba(MB)</title>
+        <title lang="de-DE">Steuersätze in Manitoba(MB)</title>
+
+        <input-field type="float">
+            <name>TaxGstMB</name>
+            <defaultValue>5</defaultValue>
+            <label>GST</label>
+            <label lang="de-DE">GST</label>
+        </input-field>
+
+        <input-field type="float">
+            <name>TaxPstMB</name>
+            <defaultValue>7</defaultValue>
+            <label>PST</label>
+            <label lang="de-DE">PST</label>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Tax rates in Ontario(ON)</title>
+        <title lang="de-DE">Steuersätze in Ontario(ON)</title>
+
+        <input-field type="float">
+            <name>TaxHstON</name>
+            <defaultValue>13</defaultValue>
+            <label>HST</label>
+            <label lang="de-DE">HST</label>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Tax rates in Quebec(QC)</title>
+        <title lang="de-DE">Steuersätze in Quebec(QC)</title>
+
+        <input-field type="float">
+            <name>TaxGstQC</name>
+            <defaultValue>5</defaultValue>
+            <label>GST</label>
+            <label lang="de-DE">GST</label>
+        </input-field>
+
+        <input-field type="text">
+            <name>TaxQstQC</name>
+            <defaultValue>9.975</defaultValue>
+            <label>QST</label>
+            <label lang="de-DE">QST</label>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Tax rates in New Brunswick(NB)</title>
+        <title lang="de-DE">Steuersätze in New Brunswick(NB)</title>
+
+        <input-field type="float">
+            <name>TaxHstNB</name>
+            <defaultValue>15</defaultValue>
+            <label>HST</label>
+            <label lang="de-DE">HST</label>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Tax rates in Prince Edward Island(PE)</title>
+        <title lang="de-DE">Steuersätze in Prince Edward Island(PE)</title>
+
+        <input-field type="float">
+            <name>TaxHstPE</name>
+            <defaultValue>15</defaultValue>
+            <label>HST</label>
+            <label lang="de-DE">HST</label>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Tax rates in Nova Scotia(NS)</title>
+        <title lang="de-DE">Steuersätze in Nova Scotia(NS)</title>
+
+        <input-field type="float">
+            <name>TaxHstNS</name>
+            <defaultValue>14</defaultValue>
+            <label>HST</label>
+            <label lang="de-DE">HST</label>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Tax rates in Newfoundland(NL)</title>
+        <title lang="de-DE">Steuersätze in Newfoundland(NL)</title>
+
+        <input-field type="float">
+            <name>TaxHstNL</name>
+            <defaultValue>15</defaultValue>
+            <label>HST</label>
+            <label lang="de-DE">HST</label>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Tax rates in Yukon(YT)</title>
+        <title lang="de-DE">Steuersätze in Yukon(YT)</title>
+
+        <input-field type="float">
+            <name>TaxGstYT</name>
+            <defaultValue>5</defaultValue>
+            <label>GST</label>
+            <label lang="de-DE">GST</label>
+        </input-field>
+
+        <input-field type="float">
+            <name>TaxPstYT</name>
+            <defaultValue>0</defaultValue>
+            <label>PST</label>
+            <label lang="de-DE">PST</label>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Tax rates in Northwest Territories(NT)</title>
+        <title lang="de-DE">Steuersätze in Northwest Territories(NT)</title>
+
+        <input-field type="float">
+            <name>TaxGstNT</name>
+            <defaultValue>5</defaultValue>
+            <label>GST</label>
+            <label lang="de-DE">GST</label>
+        </input-field>
+
+        <input-field type="float">
+            <name>TaxPstNT</name>
+            <defaultValue>0</defaultValue>
+            <label>PST</label>
+            <label lang="de-DE">PST</label>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Tax rates in Nunavut(NU)</title>
+        <title lang="de-DE">Steuersätze in Nunavut(NU)</title>
+
+        <input-field type="float">
+            <name>TaxGstNU</name>
+            <defaultValue>5</defaultValue>
+            <label>GST</label>
+            <label lang="de-DE">GST</label>
+        </input-field>
+
+        <input-field type="float">
+            <name>TaxPstNU</name>
+            <defaultValue>0</defaultValue>
+            <label>PST</label>
+            <label lang="de-DE">PST</label>
+        </input-field>
+    </card>
+
 </config>
 

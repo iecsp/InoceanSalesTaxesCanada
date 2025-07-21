@@ -4,9 +4,16 @@ namespace InoceanSalesTaxesCanada\Twig;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use InoceanSalesTaxesCanada\Service\TaxConfigService;
 
 class TaxNameExtension extends AbstractExtension
 {
+    private TaxConfigService $taxConfigService;
+
+    public function __construct(TaxConfigService $taxConfigService)
+    {
+        $this->taxConfigService = $taxConfigService;
+    }
 
     public function getFilters(): array
     {
@@ -15,32 +22,11 @@ class TaxNameExtension extends AbstractExtension
         ];
     }
 
-    public function getTaxName(float $value, string $language = 'fr'): string
+    public function getTaxName(string $proviceCode): array
     {
         
-        $taxNames['fr'] = [
-            0 => 'Sans taxe',
-            5 => 'TPS',
-            6 => 'TVP',
-            7 => 'TVP',
-            9.975 => 'TVQ',
-            13 => 'TVH',
-            14 => 'TVH',
-            15 => 'TVH',
-        ];
+        return $this->taxConfigService->getTaxNameByProvince($proviceCode);
 
-        $taxNames['en'] = [
-            0 => 'NO-TAX',
-            5 => 'GST',
-            6 => 'PST',
-            7 => 'PST',
-            9.975 => 'QST',
-            13 => 'HST',
-            14 => 'HST',
-            15 => 'HST',
-        ];
-
-        return $taxNames[$language][$value] ?? $taxNames['en'][$value] ?? 'Tax';
     }
 
 }

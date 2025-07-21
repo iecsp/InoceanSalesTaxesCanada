@@ -19,10 +19,10 @@
                             {% for calculatedTax in order.price.calculatedTaxes.sortByTax %}
                                 <tr>
                                     {% block document_sum_tax_label %}
-                                        {% set shippingCountry = order.deliveries.first.getShippingOrderAddress.country.translated.name %}
-                                        {% if shippingCountry == 'Canada' %}
-                                            {% set calculatedTaxRate = calculatedTax.taxRate ?? 0 %}
-                                            <td class="align-right">{% if calculatedTaxRate != 0 %}+ {{ calculatedTaxRate }}%{% endif %} {{ calculatedTaxRate | getTaxName(app.request.locale | slice(0, 2)) }}</td>
+                                        {% set shippingCountry = order.deliveries.first.getShippingOrderAddress.country.translated.iso %}
+                                        {% if shippingCountry == 'CA' %}
+                                            {% set taxName = (calculatedTax.extensions.taxName.name == 0 ? 'TAX' : calculatedTax.extensions.taxName.name) %}
+                                            <td class="align-right">{{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': calculatedTax.taxRate})|sw_sanitize }}</td>
                                         {% else %}
                                             <td class="align-right">{{ 'document.lineItems.tax'|trans({'%taxRate%': calculatedTax.taxRate})|sw_sanitize }}</td>
                                         {% endif %}

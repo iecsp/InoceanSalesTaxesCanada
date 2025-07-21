@@ -9,6 +9,8 @@
 
 namespace InoceanSalesTaxesCanada;
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Uuid\Uuid;
@@ -28,6 +30,7 @@ class InoceanSalesTaxesCanada extends Plugin
 
 	public function install(InstallContext $installContext): void
     {
+
         parent::install($installContext);
 
         $context = $installContext->getContext();
@@ -38,12 +41,14 @@ class InoceanSalesTaxesCanada extends Plugin
         $criteria->addFilter(new EqualsFilter('id', Constants::CANADA_RULE_ID));
         $ruleId = $ruleRepository->searchIds($criteria, $context)->firstId();
         if (!$ruleId) {
-            $ruleRepository->create([[
+            $ruleData = [
                 'id' => Constants::CANADA_RULE_ID,
                 'name' => Constants::RULE_NAME,
+                'moduleTypes' => ['types' => ["price", "shipping"]],
                 'priority' => 1,
-                'createdAt' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
-            ]], $context);
+                'createdAt' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT)
+            ];
+            $ruleRepository->create([$ruleData], $context);
         }
 
         $countryId = $this->getCountryIdByIso(Constants::DEFAULT_COUNTRY, $context);
@@ -55,7 +60,7 @@ class InoceanSalesTaxesCanada extends Plugin
             if (!$ruleConditionId) {
                 $ruleConditionRepository->create([[
                     'id' => Uuid::randomHex(),
-                    'type' => 'customerBillingCountry',
+                    'type' => 'customerShippingCountry',
                     'ruleId' => Constants::CANADA_RULE_ID,
                     'value' => ['operator' => '=', 'countryIds' => [$countryId]],
                     'createdAt' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
@@ -65,7 +70,7 @@ class InoceanSalesTaxesCanada extends Plugin
 
         $taxProviderRepository = $container->get('tax_provider.repository');
         $criteria = new Criteria();
-        $criteria->addFilter(new EqualsFilter('id', Constants::TAX_PROVIDER_ID));
+        $criteria->addFilter(new EqualsFilter('identifier', CanadaTaxProvider::class));
         $taxProviderId = $taxProviderRepository->searchIds($criteria, $context)->firstId();
         if (!$taxProviderId) {
             $languageRepository = $this->container->get('language.repository');
@@ -77,9 +82,9 @@ class InoceanSalesTaxesCanada extends Plugin
             $enGbLanguageId = $languageRepository->searchIds($enGbLangCriteria, $context)->firstId();
 
             $taxProviderData = [
-                'id' => Constants::TAX_PROVIDER_ID,
+                'id' => Uuid::randomHex(),
                 'identifier' => CanadaTaxProvider::class,
-                'name' => 'Canada Sales Tax Provider',
+                'name' => 'Canada Tax Provider',
                 'active' => true,
                 'priority' => 1,
                 'availabilityRuleId' => Constants::CANADA_RULE_ID,
@@ -88,7 +93,7 @@ class InoceanSalesTaxesCanada extends Plugin
             ];
 
             if ($enGbLanguageId) {
-                $taxProviderData['translations'][$enGbLanguageId] = ['name' => 'Canada Sales Tax Provider'];
+                $taxProviderData['translations'][$enGbLanguageId] = ['name' => 'Canada Tax Provider'];
             }
 
             if ($deDeLanguageId) {
@@ -97,7 +102,7 @@ class InoceanSalesTaxesCanada extends Plugin
 
             $taxProviderRepository->create([$taxProviderData], $context);
         }
-        
+
         $taxRepository = $container->get('tax.repository');
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsAnyFilter('id', array_column(Constants::TAXES, 'id')));
@@ -120,10 +125,24 @@ class InoceanSalesTaxesCanada extends Plugin
     public function uninstall(UninstallContext $uninstallContext): void
     {
         parent::uninstall($uninstallContext);
+
+        $context = $uninstallContext->getContext();
+
+        if ($uninstallContext->keepUserData()) {
+            return;
+        }
+
+        $this->setActiveFlagForTaxProvider(false, $context);
+        $this->clearTaxProviderRuleAssociation($context);
+        $this->removeTaxProvider($context);
+        $this->removeRuleConditions($context);
+        $this->removeRule($context);
+        $this->removeTaxes($context);
+    
     }
 
     public function activate(ActivateContext $activateContext): void
-    {
+    {  
         parent::activate($activateContext);
         $this->setActiveFlagForTaxProvider(true, $activateContext->getContext());
     }
@@ -137,7 +156,7 @@ class InoceanSalesTaxesCanada extends Plugin
     private function setActiveFlagForTaxProvider(bool $active, Context $context): void
     {
         $taxProviderRepository = $this->container->get('tax_provider.repository');
-        $criteria = (new Criteria())->addFilter(new EqualsFilter('id', Constants::TAX_PROVIDER_ID));
+        $criteria = (new Criteria())->addFilter(new EqualsFilter('identifier', CanadaTaxProvider::class));
         $taxProviderId = $taxProviderRepository->searchIds($criteria, $context)->firstId();
         if ($taxProviderId) {
             $taxProviderRepository->update([
@@ -149,15 +168,103 @@ class InoceanSalesTaxesCanada extends Plugin
         }
     }
 
+    private function clearTaxProviderRuleAssociation(Context $context): void
+    {
+        $taxProviderRepository = $this->container->get('tax_provider.repository');
+        $criteria = new Criteria();
+        $criteria->addFilter(new EqualsFilter('identifier', CanadaTaxProvider::class));
+        
+        $taxProviderId = $taxProviderRepository->searchIds($criteria, $context)->firstId();
+        if ($taxProviderId) {
+            $taxProviderRepository->update([
+                [
+                    'id' => $taxProviderId,
+                    'availabilityRuleId' => null,
+                ],
+            ], $context);
+        }
+    }
+
+    private function removeTaxProvider(Context $context): void
+    {
+        $taxProviderRepository = $this->container->get('tax_provider.repository');
+        $criteria = new Criteria();
+        $criteria->addFilter(new EqualsFilter('identifier', CanadaTaxProvider::class));
+        
+        $taxProviderId = $taxProviderRepository->searchIds($criteria, $context)->firstId();
+        if ($taxProviderId) {
+            $taxProviderRepository->delete([
+                ['id' => $taxProviderId]
+            ], $context);
+        }
+    }
+
+    private function removeRuleConditions(Context $context): void
+    {
+        $ruleConditionRepository = $this->container->get('rule_condition.repository');
+        $criteria = new Criteria();
+        $criteria->addFilter(new EqualsFilter('ruleId', Constants::CANADA_RULE_ID));
+        
+        $ruleConditionIds = $ruleConditionRepository->searchIds($criteria, $context)->getIds();
+        if (!empty($ruleConditionIds)) {
+            $deleteData = array_map(fn($id) => ['id' => $id], $ruleConditionIds);
+            $ruleConditionRepository->delete($deleteData, $context);
+        }
+    }
+
+    private function removeRule(Context $context): void
+    {
+        $ruleRepository = $this->container->get('rule.repository');
+        $criteria = new Criteria();
+        $criteria->addFilter(new EqualsFilter('id', Constants::CANADA_RULE_ID));
+        
+        $ruleId = $ruleRepository->searchIds($criteria, $context)->firstId();
+        if ($ruleId) {
+            $ruleRepository->delete([
+                ['id' => $ruleId]
+            ], $context);
+        }
+    }
+
+    private function removeTaxes(Context $context): void
+    {
+        $taxRepository = $this->container->get('tax.repository');
+        $criteria = new Criteria();
+        
+        $taxIds = array_map(fn($tax) => $tax['id'], Constants::TAXES);
+        $criteria->addFilter(new EqualsAnyFilter('id', $taxIds));
+        
+        $taxesToRemove = $taxRepository->searchIds($criteria, $context)->getIds();
+        
+        if (!empty($taxesToRemove)) {
+            $productRepository = $this->container->get('product.repository');
+            $shippingMethodRepository = $this->container->get('shipping_method.repository');
+            
+            $productCriteria = new Criteria();
+            $productCriteria->addFilter(new EqualsAnyFilter('taxId', $taxesToRemove));
+            $productsUsingTax = $productRepository->searchIds($productCriteria, $context)->getIds();
+            
+            $shippingMethodCriteria = new Criteria();
+            $shippingMethodCriteria->addFilter(new EqualsAnyFilter('taxId', $taxesToRemove));
+            $shippingMethodsUsingTax = $shippingMethodRepository->searchIds($shippingMethodCriteria, $context)->getIds();
+            
+            $taxesInUse = array_unique(array_merge($productsUsingTax, $shippingMethodsUsingTax));
+            $taxesToActuallyRemove = array_diff($taxesToRemove, $taxesInUse);
+            
+            if (!empty($taxesToActuallyRemove)) {
+                $deleteData = array_map(fn($id) => ['id' => $id], $taxesToActuallyRemove);
+                $taxRepository->delete($deleteData, $context);
+            }
+        }
+    }
+
     private function getCountryIdByIso(string $iso, Context $context): ?string
     {
-
         $countryRepository = $this->container->get('country.repository');
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('iso', $iso));
         $countryIds = $countryRepository->searchIds($criteria, $context);
         return $countryIds->getIds()[0] ?? null;
-
     }
 
 }

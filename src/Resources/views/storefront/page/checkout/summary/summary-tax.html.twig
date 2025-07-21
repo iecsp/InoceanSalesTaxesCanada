@@ -1,14 +1,29 @@
 {% sw_extends '@Storefront/storefront/page/checkout/summary/summary-tax.html.twig' %}
 
-{% set defaultShippingCountry = context.customer.defaultShippingAddress.country.name %}
+{% set defaultShippingCountry = context.customer.defaultShippingAddress.country.iso %}
 
-{% block page_checkout_summary_tax_label %}
-    {% if defaultShippingCountry == 'Canada' %}
-        {% set calculatedTaxRate = taxItem.taxRate ?? 0 %}
-        <dt class="col-7 checkout-aside-summary-label summary-tax">
-            {% if calculatedTaxRate != 0 %}+ {{ calculatedTaxRate }}%{% endif %} {{ calculatedTaxRate | getTaxName(app.request.locale | slice(0, 2)) }}
-        </dt>
-    {% else %}
-        {{ parent() }}
-    {% endif %}
+{% block page_checkout_summary_taxes %}
+    {% for taxItem in summary.price.calculatedTaxes %}
+        {% if taxItem.taxRate != 0 %}
+            {% block page_checkout_summary_tax %}
+                {% block page_checkout_summary_tax_label %}
+                    {% if defaultShippingCountry == 'CA' %}
+                        {% set taxName = (taxItem.extensions.taxName.name == 0 ? 'TAX' : taxItem.extensions.taxName.name) %}
+                        <dt class="col-7 checkout-aside-summary-label summary-tax">
+                            {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': taxItem.taxRate})|sw_sanitize }}
+                        </dt>
+                    {% else %}
+                        <dt class="col-7 checkout-aside-summary-label summary-tax">
+                            {{ 'checkout.summaryTax'|trans({
+                                '%rate%': taxItem.taxRate
+                            })|sw_sanitize }}
+                        </dt>
+                    {% endif %}
+                {% endblock %}
+                {% block page_checkout_summary_tax_value %}
+                    {{ parent() }}
+                {% endblock %}
+            {% endblock %}
+        {% endif %}
+    {% endfor %}
 {% endblock %}

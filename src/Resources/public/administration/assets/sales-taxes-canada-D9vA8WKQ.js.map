@@ -1,1 +1,0 @@
-{"version":3,"file":"sales-taxes-canada-D9vA8WKQ.js","sources":["../../../app/administration/src/module/sales-taxes-canada/index.js"],"sourcesContent":["const { Module } = Shopware;\n\nModule.register('sales-taxes-canada', {});"],"names":["Module"],"mappings":"AAAA,KAAM,CAAE,OAAAA,CAAQ,EAAG,SAEnBA,EAAO,SAAS,qBAAsB,EAAE"}

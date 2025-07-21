@@ -1,11 +1,11 @@
 {
-  "base": "/bundles/salestaxescanada/administration/",
+  "base": "/bundles/inoceansalestaxescanada/administration/",
   "entryPoints": {
-    "sales-taxes-canada": {
+    "inocean-sales-taxes-canada": {
       "css": [],
       "dynamic": [],
       "js": [
-        "/bundles/salestaxescanada/administration/assets/sales-taxes-canada-D9vA8WKQ.js"
+        "/bundles/inoceansalestaxescanada/administration/assets/inocean-sales-taxes-canada-l0sNRNKZ.js"
       ],
       "legacy": false,
       "preload": []

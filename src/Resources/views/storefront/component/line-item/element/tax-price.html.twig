@@ -1,9 +1,9 @@
 {% sw_extends '@Storefront/storefront/component/line-item/element/tax-price.html.twig' %}
 
-{% set defaultShippingCountry = context.customer.defaultShippingAddress.country.name %}
+{% set defaultShippingCountry = context.customer.defaultShippingAddress.country.iso %}
 
 {% block component_line_item_tax_price_label %}
-    {% if defaultShippingCountry != 'Canada' %}
+    {% if defaultShippingCountry != 'CA' %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
@@ -12,8 +12,9 @@
     {% for calculatedTax in lineItem.price.calculatedTaxes %}
         {% set calculatedTaxRate = calculatedTax.taxRate ?? 0 %}
         <div class="line-item-product-number">
-        {% if defaultShippingCountry == 'Canada' %}
-            {% if calculatedTaxRate != 0 %}+{% endif %} {{ calculatedTaxRate | getTaxName(app.request.locale | slice(0, 2)) }}
+        {% if defaultShippingCountry == 'CA' %}
+            {% set taxName = (calculatedTax.extensions.taxName.name == 0 ? 'TAX' : calculatedTax.extensions.taxName.name) %}
+            {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': calculatedTax.taxRate})|sw_sanitize }}
         {% endif %}
 
         {% set calculatedTaxValue = calculatedTax.tax ?? 0 %}

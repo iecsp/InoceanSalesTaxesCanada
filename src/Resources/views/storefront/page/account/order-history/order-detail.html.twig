@@ -1,12 +1,12 @@
 {% sw_extends '@Storefront/storefront/page/account/order-history/order-detail.html.twig' %}
 
-{% set defaultShipppingCountry = context.customer.defaultShippingAddress.country.name %}
+{% set defaultShipppingCountry = context.customer.defaultShippingAddress.country.iso %}
 
 {% block page_account_order_item_detail_vat_label %}
-    {% if defaultShipppingCountry == 'Canada' %}
-        {% set calculatedTaxRate = calculatedTax.taxRate ?? 0 %}
+    {% if defaultShipppingCountry == 'CA' %}
+        {% set taxName = (calculatedTax.extensions.taxName.name == 0 ? 'TAX' : calculatedTax.extensions.taxName.name) %}
         <dt class="col-6 col-md-8">
-            {% if calculatedTaxRate != 0 %}+ {{ calculatedTaxRate }}%{% endif %} {{ calculatedTaxRate | getTaxName(app.request.locale | slice(0, 2)) }}
+            {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': calculatedTax.taxRate})|sw_sanitize }}
         </dt>
     {% else %}
         {{ parent() }}
