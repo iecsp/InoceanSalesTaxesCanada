@@ -33,11 +33,9 @@ class CanadaTaxProvider extends AbstractTaxProvider
 
     public function provide(Cart $cart, SalesChannelContext $context): TaxProviderResult
     {
-
         $lineItemTaxes = [];
+        $deliveryTaxes = [];
         $finalCartTaxes = [];
-
-        $freightTaxable = $this->taxConfigService->isFreightTaxable($context->getSalesChannelId());
 
         $address = $context->getShippingLocation()->getAddress();
         if (!$address || strtoupper($address->getCountry()?->getIso()) !== Constants::DEFAULT_COUNTRY) {
@@ -47,70 +45,80 @@ class CanadaTaxProvider extends AbstractTaxProvider
         $proviceShortCode = substr(strtoupper($address->getCountryState()->getShortCode()), -2);
         $province = CanadianProvince::from($proviceShortCode ?? Constants::DEFAULT_PROVINCE);
 
-        foreach ($cart->getLineItems() as $lineItem) {
-
+        // --- Process Product Line Items ---
+        foreach ($cart->getLineItems()->filterType('product') as $lineItem) {
             $originalTaxRate = $lineItem->getPrice()->getCalculatedTaxes()->first()?->getTaxRate() ?? $this->getDefaultRateByTaxType('TAX-FREE');
 
             if ($lineItem->getPayloadValue('taxId') === Constants::TAXES[3]['id']) {
                 $taxRates = [$this->getDefaultRateByTaxType('TAX-FREE')];
             } else if ($lineItem->getPayloadValue('taxId') === Constants::TAXES[2]['id']) {
                 $taxRates = [$this->getDefaultRateByTaxType('GST-ONLY')];
-            } elseif ($lineItem->getPayloadValue('taxId') === Constants::TAXES[1]['id']) {
-                $taxRates = $this->taxConfigService->getProvinceTaxRates($province, $context->getSalesChannelId());
-            } elseif ($lineItem->getPayloadValue('taxId') === Constants::TAXES[0]['id']) {
-                $taxRates = $this->taxConfigService->getProvinceTaxRates($province, $context->getSalesChannelId());
             } else {
-                $taxRates = [$originalTaxRate];
+                $taxRates = $this->taxConfigService->getProvinceTaxRates($province, $context->getSalesChannelId());
             }
 
             $price = $lineItem->getPrice()->getTotalPrice();
             $calculatedTaxes = [];
+            $lineItemTaxInfo = [];
 
             foreach ($taxRates as $taxName => $taxRate) {
                 $tax = $price * $taxRate / 100;
                 $calculatedTax = new CalculatedTax($tax, $taxRate, $price);
-                $calculatedTax->addExtension('taxName', new ArrayEntity(['name' => $taxName]));
+                $calculatedTax->addExtension('taxName', new ArrayEntity(['name' => $taxName])); // For checkout process
                 $calculatedTaxes[] = $calculatedTax;
                 $finalCartTaxes[] = $calculatedTax;
+
+                // This structure will be persisted in the order_line_item payload
+                $lineItemTaxInfo[] = ['name' => $taxName, 'rate' => $taxRate, 'tax' => $tax];
             }
+
+            // Persist the detailed tax info into the line item's payload
+            $payload = $lineItem->getPayload();
+            $payload['inoceanCanadaTaxInfo'] = $lineItemTaxInfo;
+            $lineItem->setPayload($payload);
 
             $lineItemTaxes[$lineItem->getUniqueIdentifier()] = new CanadaCalculatedTaxCollection($calculatedTaxes);
         }
 
-        $calculatedDeliveryTaxes = [];
-        $deliveryTaxes = [];
-        $shippingTotalPrice = $cart->getShippingCosts()->getTotalPrice() ?? 0;
+        // --- Process Shipping Costs ---
+        $shippingLineItem = $cart->getLineItems()->filterType('shipping')->first();
+        if ($shippingLineItem) {
+            $freightTaxable = $this->taxConfigService->isFreightTaxable($context->getSalesChannelId());
+            $shippingTotalPrice = $cart->getShippingCosts()->getTotalPrice() ?? 0;
 
-        if ($freightTaxable) {
-            foreach ($cart->getDeliveries() as $delivery) {
+            if ($freightTaxable && $shippingTotalPrice > 0) {
+                $delivery = $cart->getDeliveries()->first(); // Assuming one delivery for simplicity
+                $shippingMethod = $delivery->getShippingMethod();
+                $taxId = $shippingMethod->getTaxId();
+
+                if ($taxId === Constants::TAXES[3]['id']) {
+                    $deliveryTaxRates = [$this->getDefaultRateByTaxType('TAX-FREE')];
+                } else if ($taxId === Constants::TAXES[2]['id']) {
+                    $deliveryTaxRates = [$this->getDefaultRateByTaxType('GST-ONLY')];
+                } else {
+                    $deliveryTaxRates = $this->taxConfigService->getProvinceTaxRates($province, $context->getSalesChannelId());
+                }
+
                 $calculatedDeliveryTaxes = [];
-                foreach ($delivery->getPositions() as $position) {
-                    $shippingMethod = $delivery->getShippingMethod();
-                    $taxId = $shippingMethod->getTaxId();
-                    $originalDeliveryTaxRate = $shippingMethod->getTax()?->getTaxRate() ?? $this->getDefaultRateByTaxType('TAX-FREE');
+                $shippingTaxInfo = [];
 
-                    if ($taxId === Constants::TAXES[3]['id']) {
-                        $deliveryTaxRates = [$this->getDefaultRateByTaxType('TAX-FREE')];
-                    } else if ($taxId === Constants::TAXES[2]['id']) {
-                        $deliveryTaxRates = [$this->getDefaultRateByTaxType('GST-ONLY')];
-                    } elseif ($taxId === Constants::TAXES[1]['id']) {
-                        $deliveryTaxRates = $this->taxConfigService->getProvinceTaxRates($province, $context->getSalesChannelId());
-                    } elseif ($taxId === Constants::TAXES[0]['id']) {
-                        $deliveryTaxRates = $this->taxConfigService->getProvinceTaxRates($province, $context->getSalesChannelId());
-                    } else {
-                        $deliveryTaxRates = [$originalDeliveryTaxRate];
-                    }
+                foreach ($deliveryTaxRates as $deliveryTaxName => $deliveryTaxRate) {
+                    $deliveryTaxedPrice = $shippingTotalPrice * $deliveryTaxRate / 100;
+                    $calculatedDeliveryTax = new CalculatedTax($deliveryTaxedPrice, $deliveryTaxRate, $shippingTotalPrice);
+                    $calculatedDeliveryTax->addExtension('taxName', new ArrayEntity(['name' => $deliveryTaxName]));
+                    $calculatedDeliveryTaxes[] = $calculatedDeliveryTax;
+                    $finalCartTaxes[] = $calculatedDeliveryTax;
 
-                    foreach ($deliveryTaxRates as $deliveryTaxName => $deliveryTaxRate) {
-                        $deliveryTaxedPrice = $shippingTotalPrice * $deliveryTaxRate / 100;
-                        $finalDeliveryTaxRate = $deliveryTaxRate;
+                    $shippingTaxInfo[] = ['name' => $deliveryTaxName, 'rate' => $deliveryTaxRate, 'tax' => $deliveryTaxedPrice];
+                }
 
-                        $calculatedDeliveryTax = new CalculatedTax($deliveryTaxedPrice, $finalDeliveryTaxRate, $shippingTotalPrice);
-                        $calculatedDeliveryTax->addExtension('taxName', new ArrayEntity(['name' => $deliveryTaxName]));
-                        $calculatedDeliveryTaxes[] = $calculatedDeliveryTax;
-                        $finalCartTaxes[] = $calculatedDeliveryTax;
-                    }
-                    $deliveryTaxes[$position->getIdentifier()] = new CanadaCalculatedTaxCollection($calculatedDeliveryTaxes);
+                // Persist into the shipping line item's payload
+                $payload = $shippingLineItem->getPayload();
+                $payload['inoceanCanadaTaxInfo'] = $shippingTaxInfo;
+                $shippingLineItem->setPayload($payload);
+
+                if (!empty($calculatedDeliveryTaxes) && $delivery) {
+                    $deliveryTaxes[$delivery->getUniqueIdentifier()] = new CanadaCalculatedTaxCollection($calculatedDeliveryTaxes);
                 }
             }
         }
@@ -118,9 +126,8 @@ class CanadaTaxProvider extends AbstractTaxProvider
         return new TaxProviderResult(
             $lineItemTaxes,
             $deliveryTaxes,
-            // new CanadaCalculatedTaxCollection($finalCartTaxes)
+            new CanadaCalculatedTaxCollection($finalCartTaxes)
         );
-
     }
 
     private function getDefaultRateByTaxType(string $type): int {

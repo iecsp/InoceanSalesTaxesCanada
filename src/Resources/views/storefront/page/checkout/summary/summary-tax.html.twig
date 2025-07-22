@@ -3,27 +3,59 @@
 {% set defaultShippingCountry = context.customer.defaultShippingAddress.country.iso %}
 
 {% block page_checkout_summary_taxes %}
-    {% for taxItem in summary.price.calculatedTaxes %}
-        {% if taxItem.taxRate != 0 %}
-            {% block page_checkout_summary_tax %}
-                {% block page_checkout_summary_tax_label %}
-                    {% if defaultShippingCountry == 'CA' %}
-                        {% set taxName = (taxItem.extensions.taxName.name == 0 ? 'TAX' : taxItem.extensions.taxName.name) %}
-                        <dt class="col-7 checkout-aside-summary-label summary-tax">
-                            {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': taxItem.taxRate})|sw_sanitize }}
-                        </dt>
-                    {% else %}
-                        <dt class="col-7 checkout-aside-summary-label summary-tax">
-                            {{ 'checkout.summaryTax'|trans({
-                                '%rate%': taxItem.taxRate
-                            })|sw_sanitize }}
-                        </dt>
-                    {% endif %}
+    {% if app.request.attributes.get('_route') === 'frontend.checkout.finish.page' %}
+
+        {% set taxTotals = {} %}
+        {% for taxItem in page.order.lineItems %}
+            {% if taxItem.payload.inoceanCanadaTaxInfo is defined and taxItem.payload.inoceanCanadaTaxInfo is not empty %}
+                {% for taxInfo in taxItem.payload.inoceanCanadaTaxInfo %}
+                    {% set taxName = taxInfo.name %}
+                    {% set currentTaxData = taxTotals[taxName]|default({ 'rate': taxInfo.rate, 'total': 0 }) %}
+                    {% set newTotal = currentTaxData.total + taxInfo.tax %}
+                    {% set updatedTaxData = currentTaxData|merge({ 'total': newTotal }) %}
+                    {% set taxTotals = taxTotals|merge({ (taxName): updatedTaxData }) %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+        {% for taxName, taxData in taxTotals %}
+             {% if taxData.total > 0 %}
+                <dt class="col-7 checkout-aside-summary-label summary-tax">
+                    {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': taxData.rate})|sw_sanitize }}
+                </dt>
+                <dd class="col-5 checkout-aside-summary-value summary-tax">
+                    {{ taxData.total|currency }}
+                </dd> 
+            {% endif %}
+        {% endfor %}
+
+    {% else %}
+   
+        {% for taxItem in summary.price.calculatedTaxes %}
+            {% if taxItem.taxRate != 0 %}
+                {% block page_checkout_summary_tax %}
+                    {% block page_checkout_summary_tax_label %}
+                        {% if defaultShippingCountry == 'CA' %}
+                            {% set taxName = (taxItem.extensions.taxName.name == 0 ? 'TAX' : taxItem.extensions.taxName.name) %}
+                            <dt class="col-7 checkout-aside-summary-label summary-tax">
+                                {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': taxItem.taxRate})|sw_sanitize }}
+                            </dt>
+                        {% else %}
+                            <dt class="col-7 checkout-aside-summary-label summary-tax">
+                                {{ 'checkout.summaryTax'|trans({
+                                    '%rate%': taxItem.taxRate
+                                })|sw_sanitize }}
+                            </dt>
+                        {% endif %}
+                    {% endblock %}
+                    {% block page_checkout_summary_tax_value %}
+                        <dd class="col-5 checkout-aside-summary-value summary-tax">
+                            {{ taxItem.tax|currency }}
+                        </dd>
+                    {% endblock %}
                 {% endblock %}
-                {% block page_checkout_summary_tax_value %}
-                    {{ parent() }}
-                {% endblock %}
-            {% endblock %}
-        {% endif %}
-    {% endfor %}
+            {% endif %}
+        {% endfor %}
+        
+    {% endif %}
 {% endblock %}
