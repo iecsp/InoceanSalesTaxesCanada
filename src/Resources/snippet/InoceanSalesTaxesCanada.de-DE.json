@@ -1,18 +1,35 @@
 {
-    "general": {
-        "grossTaxInformation": "Preise inkl. Steuern",
-        "netTaxInformation": "Preise excl. Steuern"
-    },
-    "salseTaxCanada": {
-        "checkout": {
-            "summary": {
-                "taxRateNotice": "Die Steuersätze werden auf der Checkout-Seite angezeigt.",
-                "shippingMethod": "📦 Versandmethode:",
-                "shippingTotalPrice": "Versandkosten:",
-                "shippingTaxRate": "Steuersatz:",
-                "shippingTax": "Steuerbetrag:",
-                "shippingDelivered": "Voraussichtliche Lieferzeit:"
-            }
-        }
+  "general": {
+    "grossTaxInformation": "Preise inkl. MwSt.",
+    "netTaxInformation": "Preise zzgl. MwSt."
+  },
+  "salseTaxCanada": {
+    "checkout": {
+      "summary": {
+        "taxRateNotice": "Die Steuersätze werden auf der Kassenseite angezeigt.",
+        "shippingMethod": "📦 Versandmethode:",
+        "shippingTotalPrice": "Versandkosten:",
+        "shippingTaxRate": "Steuersatz:",
+        "shippingTax": "Steuerbetrag:",
+        "shippingDelivered": "Voraussichtliche Lieferzeit:"
+      },
+      "taxes": {
+        "taxGST": "+ GST (%taxRate%%)",
+        "taxPST": "+ PST (%taxRate%%)",
+        "taxQST": "+ QST (%taxRate%%)",
+        "taxHST": "+ HST (%taxRate%%)",
+        "taxTAX": "STEUER (%taxRate%%)"
+      }
     }
+  },
+  "document": {
+    "lineItems": {
+      "header": {
+        "tax": "Steuer"
+      },
+      "tax": "zzgl. %taxRate%% Steuer:",
+      "inclVAT": "Inkl. MwSt.",
+      "exclVAT": "Zzgl. MwSt."
+    }
+  }
 }

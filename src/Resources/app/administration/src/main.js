@@ -1,5 +1,3 @@
-// import template from './extension/sw-order-detail/sw-order-detail.html.twig';
-
-// Shopware.Component.override('sw-order-detail', {
-//   template,
-// });
+import './snippet/de-DE.json';
+import './snippet/en-GB.json';
+import './snippet/fr-FR.json';

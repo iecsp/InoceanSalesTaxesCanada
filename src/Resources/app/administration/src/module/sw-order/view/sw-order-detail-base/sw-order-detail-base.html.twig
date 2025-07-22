@@ -1,0 +1,22 @@
+{% sw_extends '@Administration/module/sw-order/view/sw-order-detail-base/sw-order-detail-base.html.twig' %}
+
+{# 覆盖渲染税费总计的Block #}
+{% block sw_order_detail_base_summary_taxes %}
+    {# 循环遍历订单价格中的所有税费条目 #}
+    {% for calculatedTax in order.price.calculatedTaxes %}
+        <dt>
+            {# 
+               检查我们通过Subscriber添加的自定义标签是否存在。
+               calculatedTax.extensions.label.name 对应我们PHP代码中添加的结构。
+            #}
+            {% if calculatedTax.extensions.label and calculatedTax.extensions.label.name %}
+                {# 如果存在，显示税名和税率，例如: "plus GST (5.00%)" #}
+                {{ 'sw-order.detailBase.summaryLabelPlus'|trans }} {{ calculatedTax.extensions.label.name }} ({{ calculatedTax.taxRate|currency(order.currency.shortName, { "style": "percent" }) }})
+            {% else %}
+                {# 如果不存在（作为后备），则使用Shopware的默认显示方式 #}
+                {{ 'sw-order.detailBase.summaryLabelPlusTax'|trans({ '%rate%': calculatedTax.taxRate }) }}
+            {% endif %}
+        </dt>
+        <dd>{{ calculatedTax.tax|currency(order.currency.shortName) }}</dd>
+    {% endfor %}
+{% endblock %}

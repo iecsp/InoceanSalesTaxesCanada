@@ -1,18 +1,35 @@
 {
-    "general": {
-        "grossTaxInformation": "Prix incl. Taxes",
-        "netTaxInformation": "Prix excl. Taxex"
-    },
-    "salseTaxCanada": {
-        "checkout": {
-            "summary": {
-                "taxRateNotice": "Les taux de taxe seront affichés sur la page de paiement.",
-                "shippingMethod": "📦 Méthode d'expédition :",
-                "shippingTotalPrice": "Montant de l'expédition :",
-                "shippingTaxRate": "Taux de taxe :",
-                "shippingTax": "Montant de la taxe :",
-                "shippingDelivered": "Délai de livraison estimé :"
-            }
-        }
+  "general": {
+    "grossTaxInformation": "Prix TTC",
+    "netTaxInformation": "Prix HT"
+  },
+  "salseTaxCanada": {
+    "checkout": {
+      "summary": {
+        "taxRateNotice": "Les taux de taxe seront affichés sur la page de paiement.",
+        "shippingMethod": "📦 Méthode d'expédition :",
+        "shippingTotalPrice": "Frais d'expédition :",
+        "shippingTaxRate": "Taux de taxe :",
+        "shippingTax": "Montant de la taxe :",
+        "shippingDelivered": "Délai de livraison estimé :"
+      },
+      "taxes": {
+        "taxGST": "+ TPS (%taxRate%%)",
+        "taxPST": "+ TVP (%taxRate%%)",
+        "taxQST": "+ TVQ (%taxRate%%)",
+        "taxHST": "+ TVH (%taxRate%%)",
+        "taxTAX": "TAXE (%taxRate%%)"
+      }
     }
+  },
+  "document": {
+    "lineItems": {
+      "header": {
+        "tax": "Taxe"
+      },
+      "tax": "plus %taxRate%% de taxe :",
+      "inclVAT": "Taxe incl.",
+      "exclVAT": "Hors taxe"
+    }
+  }
 }
