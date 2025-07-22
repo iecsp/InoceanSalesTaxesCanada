@@ -31,11 +31,11 @@ class OrderLoadedSubscriber implements EventSubscriberInterface
                 $payload = $lineItem->getPayload();
 
                 // !!! 请根据您的实际payload结构修改这里的 'canadian_taxes' !!!
-                if (!isset($payload['inoceanTaxInfo']) || !is_array($payload['inoceanTaxInfo'])) {
+                if (!isset($payload['inoceanCanadaTaxInfo']) || !is_array($payload['inoceanCanadaTaxInfo'])) {
                     continue;
                 }
 
-                foreach ($payload['inoceanTaxInfo'] as $customTax) {
+                foreach ($payload['inoceanCanadaTaxInfo'] as $customTax) {
                     // !!! 请根据您的实际payload结构修改这里的 'rate' 和 'name' !!!
                     $rate = $customTax['rate'] ?? null;
                     $name = $customTax['taxName'] ?? null;
