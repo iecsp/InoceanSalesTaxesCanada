@@ -1,6 +1,4 @@
 <?php declare(strict_types=1);
-
-namespace InoceanSalesTaxesCanada\Service;
 /*
  * Copyright (c) Inocean Technology (iecsp.com). All rights reserved.
  * This file is part of software that is released under a proprietary license.
@@ -8,6 +6,8 @@ namespace InoceanSalesTaxesCanada\Service;
  * its contents or parts thereof without express permission by the copyright
  * holder, unless otherwise permitted by law.
  */
+
+namespace InoceanSalesTaxesCanada\Service;
 
 use InoceanSalesTaxesCanada\Config\CanadianProvince;
 use InoceanSalesTaxesCanada\Config\TaxType;

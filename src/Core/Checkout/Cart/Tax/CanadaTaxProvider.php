@@ -43,7 +43,6 @@ class CanadaTaxProvider extends AbstractTaxProvider
         $proviceShortCode = substr(strtoupper($address->getCountryState()->getShortCode()), -2);
         $province = CanadianProvince::from($proviceShortCode ?? Constants::DEFAULT_PROVINCE);
 
-        // --- Process Product Line Items ---
         foreach ($cart->getLineItems() as $lineItem) {
             if ($lineItem->getPayloadValue('taxId') === Constants::TAXES[3]['id']) { // TAX-FREE
                 $taxRates = ['TAX-FREE' => $this->getDefaultRateByTaxType('TAX-FREE')];
@@ -79,7 +78,6 @@ class CanadaTaxProvider extends AbstractTaxProvider
             $lineItemTaxes[$lineItem->getUniqueIdentifier()] = new CanadaCalculatedTaxCollection($calculatedTaxes);
         }
 
-        // --- Process Shipping Costs ---
         if ($this->taxConfigService->isFreightTaxable($context->getSalesChannelId())) {
             $aggregatedShippingTaxesPayload = [];
 
@@ -106,14 +104,12 @@ class CanadaTaxProvider extends AbstractTaxProvider
                     $calculatedDeliveryTax->addExtension('taxName', new ArrayEntity(['name' => $deliveryTaxName]));
                     $calculatedDeliveryTaxes[] = $calculatedDeliveryTax;
 
-                    // Aggregate for the final cart summary display
                     if (!isset($aggregatedCartTaxes[$deliveryTaxName])) {
                         $aggregatedCartTaxes[$deliveryTaxName] = ['rate' => $deliveryTaxRate, 'tax' => 0, 'price' => 0];
                     }
                     $aggregatedCartTaxes[$deliveryTaxName]['tax'] += $deliveryTaxedPrice;
                     $aggregatedCartTaxes[$deliveryTaxName]['price'] += $shippingTotalPrice;
 
-                    // Aggregate for the payload
                     if (!isset($aggregatedShippingTaxesPayload[$deliveryTaxName])) {
                         $aggregatedShippingTaxesPayload[$deliveryTaxName] = ['name' => $deliveryTaxName, 'rate' => $deliveryTaxRate, 'tax' => 0];
                     }
@@ -125,7 +121,6 @@ class CanadaTaxProvider extends AbstractTaxProvider
                 }
             }
 
-            // Persist the aggregated shipping tax info into the single shipping line item's payload
             if (!empty($aggregatedShippingTaxesPayload)) {
                 $payload = $cart->getLineItems()->first()->getPayload();
                 $payload['inoceanShippingTaxInfo'] = array_values($aggregatedShippingTaxesPayload);

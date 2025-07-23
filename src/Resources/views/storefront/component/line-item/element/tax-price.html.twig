@@ -13,8 +13,22 @@
         {% set calculatedTaxRate = calculatedTax.taxRate ?? 0 %}
         <div class="line-item-product-number">
         {% if defaultShippingCountry == 'CA' %}
-            {% set taxName = (calculatedTax.extensions.taxName.name == 0 ? 'TAX' : calculatedTax.extensions.taxName.name) %}
-            {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': calculatedTax.taxRate})|sw_sanitize }}
+
+            {% if app.request.attributes.get('_route') === 'frontend.checkout.finish.page' %}
+                {% for taxItem in page.order.lineItems %}
+                    {% if taxItem.payload.inoceanCanadaTaxInfo is defined and taxItem.payload.inoceanCanadaTaxInfo is not empty %}
+                        {% for taxInfo in taxItem.payload.inoceanCanadaTaxInfo %}
+                            {% if calculatedTax.taxRate == taxInfo.rate %}
+                                {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxInfo.name)|trans({'%taxRate%': taxInfo.rate})|sw_sanitize }}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% set taxName = (calculatedTax.extensions.taxName.name == 0 ? 'TAX' : calculatedTax.extensions.taxName.name) %}
+                {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': calculatedTax.taxRate})|sw_sanitize }}
+            {% endif %}
+
         {% endif %}
 
         {% set calculatedTaxValue = calculatedTax.tax ?? 0 %}
