@@ -7,7 +7,7 @@
 
     {% sw_include '@Storefront/storefront/page/checkout/summary/summary-net.html.twig' with { summary: summary } %}
 
-    {% if app.request.attributes.get('_route') != 'frontend.checkout.cart.page' %}
+    {% if app.request.attributes.get('_route') not in(['frontend.checkout.cart.page', 'frontend.checkout.register.page']) %}
         {% sw_include '@Storefront/storefront/page/checkout/summary/summary-tax.html.twig' with { summary: summary } %}
 
         {% sw_include '@Storefront/storefront/page/checkout/summary/summary-total.html.twig' with {
