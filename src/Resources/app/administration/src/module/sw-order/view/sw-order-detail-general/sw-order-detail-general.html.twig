@@ -1,0 +1,44 @@
+{% block sw_order_detail_general_line_items_summary_amount_without_tax %}
+<template v-if="taxStatus !== 'tax-free'">
+    <dt><strong>{{ $tc('salseTaxCanada.order.summary.subtotal') }}</strong></dt>
+    <dd><strong>{{ currencyFilter(order.amountNet, currency.isoCode, order.totalRounding.decimals) }}</strong></dd>
+</template>
+{% endblock %}
+
+{% block sw_order_detail_general_line_items_summary_taxes %}
+    <template v-if="taxStatus !== 'tax-free'">
+        <template
+            v-for="(calculatedTax, index) in sortedCalculatedTaxes"
+            :key="index"
+        >
+            <dt>
+                {{ $tc('salseTaxCanada.order.summary.tax' + calculatedTax.taxDetails.name, { taxRate: calculatedTax.taxDetails.rate }, 1) }}
+            </dt>
+            <dd>
+                {{ currencyFilter(calculatedTax.taxDetails.tax, currency.isoCode, order.totalRounding.decimals) }}
+            </dd>
+        </template>
+        <template
+            v-for="(shippingTax, index) in sortedShippingTaxes"
+            :key="index"
+        >
+            <dt>
+                {{ $tc('salseTaxCanada.order.summary.shippingTax' + shippingTax.taxDetails.name, { taxRate: shippingTax.taxDetails.rate }, 1) }}
+            </dt>
+            <dd>
+                {{ currencyFilter(shippingTax.taxDetails.tax, currency.isoCode, order.totalRounding.decimals) }}
+            </dd>
+        </template>
+    </template>
+{% endblock %}
+
+{% block sw_order_detail_general_line_items_summary_amount_total %}
+<template v-if="taxStatus !== 'tax-free'">
+    <dt><strong>{{ $tc('salseTaxCanada.order.summary.groundTotal') }}</strong></dt>
+    <dd><strong>{{ currencyFilter(orderTotal, currency.isoCode, order.totalRounding.decimals) }}</strong></dd>
+    <template v-if="displayRounded">
+        <dt><strong>{{ $tc('salseTaxCanada.order.summary.totalRounded') }}</strong></dt>
+        <dd><strong>{{ currencyFilter(order.price.totalPrice, currency.isoCode, order.totalRounding.decimals) }}</strong></dd>
+    </template>
+</template>
+{% endblock %}

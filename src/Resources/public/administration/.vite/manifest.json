@@ -1,8 +1,11 @@
 {
   "main.js": {
-    "file": "assets/inocean-sales-taxes-canada-l0sNRNKZ.js",
+    "file": "assets/inocean-sales-taxes-canada-ByB9avh7.js",
     "name": "inocean-sales-taxes-canada",
     "src": "main.js",
-    "isEntry": true
+    "isEntry": true,
+    "css": [
+      "assets/inocean-sales-taxes-canada-CvlTUI7k.css"
+    ]
   }
 }

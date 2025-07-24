@@ -1,0 +1,16 @@
+{% block sw_order_line_items_grid_grid_columns_tax_inline_edit %}{% endblock %}
+
+{% block sw_order_line_items_grid_grid_columns_tax_content_tooltip %}{% endblock %}
+
+{% block sw_order_line_items_grid_grid_columns_tax_content %}
+<span v-if="item.price && item.price.taxRules.length">
+    <template
+        v-for="(calculatedTax, index) in sortedCalculatedTaxes"
+        :key="index"
+    >
+        <span class="sw-order-line-items-grid__item_taxes">
+            {{ $tc('salseTaxCanada.order.summary.tax' + calculatedTax.taxDetails.name, { taxRate: calculatedTax.taxDetails.rate }, 1) }} {{ currencyFilter(calculatedTax.taxDetails.tax, calculatedTax.taxDetails.currencyIsoCode, order.totalRounding.decimals) }}
+        </span>
+    </template>
+</span>
+{% endblock %}

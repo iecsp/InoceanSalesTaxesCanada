@@ -2,10 +2,12 @@
   "base": "/bundles/inoceansalestaxescanada/administration/",
   "entryPoints": {
     "inocean-sales-taxes-canada": {
-      "css": [],
+      "css": [
+        "/bundles/inoceansalestaxescanada/administration/assets/inocean-sales-taxes-canada-CvlTUI7k.css"
+      ],
       "dynamic": [],
       "js": [
-        "/bundles/inoceansalestaxescanada/administration/assets/inocean-sales-taxes-canada-l0sNRNKZ.js"
+        "/bundles/inoceansalestaxescanada/administration/assets/inocean-sales-taxes-canada-ByB9avh7.js"
       ],
       "legacy": false,
       "preload": []
