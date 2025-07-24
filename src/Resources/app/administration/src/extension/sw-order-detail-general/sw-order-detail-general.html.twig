@@ -1,0 +1,97 @@
+{# <plugin-root>/src/Resources/app/administration/src/extension/sw-order-detail-general/sw-order-detail-general.html.twig #}
+
+{% block sw_order_detail_general %}
+    {% parent %}
+    
+    {# 加拿大税率信息显示区块 #}
+    {% block sw_order_detail_general_canadian_tax_info %}
+        <sw-card v-if="formattedCanadianTaxes.length > 0" 
+                 :title="$tc('canadian-tax-plugin.order.taxInfoTitle')" 
+                 class="sw-order-detail-general__canadian-tax-info">
+            
+            {% block sw_order_detail_general_canadian_tax_content %}
+                <div class="sw-order-detail-general__canadian-tax-wrapper">
+                    
+                    {# 税率信息表格 #}
+                    <sw-data-grid :dataSource="formattedCanadianTaxes"
+                                  :columns="canadianTaxColumns"
+                                  :showSelection="false"
+                                  :showActions="false"
+                                  :allowInlineEdit="false"
+                                  class="sw-order-detail-general__canadian-tax-grid">
+                        
+                        {# 税种名称列 #}
+                        <template #column-taxName="{ item }">
+                            <strong>{{ item.taxName }}</strong>
+                        </template>
+                        
+                        {# 税率列 #}
+                        <template #column-taxRate="{ item }">
+                            {{ formatTaxRate(item.taxRate) }}
+                        </template>
+                        
+                        {# 税额列 #}
+                        <template #column-taxAmount="{ item }">
+                            {{ formatCurrency(item.taxAmount) }}
+                        </template>
+                        
+                        {# 应用范围列 #}
+                        <template #column-type="{ item }">
+                            <sw-label v-if="item.type === 'order'" 
+                                     size="small" 
+                                     variant="success">
+                                {{ $tc('canadian-tax-plugin.order.orderLevel') }}
+                            </sw-label>
+                            <div v-else>
+                                <sw-label size="small" variant="neutral">
+                                    {{ $tc('canadian-tax-plugin.order.lineItemLevel') }}
+                                </sw-label>
+                                <br>
+                                <small class="sw-order-detail-general__line-item-label">
+                                    {{ item.lineItemLabel }}
+                                </small>
+                            </div>
+                        </template>
+                    </sw-data-grid>
+                </div>
+            {% endblock %}
+        </sw-card>
+    {% endblock %}
+{% endblock %}
+
+{# 添加必要的数据列定义 #}
+{% block sw_order_detail_general_computed_additions %}
+    <script>
+        // 在组件的 computed 中添加列定义
+        canadianTaxColumns: [
+            {
+                property: 'taxName',
+                label: this.$tc('canadian-tax-plugin.order.columns.taxName'),
+                rawData: true,
+                allowResize: true,
+                width: '200px'
+            },
+            {
+                property: 'taxRate', 
+                label: this.$tc('canadian-tax-plugin.order.columns.taxRate'),
+                rawData: true,
+                allowResize: true,
+                width: '120px'
+            },
+            {
+                property: 'taxAmount',
+                label: this.$tc('canadian-tax-plugin.order.columns.taxAmount'), 
+                rawData: true,
+                allowResize: true,
+                width: '150px'
+            }
+            {
+                property: 'type',
+                label: this.$tc('canadian-tax-plugin.order.columns.scope'),
+                rawData: true,
+                allowResize: true,
+                width: '180px'
+            }
+        ]
+    </script>
+{% endblock %}

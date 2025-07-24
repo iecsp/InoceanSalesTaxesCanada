@@ -79,12 +79,24 @@ All blocks of this template are available in the template which renders this tem
                         {% block document_line_item_table_row_tax_rate %}
                             <td class="align-right">
                             {% block document_line_item_table_column_tax_rate %}
-                                {% set shippingCountry = order.deliveries.first.getShippingOrderAddress.country.translated.iso %}
+                                {% set shippingCountry = order.deliveries.first.getShippingOrderAddress.country.iso %}
                                 {% if shippingCountry == 'CA' %}
-                                    {% for tax in lineItem.price.calculatedTaxes %}
-                                    {% set taxName = (tax.extensions.taxName.name == 0 ? 'TAX' : tax.extensions.taxName.name) %}
-                                        {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': tax.taxRate})|sw_sanitize }} {% if loop.last %}{% else %}<br>{% endif %}
-                                    {% endfor %}
+
+                                    {% if lineItem.payload.inoceanCanadaTaxInfo is defined and lineItem.payload.inoceanCanadaTaxInfo is not empty %}
+
+                                        {% for taxInfo in lineItem.payload.inoceanCanadaTaxInfo %}
+                                            {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxInfo.name)|trans({'%taxRate%': taxInfo.rate})|sw_sanitize }}{% if loop.last %}{% else %}<br>{% endif %}
+                                        {% endfor %}
+
+                                    {% else %}
+
+                                        {% for tax in lineItem.price.calculatedTaxes %}
+                                        {% set taxName = (tax.extensions.taxName.name == 0 ? 'TAX' : tax.extensions.taxName.name) %}
+                                            {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': tax.taxRate})|sw_sanitize }} {% if loop.last %}{% else %}<br>{% endif %}
+                                        {% endfor %}
+
+                                    {% endif %}
+
                                 {% else %}
                                     {% for tax in lineItem.price.taxRules %}
                                         {{ tax.taxRate }} % {% if loop.last %}{% else %}<br>{% endif %}

@@ -1,6 +1,6 @@
 {% sw_extends '@Storefront/storefront/page/checkout/summary/summary-tax.html.twig' %}
 
-{% set defaultShippingCountry = context.customer.defaultShippingAddress.country.iso %}
+{% set defaultShippingCountry = context.customer.activeShippingAddress.country.iso %}
 
 {% block page_checkout_summary_taxes %}
     {% if app.request.attributes.get('_route') === 'frontend.checkout.finish.page' %}

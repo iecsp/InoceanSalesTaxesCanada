@@ -1,0 +1,35 @@
+{
+    "general": {
+        "grossTaxInformation": "Prices incl. Tax",
+        "netTaxInformation": "Prices excl. Tax"
+    },
+    "salseTaxCanada": {
+        "checkout": {
+            "summary": {
+                "taxRateNotice": "Tax rates will be displayed on the checkout page.",
+                "shippingMethod": "📦 Shipping Method:",
+                "shippingTotalPrice": "Shipping Amount:",
+                "shippingTaxRate": "Tax Rate:",
+                "shippingTax": "Tax Amount:",
+                "shippingDelivered": "Estimated Delivery Time:"
+            },
+            "taxes": {
+                "taxGST": "+ GST (%taxRate%%)",
+                "taxPST": "+ PST (%taxRate%%)",
+                "taxQST": "+ QST (%taxRate%%)",
+                "taxHST": "+ HST (%taxRate%%)",
+                "taxTAX": "TAX (%taxRate%%)"
+            }
+        }
+    },
+    "document": {
+        "lineItems": {
+            "header": {
+                "tax": "Tax"
+            },
+            "tax": "plus %taxRate%% Tax:",
+            "inclVAT": "Incl. Tax",
+            "exclVAT": "Excl. Tax"
+        }
+    }
+}

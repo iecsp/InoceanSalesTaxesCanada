@@ -1,6 +1,6 @@
 {% sw_extends '@Storefront/storefront/page/account/order-history/order-detail.html.twig' %}
 
-{% set defaultShipppingCountry = context.customer.defaultShippingAddress.country.iso %}
+{% set defaultShipppingCountry = context.customer.activeShippingAddress.country.iso %}
 
 {% block page_account_order_item_detail_vat_label %}
     {% if defaultShipppingCountry == 'CA' %}
