@@ -18,6 +18,7 @@
         "taxPST": "+ TVP (%taxRate%%)",
         "taxQST": "+ TVQ (%taxRate%%)",
         "taxHST": "+ TVH (%taxRate%%)",
+        "taxTAX-FREE": "SANS IMPÔT",
         "taxTAX": "TAXE (%taxRate%%)"
       }
     }

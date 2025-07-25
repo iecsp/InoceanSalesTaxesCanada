@@ -13,6 +13,7 @@
         "taxQST": "+ TVQ ({taxRate}%)",
         "taxHST": "+ TVH ({taxRate}%)",
         "taxTAX": "+ Taxe ({taxRate}%)",
+        "taxTAX-FREE": "SANS IMPÔT",
         "shippingTaxGST": "+ TPS sur l'expédition ({taxRate}%)",
         "shippingTaxPST": "+ TVP sur l'expédition ({taxRate}%)",
         "shippingTaxQST": "+ TVQ sur l'expédition ({taxRate}%)",

@@ -18,6 +18,7 @@
         "taxPST": "+ PST (%taxRate%%)",
         "taxQST": "+ QST (%taxRate%%)",
         "taxHST": "+ HST (%taxRate%%)",
+        "taxTAX-FREE": "STEUERFREI",
         "taxTAX": "STEUER (%taxRate%%)"
       }
     }

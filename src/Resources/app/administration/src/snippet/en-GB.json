@@ -32,6 +32,7 @@
           "taxQST": "+ QST ({taxRate}%)",
           "taxHST": "+ HST ({taxRate}%)",
           "taxTAX": "+ TAX ({taxRate}%)",
+          "taxTAX-FREE": "TAX-FREE",
           "shippingTaxGST": "+ Shipping GST ({taxRate}%)",
           "shippingTaxPST": "+ Shipping PST ({taxRate}%)",
           "shippingTaxQST": "+ Shipping QST ({taxRate}%)",
