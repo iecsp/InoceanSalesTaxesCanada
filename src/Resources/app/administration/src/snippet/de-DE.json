@@ -2,19 +2,22 @@
   "salseTaxCanada": {
     "order": {
       "lineItem": {
-          "taxRateNotice": "Tax rates will be displayed on the checkout page.",
-          "shippingMethod": "📦 Shipping Method:",
-          "shippingTotalPrice": "Shipping Amount:",
-          "shippingTaxRate": "Tax Rate:",
-          "shippingTax": "Tax Amount:",
-          "shippingDelivered": "Estimated Delivery Time:"
+        "tax": "Steuer"
       },
       "summary": {
-          "taxGST": "+ GST (%taxRate%%)",
-          "taxPST": "+ PST (%taxRate%%)",
-          "taxQST": "+ QST (%taxRate%%)",
-          "taxHST": "+ HST (%taxRate%%)",
-          "taxTAX": "TAX (%taxRate%%)"
+        "subtotal": "Summe ohne Steuer",
+        "groundTotal": "Summe inklusive Steuer",
+        "totalRounded": "Gerundete Summe inklusive Steuer",
+        "taxGST": "+ GST ({taxRate}%)",
+        "taxPST": "+ PST ({taxRate}%)",
+        "taxQST": "+ QST ({taxRate}%)",
+        "taxHST": "+ HST ({taxRate}%)",
+        "taxTAX": "+ Steuer ({taxRate}%)",
+        "shippingTaxGST": "+ Versand-GST ({taxRate}%)",
+        "shippingTaxPST": "+ Versand-PST ({taxRate}%)",
+        "shippingTaxQST": "+ Versand-QST ({taxRate}%)",
+        "shippingTaxHST": "+ Versand-HST ({taxRate}%)",
+        "shippingTaxTAX": "+ Versand-Steuer ({taxRate}%)"
       }
     }
   }

@@ -8,12 +8,32 @@
         <title lang="de-DE">Grundeinstellungen für den Kanadische Steuersatz</title>
 
         <!-- Maybe it will be added in the next version.
+        <input-field type="text">
+            <name>GstNumber</name>
+            <defaultValue></defaultValue>
+            <label>GST Number</label>
+            <label lang="de-DE">GST Number</label>
+        </input-field>
+        <input-field type="text">
+            <name>PstQstNumber</name>
+            <defaultValue></defaultValue>
+            <label>PST/QST Number</label>
+            <label lang="de-DE">PST/QST Number</label>
+        </input-field>
+        <input-field type="text">
+            <name>HstNumber</name>
+            <defaultValue></defaultValue>
+            <label>HST Number</label>
+            <label lang="de-DE">HST Number</label>
+        </input-field>
+
         <input-field type="bool">
             <name>TaxBreakdown</name>
             <defaultValue>true</defaultValue>
             <label>Show tax breakdown?</label>
             <label lang="de-DE">wie ist die Steueraufschlüsselung?</label>
-        </input-field> -->
+        </input-field> 
+        -->
 
         <input-field type="bool">
             <name>FreightTaxable</name>

@@ -1,39 +1,23 @@
 {
-  "sw-order": {
-    "createBase": {
-      "columnTax": "Taxe",
-      "summaryLabelAmountWithoutTaxes": "Total hors taxe",
-      "summaryLabelAmountTotal": "Total TTC",
-      "summaryLabelAmountTotalRounded": "Total arrondi TTC",
-      "summaryLabelTaxes": "plus {taxRate}% de taxe"
-    },
-    "detailBase": {
-      "columnTax": "Taxe",
-      "summaryLabelAmountWithoutTaxes": "Total hors taxe",
-      "summaryLabelAmountTotal": "Total TTC",
-      "summaryLabelAmountTotalRounded": "Total arrondi TTC",
-      "summaryLabelTaxes": "plus {taxRate}% de taxe"
-    },
-    "nestedLineItemsModal": {
-      "headerTax": "Taxe"
-    }
-  },
   "salseTaxCanada": {
     "order": {
       "lineItem": {
-          "taxRateNotice": "Tax rates will be displayed on the checkout page.",
-          "shippingMethod": "📦 Shipping Method:",
-          "shippingTotalPrice": "Shipping Amount:",
-          "shippingTaxRate": "Tax Rate:",
-          "shippingTax": "Tax Amount:",
-          "shippingDelivered": "Estimated Delivery Time:"
+        "tax": "Taxe"
       },
       "summary": {
-          "taxGST": "+ GST (%taxRate%%)",
-          "taxPST": "+ PST (%taxRate%%)",
-          "taxQST": "+ QST (%taxRate%%)",
-          "taxHST": "+ HST (%taxRate%%)",
-          "taxTAX": "TAX (%taxRate%%)"
+        "subtotal": "Total hors taxe",
+        "groundTotal": "Total TTC",
+        "totalRounded": "Total arrondi TTC",
+        "taxGST": "+ TPS ({taxRate}%)",
+        "taxPST": "+ TVP ({taxRate}%)",
+        "taxQST": "+ TVQ ({taxRate}%)",
+        "taxHST": "+ TVH ({taxRate}%)",
+        "taxTAX": "+ Taxe ({taxRate}%)",
+        "shippingTaxGST": "+ TPS sur l'expédition ({taxRate}%)",
+        "shippingTaxPST": "+ TVP sur l'expédition ({taxRate}%)",
+        "shippingTaxQST": "+ TVQ sur l'expédition ({taxRate}%)",
+        "shippingTaxHST": "+ TVH sur l'expédition ({taxRate}%)",
+        "shippingTaxTAX": "+ Taxe sur l'expédition ({taxRate}%)"
       }
     }
   }
