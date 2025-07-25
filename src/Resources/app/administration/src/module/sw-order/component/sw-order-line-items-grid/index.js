@@ -74,44 +74,32 @@ Component.override('sw-order-line-items-grid', {
             ];
         },
 
-        sortedCalculatedTaxes() {
-
+        lineItemTaxesMap() {
             if (!this.order || !this.order.lineItems) {
-                return [];
+                return {};
             }
-
-            const taxAggregation = {};
-
+    
+            const map = {};
+    
             this.order.lineItems.forEach(lineItem => {
-                if (lineItem.payload && Array.isArray(lineItem.payload.inoceanCanadaTaxInfo)) {
-                    lineItem.payload.inoceanCanadaTaxInfo.forEach(taxInfo => {
-                        const rateKey = taxInfo.rate;
-
-                        if (!taxAggregation[rateKey]) {
-                            taxAggregation[rateKey] = {
-                                taxRate: taxInfo.rate,
-                                taxName: taxInfo.name,
-                                taxPriceTotal: 0,
-                            };
-                        }
-
-                        taxAggregation[rateKey].taxPriceTotal += Number(taxInfo.tax) || 0;
-                    });
-                }
+                map[lineItem.id] = Array.isArray(lineItem.payload?.inoceanCanadaTaxInfo) 
+                    ? lineItem.payload.inoceanCanadaTaxInfo.map(taxInfo => ({
+                        taxName: taxInfo.name,
+                        taxRate: taxInfo.rate,
+                        taxPrice: Number(taxInfo.tax) || 0,
+                    })) 
+                    : [];
             });
 
-            const aggregatedTaxes = Object.values(taxAggregation);
-
-            aggregatedTaxes.sort((a, b) => a.taxRate - b.taxRate);
-            return aggregatedTaxes.map(tax => ({
-                taxDetails: {
-                    rate: tax.taxRate,
-                    tax: tax.taxPriceTotal,
-                    name: tax.taxName,
-                    currencyIsoCode: this.order.currency.isoCode,
-                },
-            }));
+            return map;
         },
+    
+        lineItemsTaxes() {
+            return Object.entries(this.lineItemTaxesMap).map(([id, taxes]) => ({
+                id,
+                taxes,
+            }));
+        }
 
     }
 });

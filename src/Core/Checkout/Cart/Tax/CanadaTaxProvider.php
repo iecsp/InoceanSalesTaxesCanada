@@ -69,11 +69,14 @@ class CanadaTaxProvider extends AbstractTaxProvider
                 $aggregatedCartTaxes[$taxName]['price'] += $price;
 
                 $lineItemTaxInfo[] = ['name' => $taxName, 'rate' => $taxRate, 'tax' => $tax];
+
+                $payload = $lineItem->getPayload();
+                $payload['inoceanCanadaTaxInfo'] = $lineItemTaxInfo;
+                $lineItem->setPayload($payload);
+
             }
 
-            $payload = $lineItem->getPayload();
-            $payload['inoceanCanadaTaxInfo'] = $lineItemTaxInfo;
-            $lineItem->setPayload($payload);
+            
 
             $lineItemTaxes[$lineItem->getUniqueIdentifier()] = new CanadaCalculatedTaxCollection($calculatedTaxes);
         }
@@ -109,11 +112,14 @@ class CanadaTaxProvider extends AbstractTaxProvider
                     }
                     $aggregatedCartTaxes[$deliveryTaxName]['tax'] += $deliveryTaxedPrice;
                     $aggregatedCartTaxes[$deliveryTaxName]['price'] += $shippingTotalPrice;
+                    // $aggregatedCartTaxes[$deliveryTaxName]['tax'] = $deliveryTaxedPrice;
+                    // $aggregatedCartTaxes[$deliveryTaxName]['price'] = $shippingTotalPrice;
 
                     if (!isset($aggregatedShippingTaxesPayload[$deliveryTaxName])) {
                         $aggregatedShippingTaxesPayload[$deliveryTaxName] = ['name' => $deliveryTaxName, 'rate' => $deliveryTaxRate, 'tax' => 0];
                     }
-                    $aggregatedShippingTaxesPayload[$deliveryTaxName]['tax'] += $deliveryTaxedPrice;
+                    // $aggregatedShippingTaxesPayload[$deliveryTaxName]['tax'] += $deliveryTaxedPrice;
+                    $aggregatedShippingTaxesPayload[$deliveryTaxName]['tax'] = $deliveryTaxedPrice;
                 }
 
                 if (!empty($calculatedDeliveryTaxes)) {
@@ -138,7 +144,7 @@ class CanadaTaxProvider extends AbstractTaxProvider
         return new TaxProviderResult(
             $lineItemTaxes,
             $deliveryTaxes,
-            $finalCartTaxes
+            // $finalCartTaxes
         );
     }
 

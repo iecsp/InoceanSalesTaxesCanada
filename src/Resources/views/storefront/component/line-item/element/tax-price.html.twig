@@ -15,10 +15,12 @@
         {% if defaultShippingCountry == 'CA' %}
 
             {% if app.request.attributes.get('_route') === 'frontend.checkout.finish.page' %}
+                {% set displayedTaxRates = [] %}
                 {% for taxItem in page.order.lineItems %}
                     {% if taxItem.payload.inoceanCanadaTaxInfo is defined and taxItem.payload.inoceanCanadaTaxInfo is not empty %}
                         {% for taxInfo in taxItem.payload.inoceanCanadaTaxInfo %}
-                            {% if calculatedTax.taxRate == taxInfo.rate %}
+                            {% if taxInfo.rate not in displayedTaxRates and calculatedTax.taxRate == taxInfo.rate %}
+                                {% set displayedTaxRates = displayedTaxRates|merge([taxInfo.rate]) %}
                                 {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxInfo.name)|trans({'%taxRate%': taxInfo.rate})|sw_sanitize }}
                             {% endif %}
                         {% endfor %}

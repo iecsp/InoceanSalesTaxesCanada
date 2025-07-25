@@ -3,13 +3,10 @@
 {% block sw_order_line_items_grid_grid_columns_tax_content_tooltip %}{% endblock %}
 
 {% block sw_order_line_items_grid_grid_columns_tax_content %}
-<span v-if="item.price && item.price.taxRules.length">
-    <template
-        v-for="(calculatedTax, index) in sortedCalculatedTaxes"
-        :key="index"
-    >
+<span v-if="item.price && item.price.taxRules.length && lineItemTaxesMap[item.id]">
+    <template v-for="(calculatedTax, index) in lineItemTaxesMap[item.id]" :key="index">
         <span class="sw-order-line-items-grid__item_taxes">
-            {{ $tc('salseTaxCanada.order.summary.tax' + calculatedTax.taxDetails.name, { taxRate: calculatedTax.taxDetails.rate }, 1) }} {{ currencyFilter(calculatedTax.taxDetails.tax, calculatedTax.taxDetails.currencyIsoCode, order.totalRounding.decimals) }}
+            {{ $tc('salseTaxCanada.order.summary.tax' + calculatedTax.taxName, { taxRate: calculatedTax.taxRate }, 1) }} {{ currencyFilter(calculatedTax.taxPrice, order.currency.isoCode, order.totalRounding.decimals) }}
         </span>
     </template>
 </span>
