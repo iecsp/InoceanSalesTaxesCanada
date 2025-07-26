@@ -1,5 +1,5 @@
 PROPRIETARY SOFTWARE LICENSE AGREEMENT
-Canadian Tax Compliance Plugin for Shopware
+Canada Tax Provider - GST, PST, HST & QST Plugin for Shopware
 
 Copyright (c) 2025 Inocean Technology (Canada). All rights reserved.
 
@@ -8,13 +8,12 @@ Subject to the terms and conditions of this Agreement, the copyright holder here
 
 PERMITTED USES:
 - Install and use the Plugin on Shopware e-commerce platforms operated by businesses located in Canada
-- Use the Plugin's functionality for Canadian tax compliance and calculation purposes
+- Use the Plugin's functionality for Canada Tax Provider - GST, PST, HST & QST and calculation purposes
 - Receive updates and technical support as provided by the copyright holder
 
 RESTRICTIONS:
 You may NOT:
-- Copy, modify, adapt, alter, translate, or create derivative works of the Plugin
-- Reverse engineer, disassemble, decompile, or otherwise attempt to derive the source code
+- Copy, modify, adapt, or create derivative works of the Plugin
 - Distribute, sublicense, rent, lease, or transfer the Plugin to any third party
 - Remove or alter any copyright, trademark, or other proprietary notices
 - Use the Plugin outside of Canada or for non-Canadian tax jurisdictions
@@ -33,7 +32,7 @@ LIMITATION OF LIABILITY:
 IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES RESULTING FROM THE USE OF THIS PLUGIN.
 
 TAX COMPLIANCE NOTICE:
-While this Plugin is designed to assist with Canadian tax compliance, users remain solely responsible for ensuring their tax calculations and filings comply with all applicable Canadian federal and provincial tax laws. Users should consult with qualified tax professionals.
+While this Plugin is designed to assist with Canada Tax Provider - GST, PST, HST & QST, users remain solely responsible for ensuring their tax calculations and filings comply with all applicable Canadian federal and provincial tax laws. Users should consult with qualified tax professionals.
 
 TERMINATION:
 This license is effective until terminated. The license will terminate automatically if you fail to comply with any terms. Upon termination, you must cease all use and destroy all copies of the Plugin.

@@ -91,9 +91,7 @@ This plugin provides automated Canadian tax calculation and compliance features,
 This plugin is **free for Canadian merchants** but operates under a **proprietary license**:
 
 - ✅ **Free to use** for Canadian businesses
-- ❌ **No redistribution** allowed
-- ❌ **No source code modification** permitted
-- ❌ **Geographic restriction**: Canada only
+- ❌ **No redistribution**
 
 See [LICENSE.txt](LICENSE.txt) for complete terms and conditions.
 
