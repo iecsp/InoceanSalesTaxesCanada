@@ -44,7 +44,6 @@ class InoceanSalesTaxesCanada extends Plugin
             $ruleData = [
                 'id' => Constants::CANADA_RULE_ID,
                 'name' => Constants::RULE_NAME,
-                'moduleTypes' => ['types' => ["price", "shipping"]],
                 'priority' => 1,
                 'createdAt' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT)
             ];
