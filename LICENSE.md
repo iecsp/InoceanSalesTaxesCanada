@@ -1,5 +1,5 @@
 PROPRIETARY SOFTWARE LICENSE AGREEMENT
-Canada Tax Provider - GST, PST, HST & QST Plugin for Shopware
+Canada Tax Provider for Shopware Plugin for Shopware
 
 Copyright (c) 2025 Inocean Technology (Canada). All rights reserved.
 
@@ -8,7 +8,7 @@ Subject to the terms and conditions of this Agreement, the copyright holder here
 
 PERMITTED USES:
 - Install and use the Plugin on Shopware e-commerce platforms operated by businesses located in Canada
-- Use the Plugin's functionality for Canada Tax Provider - GST, PST, HST & QST and calculation purposes
+- Use the Plugin's functionality for Canada Tax Provider for Shopware and calculation purposes
 - Receive updates and technical support as provided by the copyright holder
 
 RESTRICTIONS:
@@ -32,7 +32,7 @@ LIMITATION OF LIABILITY:
 IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES RESULTING FROM THE USE OF THIS PLUGIN.
 
 TAX COMPLIANCE NOTICE:
-While this Plugin is designed to assist with Canada Tax Provider - GST, PST, HST & QST, users remain solely responsible for ensuring their tax calculations and filings comply with all applicable Canadian federal and provincial tax laws. Users should consult with qualified tax professionals.
+While this Plugin is designed to assist with Canada Tax Provider for Shopware, users remain solely responsible for ensuring their tax calculations and filings comply with all applicable Canadian federal and provincial tax laws. Users should consult with qualified tax professionals.
 
 TERMINATION:
 This license is effective until terminated. The license will terminate automatically if you fail to comply with any terms. Upon termination, you must cease all use and destroy all copies of the Plugin.

@@ -1,4 +1,4 @@
-# Canada Tax Provider - GST, PST, HST & QST Plugin for Shopware 6.6+
+# Canada Tax Provider for Shopware Plugin for Shopware 6.6+
 
 A comprehensive tax calculation and compliance plugin designed specifically for Canadian merchants using Shopware e-commerce platform.
 
@@ -47,7 +47,7 @@ This plugin provides automated Canadian tax calculation and compliance features,
 
 ## ⚙️ Configuration
 
-1. Navigate to **Settings > Extensions > Canada Tax Provider - GST, PST, HST & QST**
+1. Navigate to **Settings > Extensions > Canada Tax Provider for Shopware**
 2. The tax rate has been set by default. If the tax rate changes in the future, you can modify it yourself.
 3. Set up tax-exempt and GST only products, other products set their own default tax rates.
 
@@ -102,7 +102,7 @@ See [LICENSE.txt](LICENSE.txt) for complete terms and conditions.
 - **Response Time**: 24-72 hours for Canadian merchants
 
 ### Tax Compliance Notice
-⚠️ **Important**: While this plugin assists with Canada Tax Provider - GST, PST, HST & QST, merchants remain solely responsible for ensuring their tax calculations comply with all applicable Canadian federal and provincial tax laws. Consult with qualified tax professionals for complex scenarios.
+⚠️ **Important**: While this plugin assists with Canada Tax Provider for Shopware, merchants remain solely responsible for ensuring their tax calculations comply with all applicable Canadian federal and provincial tax laws. Consult with qualified tax professionals for complex scenarios.
 
 ## 🔄 Changelog
 
@@ -118,5 +118,5 @@ This is proprietary software. Contributions, bug reports, and feature requests s
 
 **Made with ❤️ for Canadian e-commerce merchants**
 
-*For questions about this plugin or Canada Tax Provider - GST, PST, HST & QST, please contact our support team.*
+*For questions about this plugin or Canada Tax Provider for Shopware, please contact our support team.*
 
