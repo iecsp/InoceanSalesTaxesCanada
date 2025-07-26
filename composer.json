@@ -18,8 +18,9 @@
     "plugin-icon": "src/Resources/config/plugin.png",
     "copyright": "(c) by Inocean Technology (iecsp.com)",
     "label": {
-      "en-GB": "Canada Tax Provider",
-      "de-DE": "Kanadischer Steueranbieter"
+      "en-GB": "Canada Tax Provider - GST, PST, HST & QST",
+      "de-DE": "Kanadischer Steueranbieter - GST, PST, HST & QST",
+      "fr-FR": "Fournisseur de taxes canadien - TPS, TVP, TVH & TVQ"
     }
   },
   "autoload": {
