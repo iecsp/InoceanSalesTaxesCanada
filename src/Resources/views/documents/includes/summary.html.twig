@@ -19,8 +19,8 @@
                             {% for calculatedTax in order.price.calculatedTaxes.sortByTax %}
                                 <tr>
                                     {% block document_sum_tax_label %}
-                                        {% set shippingCountry = order.deliveries.first.getShippingOrderAddress.country.iso %}
-                                        {% if shippingCountry == 'CA' %}
+                                        {# {% set shippingCountry = order.deliveries.first.getShippingOrderAddress.country.iso %}
+                                        {% if shippingCountry == 'CA' %} #}
                                             {% set taxTotals = {} %}
                                             {% set shippingTaxTotals = {} %}
 
@@ -51,9 +51,9 @@
                                                 {% endif %}
                                             {% endfor %}
 
-                                        {% else %}
+                                        {# {% else %}
                                             <td class="align-right">{{ 'document.lineItems.tax'|trans({'%taxRate%': calculatedTax.taxRate})|sw_sanitize }}</td>
-                                        {% endif %}
+                                        {% endif %} #}
                                     {% endblock %}
                                     {% block document_sum_tax_rate %}
                                         <td class="align-right">{{ calculatedTax.tax|currency(currencyIsoCode, languageId) }}</td>
