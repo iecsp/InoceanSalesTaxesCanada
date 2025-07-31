@@ -34,6 +34,11 @@ class CanadaTaxProvider extends AbstractTaxProvider
         $lineItemTaxes = [];
         $deliveryTaxes = [];
         $aggregatedCartTaxes = [];
+        $finalCartTaxes = [];
+
+        $showTaxBreakdown = $this->taxConfigService->isTaxBreakdownEnabled($context->getSalesChannelId()) ?? 1;
+        $freightTaxable = $this->taxConfigService->isFreightTaxable($context->getSalesChannelId()) ?? 1;
+        $taxDecimals = $this->taxConfigService->getTaxDecimals($context->getSalesChannelId()) ?? 2;
 
         $address = $context->getShippingLocation()->getAddress();
         if (!$address || strtoupper($address->getCountry()?->getIso()) !== Constants::DEFAULT_COUNTRY) {
@@ -57,7 +62,7 @@ class CanadaTaxProvider extends AbstractTaxProvider
             $lineItemTaxInfo = [];
 
             foreach ($taxRates as $taxName => $taxRate) {
-                $tax = $price * $taxRate / 100;
+                $tax = round($price * $taxRate / 100, $taxDecimals);
                 $calculatedTax = new CalculatedTax($tax, $taxRate, $price);
                 $calculatedTax->addExtension('taxName', new ArrayEntity(['name' => $taxName]));
                 $calculatedTaxes[] = $calculatedTax;
@@ -65,33 +70,28 @@ class CanadaTaxProvider extends AbstractTaxProvider
                 if (!isset($aggregatedCartTaxes[$taxName])) {
                     $aggregatedCartTaxes[$taxName] = ['rate' => $taxRate, 'tax' => 0, 'price' => 0];
                 }
+
                 $aggregatedCartTaxes[$taxName]['tax'] += $tax;
                 $aggregatedCartTaxes[$taxName]['price'] += $price;
-
                 $lineItemTaxInfo[] = ['name' => $taxName, 'rate' => $taxRate, 'tax' => $tax];
-
-                $payload = $lineItem->getPayload();
-                $payload['inoceanCanadaTaxInfo'] = $lineItemTaxInfo;
-                $lineItem->setPayload($payload);
-
             }
 
-            
+            $payload = $lineItem->getPayload();
+            $payload['inoceanCanadaTaxInfo'] = $lineItemTaxInfo;
+            $lineItem->setPayload($payload);
 
             $lineItemTaxes[$lineItem->getUniqueIdentifier()] = new CanadaCalculatedTaxCollection($calculatedTaxes);
         }
 
-        if ($this->taxConfigService->isFreightTaxable($context->getSalesChannelId())) {
-            $aggregatedShippingTaxesPayload = [];
+        if ($freightTaxable) {
 
             $delivery = $cart->getDeliveries()->first();
-            foreach ($delivery->getPositions() as $position) {
+            if ($delivery && $delivery->getShippingCosts()->getTotalPrice() > 0) {
                 $shippingTotalPrice = $delivery->getShippingCosts()->getTotalPrice();
-                if ($shippingTotalPrice <= 0) {
-                    continue;
-                }
-
                 $taxId = $delivery->getShippingMethod()->getTaxId();
+                $aggregatedShippingTaxesPayload = [];
+
+                $deliveryTaxRates = [];
                 if ($taxId === Constants::TAXES[3]['id']) { // TAX-FREE
                     $deliveryTaxRates = ['TAX-FREE' => $this->getDefaultRateByTaxType('TAX-FREE')];
                 } elseif ($taxId === Constants::TAXES[2]['id']) { // GST-ONLY
@@ -102,39 +102,38 @@ class CanadaTaxProvider extends AbstractTaxProvider
 
                 $calculatedDeliveryTaxes = [];
                 foreach ($deliveryTaxRates as $deliveryTaxName => $deliveryTaxRate) {
-                    $deliveryTaxedPrice = $shippingTotalPrice * $deliveryTaxRate / 100;
-                    $calculatedDeliveryTax = new CalculatedTax($deliveryTaxedPrice, $deliveryTaxRate, $shippingTotalPrice);
+                    $deliveryTaxAmount = round($shippingTotalPrice * $deliveryTaxRate / 100, $taxDecimals);
+                    $calculatedDeliveryTax = new CalculatedTax($deliveryTaxAmount, $deliveryTaxRate, $shippingTotalPrice);
                     $calculatedDeliveryTax->addExtension('taxName', new ArrayEntity(['name' => $deliveryTaxName]));
                     $calculatedDeliveryTaxes[] = $calculatedDeliveryTax;
-
+        
                     if (!isset($aggregatedCartTaxes[$deliveryTaxName])) {
                         $aggregatedCartTaxes[$deliveryTaxName] = ['rate' => $deliveryTaxRate, 'tax' => 0, 'price' => 0];
                     }
-                    $aggregatedCartTaxes[$deliveryTaxName]['tax'] += $deliveryTaxedPrice;
+                    $aggregatedCartTaxes[$deliveryTaxName]['tax'] += $deliveryTaxAmount;
                     $aggregatedCartTaxes[$deliveryTaxName]['price'] += $shippingTotalPrice;
-                    // $aggregatedCartTaxes[$deliveryTaxName]['tax'] = $deliveryTaxedPrice;
-                    // $aggregatedCartTaxes[$deliveryTaxName]['price'] = $shippingTotalPrice;
-
-                    if (!isset($aggregatedShippingTaxesPayload[$deliveryTaxName])) {
-                        $aggregatedShippingTaxesPayload[$deliveryTaxName] = ['name' => $deliveryTaxName, 'rate' => $deliveryTaxRate, 'tax' => 0];
-                    }
-                    // $aggregatedShippingTaxesPayload[$deliveryTaxName]['tax'] += $deliveryTaxedPrice;
-                    $aggregatedShippingTaxesPayload[$deliveryTaxName]['tax'] = $deliveryTaxedPrice;
+        
+                    $aggregatedShippingTaxesPayload[$deliveryTaxName] = [
+                        'name' => $deliveryTaxName, 
+                        'rate' => $deliveryTaxRate, 
+                        'tax' => $deliveryTaxAmount
+                    ];
                 }
 
-                if (!empty($calculatedDeliveryTaxes)) {
-                    $deliveryTaxes[$position->getIdentifier()] = new CanadaCalculatedTaxCollection($calculatedDeliveryTaxes);
+                if (!empty($calculatedDeliveryTaxes) && $delivery->getPositions()->first()) {
+                    $deliveryTaxes[$delivery->getPositions()->first()->getIdentifier()] = new CanadaCalculatedTaxCollection($calculatedDeliveryTaxes);
                 }
-            }
 
-            if (!empty($aggregatedShippingTaxesPayload)) {
-                $payload = $cart->getLineItems()->first()->getPayload();
-                $payload['inoceanShippingTaxInfo'] = array_values($aggregatedShippingTaxesPayload);
-                $cart->getLineItems()->first()->setPayload($payload);
+                if (!empty($aggregatedShippingTaxesPayload) && $cart->getLineItems()->first()) {
+                    $payload = $cart->getLineItems()->first()->getPayload();
+                    $payload['inoceanShippingTaxInfo'] = array_values($aggregatedShippingTaxesPayload);
+                    $cart->getLineItems()->first()->setPayload($payload);
+                }
             }
         }
 
         $finalCartTaxes = new CanadaCalculatedTaxCollection();
+        
         foreach ($aggregatedCartTaxes as $taxName => $data) {
             $calculatedTax = new CalculatedTax($data['tax'], $data['rate'], $data['price']);
             $calculatedTax->addExtension('taxName', new ArrayEntity(['name' => $taxName]));
@@ -144,7 +143,7 @@ class CanadaTaxProvider extends AbstractTaxProvider
         return new TaxProviderResult(
             $lineItemTaxes,
             $deliveryTaxes,
-            // $finalCartTaxes
+            new CanadaCalculatedTaxCollection($finalCartTaxes)
         );
     }
 

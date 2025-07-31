@@ -86,15 +86,19 @@ class TaxConfigService
         return round($floatValue, 3);
     }
     
-    // Maybe it will be added in the next version.
-    // public function isTaxBreakdownEnabled(?string $salesChannelId = null): bool
-    // {
-    //     return (bool) $this->systemConfigService->get('InoceanSalesTaxesCanada.config.TaxBreakdown', $salesChannelId);
-    // }
+    public function isTaxBreakdownEnabled(?string $salesChannelId = null): bool
+    {
+        return (bool) $this->systemConfigService->get('InoceanSalesTaxesCanada.config.TaxBreakdown', $salesChannelId);
+    }
     
     public function isFreightTaxable(?string $salesChannelId = null): bool
     {
         return (bool) $this->systemConfigService->get('InoceanSalesTaxesCanada.config.FreightTaxable', $salesChannelId);
+    }
+
+    public function getTaxDecimals(?string $salesChannelId = null): int
+    {
+        return (int) $this->systemConfigService->get('InoceanSalesTaxesCanada.config.TaxDecimals', $salesChannelId);
     }
 
 }

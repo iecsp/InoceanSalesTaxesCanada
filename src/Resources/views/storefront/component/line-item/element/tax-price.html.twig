@@ -9,38 +9,30 @@
 {% endblock %}
 
 {% block component_line_item_tax_price_inner %}
-    {% for calculatedTax in lineItem.price.calculatedTaxes %}
-        {% set calculatedTaxRate = calculatedTax.taxRate ?? 0 %}
-        <div class="line-item-product-number">
-        {% if defaultShippingCountry == 'CA' %}
+    {% if app.request.attributes.get('_route') === 'frontend.checkout.finish.page' %}
+        {% if lineItem.payload.inoceanCanadaTaxInfo is defined and lineItem.payload.inoceanCanadaTaxInfo is not empty %}
+            {% for taxInfo in lineItem.payload.inoceanCanadaTaxInfo %}
+                <div class="line-item-product-number">
+                    {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxInfo.name)|trans({'%taxRate%': taxInfo.rate})|sw_sanitize }} {{ taxInfo.tax|abs|currency }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% else %}
+        {% for calculatedTax in lineItem.price.calculatedTaxes %}
+            {% set calculatedTaxRate = calculatedTax.taxRate ?? 0 %}
+            <div class="line-item-product-number">
+            {% set taxName = (calculatedTax.extensions.taxName.name == 0 ? 'TAX' : calculatedTax.extensions.taxName.name) %}
+            {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': calculatedTax.taxRate})|sw_sanitize }}
 
-            {% if app.request.attributes.get('_route') === 'frontend.checkout.finish.page' %}
-                {% set displayedTaxRates = [] %}
-                {% for taxItem in page.order.lineItems %}
-                    {% if taxItem.payload.inoceanCanadaTaxInfo is defined and taxItem.payload.inoceanCanadaTaxInfo is not empty %}
-                        {% for taxInfo in taxItem.payload.inoceanCanadaTaxInfo %}
-                            {% if taxInfo.rate not in displayedTaxRates and calculatedTax.taxRate == taxInfo.rate %}
-                                {% set displayedTaxRates = displayedTaxRates|merge([taxInfo.rate]) %}
-                                {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxInfo.name)|trans({'%taxRate%': taxInfo.rate})|sw_sanitize }}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                {% endfor %}
-            {% else %}
-                {% set taxName = (calculatedTax.extensions.taxName.name == 0 ? 'TAX' : calculatedTax.extensions.taxName.name) %}
-                {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': calculatedTax.taxRate})|sw_sanitize }}
+            {% set calculatedTaxValue = calculatedTax.tax ?? 0 %}
+            {% if calculatedTaxValue < 0 %}
+                &minus;
             {% endif %}
 
-        {% endif %}
-
-        {% set calculatedTaxValue = calculatedTax.tax ?? 0 %}
-        {% if calculatedTaxValue < 0 %}
-            &minus;
-        {% endif %}
-
-        {% if calculatedTaxRate != 0 %}
-            {{ calculatedTaxValue|abs|currency }}
-        {% endif %}
-        </div>
-    {% endfor %}
+            {% if calculatedTaxRate != 0 %}
+                {{ calculatedTaxValue|abs|currency }}
+            {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

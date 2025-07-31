@@ -26,20 +26,27 @@
             <label>HST Number</label>
             <label lang="de-DE">HST Number</label>
         </input-field>
+        -->
 
         <input-field type="bool">
             <name>TaxBreakdown</name>
             <defaultValue>true</defaultValue>
             <label>Show tax breakdown?</label>
             <label lang="de-DE">wie ist die Steueraufschlüsselung?</label>
-        </input-field> 
-        -->
+        </input-field>
 
         <input-field type="bool">
             <name>FreightTaxable</name>
             <defaultValue>true</defaultValue>
             <label>Freight is taxable?</label>
             <label lang="de-DE">Fracht ist steuerpflichtig?</label>
+        </input-field>
+
+        <input-field type="int">
+            <name>TaxDecimals</name>
+            <defaultValue>2</defaultValue>
+            <label>Tax Decimals</label>
+            <label lang="de-DE">Steuerdezimalzahlen</label>
         </input-field>
     </card>
 

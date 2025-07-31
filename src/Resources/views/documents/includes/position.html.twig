@@ -77,10 +77,10 @@ All blocks of this template are available in the template which renders this tem
                 {% block document_line_item_table_prices %}
                     {% if config.displayPrices %}
                         {% block document_line_item_table_row_tax_rate %}
-                            <td class="align-right">
+                            <td class="align-right" style="font-size:9px; width: 20%;">
                             {% block document_line_item_table_column_tax_rate %}
-                                {# {% set shippingCountry = order.deliveries.first.getShippingOrderAddress.country.iso %}
-                                {% if shippingCountry == 'CA' %} #}
+                                {% set shippingCountry = order.deliveries.first.getShippingOrderAddress.country.iso %}
+                                {% if shippingCountry == 'CA' %}
 
                                     {% if lineItem.payload.inoceanCanadaTaxInfo is defined and lineItem.payload.inoceanCanadaTaxInfo is not empty %}
 
@@ -97,11 +97,11 @@ All blocks of this template are available in the template which renders this tem
 
                                     {% endif %}
 
-                                {# {% else %}
+                                {% else %}
                                     {% for tax in lineItem.price.taxRules %}
                                         {{ tax.taxRate }} % {% if loop.last %}{% else %}<br>{% endif %}
                                     {% endfor %}
-                                {% endif %} #}
+                                {% endif %}
                             {% endblock %}
                             </td>
                         {% endblock %}
