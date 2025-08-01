@@ -80,6 +80,12 @@ class InoceanSalesTaxesCanada extends Plugin
             $enGbLangCriteria = (new Criteria())->addFilter(new EqualsFilter('locale.code', 'en-GB'));
             $enGbLanguageId = $languageRepository->searchIds($enGbLangCriteria, $context)->firstId();
 
+            $enUsLangCriteria = (new Criteria())->addFilter(new EqualsFilter('locale.code', 'en-US'));
+            $enUsLanguageId = $languageRepository->searchIds($enUsLangCriteria, $context)->firstId();
+
+            $frFrLangCriteria = (new Criteria())->addFilter(new EqualsFilter('locale.code', 'fr-FR'));
+            $frFrLanguageId = $languageRepository->searchIds($frFrLangCriteria, $context)->firstId();
+
             $taxProviderData = [
                 'id' => Uuid::randomHex(),
                 'identifier' => CanadaTaxProvider::class,
@@ -91,12 +97,20 @@ class InoceanSalesTaxesCanada extends Plugin
                 'translations' => [],
             ];
 
+            if ($deDeLanguageId) {
+                $taxProviderData['translations'][$deDeLanguageId] = ['name' => 'Kanada Umsatzsteuer-Anbieter'];
+            }
+
             if ($enGbLanguageId) {
                 $taxProviderData['translations'][$enGbLanguageId] = ['name' => 'Canada Tax Provider'];
             }
 
-            if ($deDeLanguageId) {
-                $taxProviderData['translations'][$deDeLanguageId] = ['name' => 'Kanada Umsatzsteuer-Anbieter'];
+            if ($enUsLanguageId) {
+                $taxProviderData['translations'][$enUsLanguageId] = ['name' => 'Canada Tax Provider'];
+            }
+
+            if ($frFrLanguageId) {
+                $taxProviderData['translations'][$frFrLanguageId] = ['name' => 'Fournisseur de taxes du Canada'];
             }
 
             $taxProviderRepository->create([$taxProviderData], $context);

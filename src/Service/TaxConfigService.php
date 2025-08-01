@@ -86,11 +86,6 @@ class TaxConfigService
         return round($floatValue, 3);
     }
     
-    public function isTaxBreakdownEnabled(?string $salesChannelId = null): bool
-    {
-        return (bool) $this->systemConfigService->get('InoceanSalesTaxesCanada.config.TaxBreakdown', $salesChannelId);
-    }
-    
     public function isFreightTaxable(?string $salesChannelId = null): bool
     {
         return (bool) $this->systemConfigService->get('InoceanSalesTaxesCanada.config.FreightTaxable', $salesChannelId);

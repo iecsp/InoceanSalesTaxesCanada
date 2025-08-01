@@ -36,7 +36,6 @@ class CanadaTaxProvider extends AbstractTaxProvider
         $aggregatedCartTaxes = [];
         $finalCartTaxes = [];
 
-        $showTaxBreakdown = $this->taxConfigService->isTaxBreakdownEnabled($context->getSalesChannelId()) ?? 1;
         $freightTaxable = $this->taxConfigService->isFreightTaxable($context->getSalesChannelId()) ?? 1;
         $taxDecimals = $this->taxConfigService->getTaxDecimals($context->getSalesChannelId()) ?? 2;
 
@@ -49,9 +48,9 @@ class CanadaTaxProvider extends AbstractTaxProvider
         $province = CanadianProvince::from($proviceShortCode ?? Constants::DEFAULT_PROVINCE);
 
         foreach ($cart->getLineItems() as $lineItem) {
-            if ($lineItem->getPayloadValue('taxId') === Constants::TAXES[3]['id']) { // TAX-FREE
+            if ($lineItem->getPayloadValue('taxId') === Constants::TAXES[3]['id']) {
                 $taxRates = ['TAX-FREE' => $this->getDefaultRateByTaxType('TAX-FREE')];
-            } elseif ($lineItem->getPayloadValue('taxId') === Constants::TAXES[2]['id']) { // GST-ONLY
+            } elseif ($lineItem->getPayloadValue('taxId') === Constants::TAXES[2]['id']) {
                 $taxRates = ['GST' => $this->getDefaultRateByTaxType('GST-ONLY')];
             } else {
                 $taxRates = $this->taxConfigService->getProvinceTaxRates($province, $context->getSalesChannelId());
@@ -90,17 +89,17 @@ class CanadaTaxProvider extends AbstractTaxProvider
                 $shippingTotalPrice = $delivery->getShippingCosts()->getTotalPrice();
                 $taxId = $delivery->getShippingMethod()->getTaxId();
                 $aggregatedShippingTaxesPayload = [];
-
                 $deliveryTaxRates = [];
-                if ($taxId === Constants::TAXES[3]['id']) { // TAX-FREE
+                $calculatedDeliveryTaxes = [];
+
+                if ($taxId === Constants::TAXES[3]['id']) {
                     $deliveryTaxRates = ['TAX-FREE' => $this->getDefaultRateByTaxType('TAX-FREE')];
-                } elseif ($taxId === Constants::TAXES[2]['id']) { // GST-ONLY
+                } elseif ($taxId === Constants::TAXES[2]['id']) {
                     $deliveryTaxRates = ['GST' => $this->getDefaultRateByTaxType('GST-ONLY')];
                 } else {
                     $deliveryTaxRates = $this->taxConfigService->getProvinceTaxRates($province, $context->getSalesChannelId());
                 }
 
-                $calculatedDeliveryTaxes = [];
                 foreach ($deliveryTaxRates as $deliveryTaxName => $deliveryTaxRate) {
                     $deliveryTaxAmount = round($shippingTotalPrice * $deliveryTaxRate / 100, $taxDecimals);
                     $calculatedDeliveryTax = new CalculatedTax($deliveryTaxAmount, $deliveryTaxRate, $shippingTotalPrice);
