@@ -1,46 +1,21 @@
-PROPRIETARY SOFTWARE LICENSE AGREEMENT
-Canada Tax Provider for Shopware Plugin for Shopware
+MIT License
 
-Copyright (c) 2025 Inocean Technology (Canada). All rights reserved.
+Copyright (c) 2025 Inocean Technology (Canada)
 
-GRANT OF LICENSE:
-Subject to the terms and conditions of this Agreement, the copyright holder hereby grants you a non-exclusive, non-transferable, revocable license to use this software ("Plugin") solely for commercial purposes within Canada.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-PERMITTED USES:
-- Install and use the Plugin on Shopware e-commerce platforms operated by businesses located in Canada
-- Use the Plugin's functionality for Canada Tax Provider for Shopware and calculation purposes
-- Receive updates and technical support as provided by the copyright holder
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-RESTRICTIONS:
-You may NOT:
-- Copy, modify, adapt, or create derivative works of the Plugin
-- Distribute, sublicense, rent, lease, or transfer the Plugin to any third party
-- Remove or alter any copyright, trademark, or other proprietary notices
-- Use the Plugin outside of Canada or for non-Canadian tax jurisdictions
-- Use the Plugin for any unlawful purpose or in violation of applicable laws
-
-GEOGRAPHIC LIMITATION:
-This license is valid only for use within Canada. Use of this Plugin outside Canadian jurisdiction is strictly prohibited.
-
-OWNERSHIP:
-The Plugin and all intellectual property rights therein remain the exclusive property of the copyright holder. This license does not grant you any ownership rights.
-
-DISCLAIMER OF WARRANTIES:
-THE PLUGIN IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. THE COPYRIGHT HOLDER DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
-
-LIMITATION OF LIABILITY:
-IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES RESULTING FROM THE USE OF THIS PLUGIN.
-
-TAX COMPLIANCE NOTICE:
-While this Plugin is designed to assist with Canada Tax Provider for Shopware, users remain solely responsible for ensuring their tax calculations and filings comply with all applicable Canadian federal and provincial tax laws. Users should consult with qualified tax professionals.
-
-TERMINATION:
-This license is effective until terminated. The license will terminate automatically if you fail to comply with any terms. Upon termination, you must cease all use and destroy all copies of the Plugin.
-
-GOVERNING LAW:
-This Agreement shall be governed by and construed in accordance with the laws of Canada and the province of [Your Province].
-
-CONTACT:
-For questions regarding this license, please contact: iecsp.com@gmail.com
-
-By installing or using this Plugin, you acknowledge that you have read, understood, and agree to be bound by the terms of this Agreement.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
