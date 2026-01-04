@@ -86,14 +86,6 @@ This plugin provides automated Canadian tax calculation and compliance features,
 | Saskatchewan      | 5%      | 6%      | 11%           |
 | Yukon             | 5%      | 0%      | 5%            |
 
-## 🔒 License & Terms
-
-This plugin is **free for Canadian merchants** but operates under a **proprietary license**:
-
-- ✅ **Free to use** for Canadian businesses
-- ❌ **No redistribution**
-
-See [LICENSE.txt](LICENSE.txt) for complete terms and conditions.
 
 ## 🆘 Support
 
