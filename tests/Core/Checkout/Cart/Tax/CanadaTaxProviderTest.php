@@ -181,6 +181,27 @@ class CanadaTaxProviderTest extends TestCase
         );
     }
 
+    /**
+     * A GST/PST province has its own GST field, so whatever the merchant put
+     * there wins - including a deliberate 0. Falling back to the federal rate
+     * here would override the province configuration, which is the very thing
+     * the hardcoded 5% used to do.
+     */
+    public function testGstOnlyLineInAGstProvinceHonoursAZeroGstConfiguration(): void
+    {
+        $cart = $this->cartWithProduct(100.0, self::GST_ONLY_TAX_ID);
+
+        $this->provider(config: [
+            'InoceanSalesTaxesCanada.config.TaxGstBC' => 0,
+            'InoceanSalesTaxesCanada.config.TaxGstFederal' => 5,
+        ] + self::DEFAULT_CONFIG)->provide($cart, $this->context('CA', 'CA-BC'));
+
+        static::assertSame(
+            [['name' => 'GST', 'rate' => 0.0, 'tax' => 0.0]],
+            $cart->getLineItems()->first()?->getPayloadValue('inoceanCanadaTaxInfo')
+        );
+    }
+
     public function testTaxFreeLineCarriesNoTax(): void
     {
         $cart = $this->cartWithProduct(100.0, self::TAX_FREE_TAX_ID);

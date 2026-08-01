@@ -157,22 +157,30 @@ class CanadaTaxProvider extends AbstractTaxProvider
         }
 
         if ($taxId === Constants::TAXES[2]['id']) {
-            return ['GST' => $this->federalGstRate($province, $salesChannelId)];
+            return ['GST' => $this->gstOnlyRate($province, $salesChannelId)];
         }
 
         return $this->taxConfigService->getProvinceTaxRates($province, $salesChannelId);
     }
 
     /**
-     * The federal component only. GST/PST provinces configure it per province;
-     * HST provinces have no province level GST field, so those fall back to the
-     * channel wide federal setting rather than to zero.
+     * The rate for a line in the "(CA) GST only" tax category: the federal
+     * component, without the provincial one.
+     *
+     * A GST/PST province has its own GST setting, and whatever the merchant put
+     * there wins - including a deliberate 0. Only HST provinces, which have no
+     * such setting at all, fall back to the channel wide federal rate. Deciding
+     * on the presence of the config field rather than on the value keeps the
+     * province configuration authoritative, which is the whole point of not
+     * hardcoding this rate.
      */
-    private function federalGstRate(CanadianProvince $province, ?string $salesChannelId): float
+    private function gstOnlyRate(CanadianProvince $province, ?string $salesChannelId): float
     {
-        $rate = $this->taxConfigService->getTaxRate(TaxType::GST, $province, $salesChannelId);
+        if (TaxType::GST->getConfigFieldName($province) !== null) {
+            return $this->taxConfigService->getTaxRate(TaxType::GST, $province, $salesChannelId);
+        }
 
-        return $rate > 0 ? $rate : $this->taxConfigService->getFederalGstRate($salesChannelId);
+        return $this->taxConfigService->getFederalGstRate($salesChannelId);
     }
 
     /**
