@@ -24,6 +24,19 @@
             <label lang="de-DE">Steuerdezimalzahlen</label>
             <label lang="fr-FR">Décimales fiscales</label>
             <label lang="en-US">Tax Decimals</label>
+            <helpText>Number of decimals tax amounts are rounded to. Values below 2 are raised to 2 and above 4 are capped at 4.</helpText>
+            <helpText lang="en-US">Number of decimals tax amounts are rounded to. Values below 2 are raised to 2 and above 4 are capped at 4.</helpText>
+        </input-field>
+
+        <input-field type="float">
+            <name>TaxGstFederal</name>
+            <defaultValue>5</defaultValue>
+            <label>Federal GST</label>
+            <label lang="de-DE">Bundesweite GST</label>
+            <label lang="fr-FR">TPS fédérale</label>
+            <label lang="en-US">Federal GST</label>
+            <helpText>Federal GST rate applied to "(CA) GST only" products in HST provinces, which have no separate provincial GST field.</helpText>
+            <helpText lang="en-US">Federal GST rate applied to "(CA) GST only" products in HST provinces, which have no separate provincial GST field.</helpText>
         </input-field>
     </card>
 
@@ -158,7 +171,7 @@
             <label lang="en-US">GST</label>
         </input-field>
 
-        <input-field type="text">
+        <input-field type="float">
             <name>TaxQstQC</name>
             <defaultValue>9.975</defaultValue>
             <label>QST</label>

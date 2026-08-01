@@ -1,7 +1,7 @@
 {
   "name": "inocean/sales-taxes-canada",
   "description": "This plugin implements different tax rates for Canada based on provinces, including multiple tax rates.",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "type": "shopware-platform-plugin",
   "license": "MIT",
   "authors": [

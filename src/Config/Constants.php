@@ -14,4 +14,11 @@ class Constants
     ];
     const DEFAULT_COUNTRY = 'CA';
     const DEFAULT_PROVINCE = 'BC';
+
+    /**
+     * Last-resort federal GST rate, used only when the TaxGstFederal setting is
+     * missing entirely (e.g. the plugin was refreshed without an update run).
+     * The configured value always wins — see TaxConfigService::getFederalGstRate().
+     */
+    const FEDERAL_GST_RATE = 5;
 }

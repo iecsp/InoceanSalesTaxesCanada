@@ -11,8 +11,11 @@
             v-for="(calculatedTax, index) in sortedCalculatedTaxes"
             :key="index"
         >
-            <dt>
+            <dt v-if="calculatedTax.taxDetails.name">
                 {{ $tc('salseTaxCanada.order.summary.tax' + calculatedTax.taxDetails.name, { taxRate: calculatedTax.taxDetails.rate }, 1) }}
+            </dt>
+            <dt v-else>
+                {{ $tc('sw-order.detailBase.summaryLabelTaxes', { taxRate: calculatedTax.taxDetails.rate }, 1) }}
             </dt>
             <dd>
                 {{ currencyFilter(calculatedTax.taxDetails.tax, currency.isoCode, order.totalRounding.decimals) }}

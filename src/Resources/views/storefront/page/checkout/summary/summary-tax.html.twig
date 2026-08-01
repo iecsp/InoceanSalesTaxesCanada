@@ -1,43 +1,36 @@
 {% sw_extends '@Storefront/storefront/page/checkout/summary/summary-tax.html.twig' %}
 
-{% set defaultShippingCountry = context.customer.activeShippingAddress.country.iso %}
-
 {% block page_checkout_summary_taxes %}
     {% if app.request.attributes.get('_route') === 'frontend.checkout.finish.page' %}
-        {% if defaultShippingCountry == 'CA' %}
 
-            {% set taxTotals = {} %}
-            {% set shippingTaxTotals = {} %}
+        {# Presence of the breakdown, not the shipping country, decides which rows to print. #}
+        {% set taxTotals = {} %}
 
-            {% for taxItem in page.order.lineItems %}
-                {% if taxItem.payload.inoceanCanadaTaxInfo is defined and taxItem.payload.inoceanCanadaTaxInfo is not empty %}
-                    {% for taxInfo in taxItem.payload.inoceanCanadaTaxInfo %}
-                        {% set taxName = taxInfo.name %}
-                        {% set currentTaxData = taxTotals[taxName]|default({ 'rate': taxInfo.rate, 'total': 0 }) %}
-                        {% set newTotal = currentTaxData.total + taxInfo.tax %}
-                        {% set updatedTaxData = currentTaxData|merge({ 'total': newTotal }) %}
-                        {% set taxTotals = taxTotals|merge({ (taxName): updatedTaxData }) %}
-                    {% endfor %}
-                {% endif %}
-                {% if taxItem.payload.inoceanShippingTaxInfo is defined and taxItem.payload.inoceanShippingTaxInfo is not empty %}
-                    {% for tax in taxItem.payload.inoceanShippingTaxInfo %}
-                        {% set taxName = tax.name %}
-                        {% set currentTaxData = taxTotals[taxName]|default({ 'rate': tax.rate, 'total': 0 }) %}
-                        {% set newTotal = currentTaxData.total + tax.tax %}
-                        {% set updatedTaxData = currentTaxData|merge({ 'total': newTotal }) %}
-                        {% set taxTotals = taxTotals|merge({ (taxName): updatedTaxData }) %}
-                    {% endfor %}
-                {% endif %}
-            {% endfor %}
+        {% for taxItem in page.order.lineItems %}
+            {% if taxItem.payload.inoceanCanadaTaxInfo is defined and taxItem.payload.inoceanCanadaTaxInfo is not empty %}
+                {% for taxInfo in taxItem.payload.inoceanCanadaTaxInfo %}
+                    {% set currentTaxData = taxTotals[taxInfo.name]|default({ 'rate': taxInfo.rate, 'total': 0 }) %}
+                    {% set taxTotals = taxTotals|merge({ (taxInfo.name): currentTaxData|merge({ 'total': currentTaxData.total + taxInfo.tax }) }) %}
+                {% endfor %}
+            {% endif %}
+            {% if taxItem.payload.inoceanShippingTaxInfo is defined and taxItem.payload.inoceanShippingTaxInfo is not empty %}
+                {% for tax in taxItem.payload.inoceanShippingTaxInfo %}
+                    {% set currentTaxData = taxTotals[tax.name]|default({ 'rate': tax.rate, 'total': 0 }) %}
+                    {% set taxTotals = taxTotals|merge({ (tax.name): currentTaxData|merge({ 'total': currentTaxData.total + tax.tax }) }) %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+        {% if taxTotals is not empty %}
 
             {% for taxName, taxData in taxTotals %}
-                {% if taxData.total > 0 %}
+                {% if taxData.total != 0 %}
                     <dt class="col-7 checkout-aside-summary-label summary-tax">
                         {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': taxData.rate})|sw_sanitize }}
                     </dt>
                     <dd class="col-5 checkout-aside-summary-value summary-tax">
                         {{ taxData.total|currency }}
-                    </dd> 
+                    </dd>
                 {% endif %}
             {% endfor %}
 
@@ -65,10 +58,10 @@
             {% if taxItem.taxRate != 0 %}
                 {% block page_checkout_summary_tax %}
                     {% block page_checkout_summary_tax_label %}
-                        {% if defaultShippingCountry == 'CA' %}
-                            {% set taxName = (taxItem.extensions.taxName.name == 0 ? 'TAX' : taxItem.extensions.taxName.name) %}
+                        {# The taxName extension is only present on taxes this plugin calculated. #}
+                        {% if taxItem.extensions.taxName.name is defined and taxItem.extensions.taxName.name %}
                             <dt class="col-7 checkout-aside-summary-label summary-tax">
-                                {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxName)|trans({'%taxRate%': taxItem.taxRate})|sw_sanitize }}
+                                {{ ('salseTaxCanada.checkout.taxes.tax' ~ taxItem.extensions.taxName.name)|trans({'%taxRate%': taxItem.taxRate})|sw_sanitize }}
                             </dt>
                         {% else %}
                             <dt class="col-7 checkout-aside-summary-label summary-tax">

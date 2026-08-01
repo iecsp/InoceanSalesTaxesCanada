@@ -37,25 +37,13 @@ enum CanadianProvince: string
         };
     }
     
-    public function getTaxFieldNames(): array
-    {
-        return match($this) {
-            self::BRITISH_COLUMBIA => ['TaxGstBC', 'TaxPstBC'],
-            self::ALBERTA => ['TaxGstAB', 'TaxPstAB'],
-            self::SASKATCHEWAN => ['TaxGstSK', 'TaxPstSK'],
-            self::MANITOBA => ['TaxGstMB', 'TaxPstMB'],
-            self::ONTARIO => ['TaxHstON'],
-            self::QUEBEC => ['TaxGstQC', 'TaxQstQC'],
-            self::NEW_BRUNSWICK => ['TaxHstNB'],
-            self::PRINCE_EDWARD_ISLAND => ['TaxHstPE'],
-            self::NOVA_SCOTIA => ['TaxHstNS'],
-            self::NEWFOUNDLAND_LABRADOR => ['TaxHstNL'],
-            self::YUKON => ['TaxGstYT', 'TaxPstYT'],
-            self::NORTHWEST_TERRITORIES => ['TaxGstNT', 'TaxPstNT'],
-            self::NUNAVUT => ['TaxGstNU', 'TaxPstNU'],
-        };
-    }
-    
+    /**
+     * Which tax bands this province levies. The config field backing each band
+     * lives in TaxType::getConfigFieldName() - deliberately the only place, so
+     * the two cannot drift apart.
+     *
+     * @return array<int, TaxType>
+     */
     public function getTaxTypes(): array
     {
         return match($this) {

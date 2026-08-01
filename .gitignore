@@ -1,3 +1,4 @@
 .idx/
 .vscode/
 .DS_Store
+.phpunit.cache/
