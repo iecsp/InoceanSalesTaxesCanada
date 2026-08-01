@@ -3,6 +3,7 @@
 namespace InoceanSalesTaxesCanada\Core\Checkout\Cart\Tax;
 
 use Shopware\Core\Checkout\Cart\Cart;
+use Shopware\Core\Checkout\Cart\LineItem\LineItem;
 use Shopware\Core\Checkout\Cart\TaxProvider\AbstractTaxProvider;
 use Shopware\Core\Checkout\Cart\TaxProvider\Struct\TaxProviderResult;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
@@ -17,9 +18,14 @@ class CanadaTaxProvider extends AbstractTaxProvider
 {
     private TaxConfigService $taxConfigService;
 
-    public function __construct(TaxConfigService $taxConfigService)
-    {
+    private PromotionTaxApportioner $promotionTaxApportioner;
+
+    public function __construct(
+        TaxConfigService $taxConfigService,
+        ?PromotionTaxApportioner $promotionTaxApportioner = null
+    ) {
         $this->taxConfigService = $taxConfigService;
+        $this->promotionTaxApportioner = $promotionTaxApportioner ?? new PromotionTaxApportioner();
     }
 
     public function provide(Cart $cart, SalesChannelContext $context): TaxProviderResult
@@ -40,7 +46,19 @@ class CanadaTaxProvider extends AbstractTaxProvider
         $proviceShortCode = substr(strtoupper($address->getCountryState()->getShortCode()), -2);
         $province = CanadianProvince::from($proviceShortCode ?? Constants::DEFAULT_PROVINCE);
 
+        // Promotion lines are handled in a second pass: a discount has to be
+        // taxed at the rates of the lines it discounted, so we must know those
+        // rates before we can resolve it. See PromotionTaxApportioner.
+        $ratesByLineId = [];
+        $priceByLineId = [];
+        $promotionLineItems = [];
+
         foreach ($cart->getLineItems() as $lineItem) {
+            if ($lineItem->getType() === LineItem::PROMOTION_LINE_ITEM_TYPE) {
+                $promotionLineItems[] = $lineItem;
+                continue;
+            }
+
             if ($lineItem->getPayloadValue('taxId') === Constants::TAXES[3]['id']) {
                 $taxRates = ['TAX-FREE' => $this->getDefaultRateByTaxType('TAX-FREE')];
             } elseif ($lineItem->getPayloadValue('taxId') === Constants::TAXES[2]['id']) {
@@ -50,12 +68,38 @@ class CanadaTaxProvider extends AbstractTaxProvider
             }
 
             $price = $lineItem->getPrice()->getTotalPrice();
+
+            // A 0% "TAX-FREE" rate is not a tax group a discount can be reversed
+            // against, so it must not act as an apportioning target.
+            $ratesByLineId[$lineItem->getId()] = array_filter(
+                $taxRates,
+                static fn ($rate): bool => (float) $rate > 0.0
+            );
+            $priceByLineId[$lineItem->getId()] = $price;
+
+            $this->applyTaxes($lineItem, $taxRates, $price, $taxDecimals, $aggregatedCartTaxes, $lineItemTaxes);
+        }
+
+        foreach ($promotionLineItems as $lineItem) {
+            $price = $lineItem->getPrice()->getTotalPrice();
+            $composition = $lineItem->getPayloadValue('composition');
+
+            $apportioned = $this->promotionTaxApportioner->apportion(
+                $price,
+                \is_array($composition) ? $composition : [],
+                $ratesByLineId,
+                $priceByLineId
+            );
+
             $calculatedTaxes = [];
             $lineItemTaxInfo = [];
 
-            foreach ($taxRates as $taxName => $taxRate) {
-                $tax = round($price * $taxRate / 100, $taxDecimals);
-                $calculatedTax = new CalculatedTax($tax, $taxRate, $price);
+            foreach ($apportioned as $taxName => $group) {
+                $taxRate = (float) $group['rate'];
+                $base = (float) $group['base'];
+                $tax = round($base * $taxRate / 100, $taxDecimals);
+
+                $calculatedTax = new CalculatedTax($tax, $taxRate, $base);
                 $calculatedTax->addExtension('taxName', new ArrayEntity(['name' => $taxName]));
                 $calculatedTaxes[] = $calculatedTax;
 
@@ -64,7 +108,7 @@ class CanadaTaxProvider extends AbstractTaxProvider
                 }
 
                 $aggregatedCartTaxes[$taxName]['tax'] += $tax;
-                $aggregatedCartTaxes[$taxName]['price'] += $price;
+                $aggregatedCartTaxes[$taxName]['price'] += $base;
                 $lineItemTaxInfo[] = ['name' => $taxName, 'rate' => $taxRate, 'tax' => $tax];
             }
 
@@ -137,6 +181,47 @@ class CanadaTaxProvider extends AbstractTaxProvider
             $deliveryTaxes,
             new CanadaCalculatedTaxCollection($finalCartTaxes)
         );
+    }
+
+    /**
+     * Apply a resolved rate set to one line item, recording both the per-line
+     * collection and the running cart aggregate.
+     *
+     * @param array<string, float|int>                             $taxRates
+     * @param array<string, array{rate: float|int, tax: float, price: float}> $aggregatedCartTaxes
+     * @param array<string, CanadaCalculatedTaxCollection>         $lineItemTaxes
+     */
+    private function applyTaxes(
+        LineItem $lineItem,
+        array $taxRates,
+        float $price,
+        int $taxDecimals,
+        array &$aggregatedCartTaxes,
+        array &$lineItemTaxes
+    ): void {
+        $calculatedTaxes = [];
+        $lineItemTaxInfo = [];
+
+        foreach ($taxRates as $taxName => $taxRate) {
+            $tax = round($price * $taxRate / 100, $taxDecimals);
+            $calculatedTax = new CalculatedTax($tax, $taxRate, $price);
+            $calculatedTax->addExtension('taxName', new ArrayEntity(['name' => $taxName]));
+            $calculatedTaxes[] = $calculatedTax;
+
+            if (!isset($aggregatedCartTaxes[$taxName])) {
+                $aggregatedCartTaxes[$taxName] = ['rate' => $taxRate, 'tax' => 0, 'price' => 0];
+            }
+
+            $aggregatedCartTaxes[$taxName]['tax'] += $tax;
+            $aggregatedCartTaxes[$taxName]['price'] += $price;
+            $lineItemTaxInfo[] = ['name' => $taxName, 'rate' => $taxRate, 'tax' => $tax];
+        }
+
+        $payload = $lineItem->getPayload();
+        $payload['inoceanCanadaTaxInfo'] = $lineItemTaxInfo;
+        $lineItem->setPayload($payload);
+
+        $lineItemTaxes[$lineItem->getUniqueIdentifier()] = new CanadaCalculatedTaxCollection($calculatedTaxes);
     }
 
     private function getDefaultRateByTaxType(string $type): int
