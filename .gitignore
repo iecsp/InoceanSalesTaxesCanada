@@ -1,4 +1,12 @@
 .idx/
 .vscode/
 .DS_Store
+vendor
+.superpowers/
+
+# Tests — kept locally, excluded from the published source
+/tests/
+/phpunit.xml.dist
 .phpunit.cache/
+.phpunit.result.cache
+/coverage/
