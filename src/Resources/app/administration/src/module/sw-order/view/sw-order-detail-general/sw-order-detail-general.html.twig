@@ -1,6 +1,6 @@
 {% block sw_order_detail_general_line_items_summary_amount_without_tax %}
 <template v-if="taxStatus !== 'tax-free'">
-    <dt><strong>{{ $tc('salseTaxCanada.order.summary.subtotal') }}</strong></dt>
+    <dt><strong>{{ $t('salseTaxCanada.order.summary.subtotal') }}</strong></dt>
     <dd><strong>{{ currencyFilter(order.amountNet, currency.isoCode, order.totalRounding.decimals) }}</strong></dd>
 </template>
 {% endblock %}
@@ -12,10 +12,10 @@
             :key="index"
         >
             <dt v-if="calculatedTax.taxDetails.name">
-                {{ $tc('salseTaxCanada.order.summary.tax' + calculatedTax.taxDetails.name, { taxRate: calculatedTax.taxDetails.rate }, 1) }}
+                {{ $t('salseTaxCanada.order.summary.tax' + calculatedTax.taxDetails.name, { taxRate: calculatedTax.taxDetails.rate }) }}
             </dt>
             <dt v-else>
-                {{ $tc('sw-order.detailBase.summaryLabelTaxes', { taxRate: calculatedTax.taxDetails.rate }, 1) }}
+                {{ $t('sw-order.detailBase.summaryLabelTaxes', { taxRate: calculatedTax.taxDetails.rate }) }}
             </dt>
             <dd>
                 {{ currencyFilter(calculatedTax.taxDetails.tax, currency.isoCode, order.totalRounding.decimals) }}
@@ -26,7 +26,7 @@
             :key="index"
         >
             <dt>
-                {{ $tc('salseTaxCanada.order.summary.shippingTax' + shippingTax.taxDetails.name, { taxRate: shippingTax.taxDetails.rate }, 1) }}
+                {{ $t('salseTaxCanada.order.summary.shippingTax' + shippingTax.taxDetails.name, { taxRate: shippingTax.taxDetails.rate }) }}
             </dt>
             <dd>
                 {{ currencyFilter(shippingTax.taxDetails.tax, currency.isoCode, order.totalRounding.decimals) }}
@@ -37,10 +37,10 @@
 
 {% block sw_order_detail_general_line_items_summary_amount_total %}
 <template v-if="taxStatus !== 'tax-free'">
-    <dt><strong>{{ $tc('salseTaxCanada.order.summary.groundTotal') }}</strong></dt>
+    <dt><strong>{{ $t('salseTaxCanada.order.summary.groundTotal') }}</strong></dt>
     <dd><strong>{{ currencyFilter(orderTotal, currency.isoCode, order.totalRounding.decimals) }}</strong></dd>
     <template v-if="displayRounded">
-        <dt><strong>{{ $tc('salseTaxCanada.order.summary.totalRounded') }}</strong></dt>
+        <dt><strong>{{ $t('salseTaxCanada.order.summary.totalRounded') }}</strong></dt>
         <dd><strong>{{ currencyFilter(order.price.totalPrice, currency.isoCode, order.totalRounding.decimals) }}</strong></dd>
     </template>
 </template>
