@@ -4,6 +4,9 @@
 
     <card>
         <title>Canada tax basic settings</title>
+        <title lang="zh-CN">加拿大税务基本设置</title>
+        <title lang="zh-TW">加拿大稅務基本設置</title>
+        <title lang="zh-HK">加拿大税務基本設置</title>
         <title lang="de-DE">Grundeinstellungen für den Kanadische Steuersatz</title>
         <title lang="fr-FR">Paramètres de base de la fiscalité canadienne</title>
         <title lang="en-US">Canada tax basic settings</title>
@@ -12,6 +15,9 @@
             <name>FreightTaxable</name>
             <defaultValue>true</defaultValue>
             <label>Freight is taxable?</label>
+            <label lang="zh-CN">运费是否征税？</label>
+            <label lang="zh-TW">運費是否徵稅？</label>
+            <label lang="zh-HK">運費是否徵税？</label>
             <label lang="de-DE">Fracht ist steuerpflichtig?</label>
             <label lang="fr-FR">Le fret est-il taxable?</label>
             <label lang="en-US">Freight is taxable?</label>
@@ -21,10 +27,16 @@
             <name>TaxDecimals</name>
             <defaultValue>2</defaultValue>
             <label>Tax Decimals</label>
+            <label lang="zh-CN">税额小数位数</label>
+            <label lang="zh-TW">稅額小數位數</label>
+            <label lang="zh-HK">税額小數位數</label>
             <label lang="de-DE">Steuerdezimalzahlen</label>
             <label lang="fr-FR">Décimales fiscales</label>
             <label lang="en-US">Tax Decimals</label>
             <helpText>Number of decimals tax amounts are rounded to. Values below 2 are raised to 2 and above 4 are capped at 4.</helpText>
+            <helpText lang="zh-CN">税额四舍五入保留的小数位数。小于 2 按 2 处理，大于 4 按 4 处理。</helpText>
+            <helpText lang="zh-TW">稅額四捨五入保留的小數位數。小於 2 按 2 處理，大於 4 按 4 處理。</helpText>
+            <helpText lang="zh-HK">税額四捨五入保留的小數位數。小於 2 按 2 處理，大於 4 按 4 處理。</helpText>
             <helpText lang="en-US">Number of decimals tax amounts are rounded to. Values below 2 are raised to 2 and above 4 are capped at 4.</helpText>
         </input-field>
 
@@ -32,16 +44,25 @@
             <name>TaxGstFederal</name>
             <defaultValue>5</defaultValue>
             <label>Federal GST</label>
+            <label lang="zh-CN">联邦 GST</label>
+            <label lang="zh-TW">聯邦 GST</label>
+            <label lang="zh-HK">聯邦 GST</label>
             <label lang="de-DE">Bundesweite GST</label>
             <label lang="fr-FR">TPS fédérale</label>
             <label lang="en-US">Federal GST</label>
             <helpText>Federal GST rate applied to "(CA) GST only" products in HST provinces, which have no separate provincial GST field.</helpText>
+            <helpText lang="zh-CN">在 HST 省份对「(CA) 仅 GST」商品适用的联邦 GST 税率（这些省份没有单独的 GST 字段）。</helpText>
+            <helpText lang="zh-TW">在 HST 省份對「(CA) 僅 GST」商品適用的聯邦 GST 稅率（這些省份沒有單獨的 GST 字段）。</helpText>
+            <helpText lang="zh-HK">在 HST 省份對「(CA) 僅 GST」商品適用的聯邦 GST 税率（這些省份沒有單獨的 GST 字段）。</helpText>
             <helpText lang="en-US">Federal GST rate applied to "(CA) GST only" products in HST provinces, which have no separate provincial GST field.</helpText>
         </input-field>
     </card>
 
     <card>
         <title>Tax rates in British Columbia(BC)</title>
+        <title lang="zh-CN">不列颠哥伦比亚省（BC）税率</title>
+        <title lang="zh-TW">不列顛哥倫比亞省（BC）稅率</title>
+        <title lang="zh-HK">不列顛哥倫比亞省（BC）税率</title>
         <title lang="de-DE">Steuersätze in British Columbia(BC)</title>
         <title lang="fr-FR">Taux d'imposition en Colombie-Britannique(BC)</title>
         <title lang="en-US">Tax rates in British Columbia(BC)</title>
@@ -50,6 +71,9 @@
             <name>TaxGstBC</name>
             <defaultValue>5</defaultValue>
             <label>GST</label>
+            <label lang="zh-CN">GST</label>
+            <label lang="zh-TW">GST</label>
+            <label lang="zh-HK">GST</label>
             <label lang="de-DE">GST</label>
             <label lang="fr-FR">GST</label>
             <label lang="en-US">GST</label>
@@ -59,6 +83,9 @@
             <name>TaxPstBC</name>
             <defaultValue>7</defaultValue>
             <label>PST</label>
+            <label lang="zh-CN">PST</label>
+            <label lang="zh-TW">PST</label>
+            <label lang="zh-HK">PST</label>
             <label lang="de-DE">PST</label>
             <label lang="fr-FR">PST</label>
             <label lang="en-US">PST</label>
@@ -67,6 +94,9 @@
 
     <card>
         <title>Tax rates in Alberta(AB)</title>
+        <title lang="zh-CN">艾伯塔省（AB）税率</title>
+        <title lang="zh-TW">艾伯塔省（AB）稅率</title>
+        <title lang="zh-HK">艾伯塔省（AB）税率</title>
         <title lang="de-DE">Steuersätze in Alberta(AB)</title>
         <title lang="fr-FR">Taux d'imposition en Alberta(AB)</title>
         <title lang="en-US">Tax rates in Alberta(AB)</title>
@@ -75,6 +105,9 @@
             <name>TaxGstAB</name>
             <defaultValue>5</defaultValue>
             <label>GST</label>
+            <label lang="zh-CN">GST</label>
+            <label lang="zh-TW">GST</label>
+            <label lang="zh-HK">GST</label>
             <label lang="de-DE">GST</label>
             <label lang="fr-FR">GST</label>
             <label lang="en-US">GST</label>
@@ -84,6 +117,9 @@
             <name>TaxPstAB</name>
             <defaultValue>0</defaultValue>
             <label>PST</label>
+            <label lang="zh-CN">PST</label>
+            <label lang="zh-TW">PST</label>
+            <label lang="zh-HK">PST</label>
             <label lang="de-DE">PST</label>
             <label lang="fr-FR">PST</label>
             <label lang="en-US">PST</label>
@@ -92,6 +128,9 @@
 
     <card>
         <title>Tax rates in Saskatchewan(SK)</title>
+        <title lang="zh-CN">萨斯喀彻温省（SK）税率</title>
+        <title lang="zh-TW">薩斯喀徹溫省（SK）稅率</title>
+        <title lang="zh-HK">薩斯喀徹温省（SK）税率</title>
         <title lang="de-DE">Steuersätze in Saskatchewan(SK)</title>
         <title lang="fr-FR">Taux d'imposition en Saskatchewan(SK)</title>
         <title lang="en-US">Tax rates in Saskatchewan(SK)</title>
@@ -100,6 +139,9 @@
             <name>TaxGstSK</name>
             <defaultValue>5</defaultValue>
             <label>GST</label>
+            <label lang="zh-CN">GST</label>
+            <label lang="zh-TW">GST</label>
+            <label lang="zh-HK">GST</label>
             <label lang="de-DE">GST</label>
             <label lang="fr-FR">GST</label>
             <label lang="en-US">GST</label>
@@ -109,6 +151,9 @@
             <name>TaxPstSK</name>
             <defaultValue>6</defaultValue>
             <label>PST</label>
+            <label lang="zh-CN">PST</label>
+            <label lang="zh-TW">PST</label>
+            <label lang="zh-HK">PST</label>
             <label lang="de-DE">PST</label>
             <label lang="fr-FR">PST</label>
             <label lang="en-US">PST</label>
@@ -117,6 +162,9 @@
 
     <card>
         <title>Tax rates in Manitoba(MB)</title>
+        <title lang="zh-CN">马尼托巴省（MB）税率</title>
+        <title lang="zh-TW">馬尼托巴省（MB）稅率</title>
+        <title lang="zh-HK">馬尼托巴省（MB）税率</title>
         <title lang="de-DE">Steuersätze in Manitoba(MB)</title>
         <title lang="fr-FR">Taux d'imposition au Manitoba(MB)</title>
         <title lang="en-US">Tax rates in Manitoba(MB)</title>
@@ -125,6 +173,9 @@
             <name>TaxGstMB</name>
             <defaultValue>5</defaultValue>
             <label>GST</label>
+            <label lang="zh-CN">GST</label>
+            <label lang="zh-TW">GST</label>
+            <label lang="zh-HK">GST</label>
             <label lang="de-DE">GST</label>
             <label lang="fr-FR">GST</label>
             <label lang="en-US">GST</label>
@@ -134,6 +185,9 @@
             <name>TaxPstMB</name>
             <defaultValue>7</defaultValue>
             <label>PST</label>
+            <label lang="zh-CN">PST</label>
+            <label lang="zh-TW">PST</label>
+            <label lang="zh-HK">PST</label>
             <label lang="de-DE">PST</label>
             <label lang="fr-FR">PST</label>
             <label lang="en-US">PST</label>
@@ -142,6 +196,9 @@
 
     <card>
         <title>Tax rates in Ontario(ON)</title>
+        <title lang="zh-CN">安大略省（ON）税率</title>
+        <title lang="zh-TW">安大略省（ON）稅率</title>
+        <title lang="zh-HK">安大略省（ON）税率</title>
         <title lang="de-DE">Steuersätze in Ontario(ON)</title>
         <title lang="fr-FR">Taux d'imposition en Ontario(ON)</title>
         <title lang="en-US">Tax rates in Ontario(ON)</title>
@@ -150,6 +207,9 @@
             <name>TaxHstON</name>
             <defaultValue>13</defaultValue>
             <label>HST</label>
+            <label lang="zh-CN">HST</label>
+            <label lang="zh-TW">HST</label>
+            <label lang="zh-HK">HST</label>
             <label lang="de-DE">HST</label>
             <label lang="fr-FR">HST</label>
             <label lang="en-US">HST</label>
@@ -158,6 +218,9 @@
 
     <card>
         <title>Tax rates in Quebec(QC)</title>
+        <title lang="zh-CN">魁北克省（QC）税率</title>
+        <title lang="zh-TW">魁北克省（QC）稅率</title>
+        <title lang="zh-HK">魁北克省（QC）税率</title>
         <title lang="de-DE">Steuersätze in Quebec(QC)</title>
         <title lang="fr-FR">Taux d'imposition au Québec(QC)</title>
         <title lang="en-US">Tax rates in Quebec(QC)</title>
@@ -166,6 +229,9 @@
             <name>TaxGstQC</name>
             <defaultValue>5</defaultValue>
             <label>GST</label>
+            <label lang="zh-CN">GST</label>
+            <label lang="zh-TW">GST</label>
+            <label lang="zh-HK">GST</label>
             <label lang="de-DE">GST</label>
             <label lang="fr-FR">GST</label>
             <label lang="en-US">GST</label>
@@ -175,6 +241,9 @@
             <name>TaxQstQC</name>
             <defaultValue>9.975</defaultValue>
             <label>QST</label>
+            <label lang="zh-CN">QST</label>
+            <label lang="zh-TW">QST</label>
+            <label lang="zh-HK">QST</label>
             <label lang="de-DE">QST</label>
             <label lang="fr-FR">QST</label>
             <label lang="en-US">QST</label>
@@ -183,6 +252,9 @@
 
     <card>
         <title>Tax rates in New Brunswick(NB)</title>
+        <title lang="zh-CN">新不伦瑞克省（NB）税率</title>
+        <title lang="zh-TW">新不倫瑞克省（NB）稅率</title>
+        <title lang="zh-HK">新不倫瑞克省（NB）税率</title>
         <title lang="de-DE">Steuersätze in New Brunswick(NB)</title>
         <title lang="fr-FR">Taux d'imposition au Nouveau-Brunswick(NB)</title>
         <title lang="en-US">Tax rates in New Brunswick(NB)</title>
@@ -191,6 +263,9 @@
             <name>TaxHstNB</name>
             <defaultValue>15</defaultValue>
             <label>HST</label>
+            <label lang="zh-CN">HST</label>
+            <label lang="zh-TW">HST</label>
+            <label lang="zh-HK">HST</label>
             <label lang="de-DE">HST</label>
             <label lang="fr-FR">HST</label>
             <label lang="en-US">HST</label>
@@ -199,6 +274,9 @@
 
     <card>
         <title>Tax rates in Prince Edward Island(PE)</title>
+        <title lang="zh-CN">爱德华王子岛省（PE）税率</title>
+        <title lang="zh-TW">愛德華王子島省（PE）稅率</title>
+        <title lang="zh-HK">愛德華王子島省（PE）税率</title>
         <title lang="de-DE">Steuersätze in Prince Edward Island(PE)</title>
         <title lang="fr-FR">Taux d'imposition à l'Île-du-Prince-Édouard(PE)</title>
         <title lang="en-US">Tax rates in Prince Edward Island(PE)</title>
@@ -207,6 +285,9 @@
             <name>TaxHstPE</name>
             <defaultValue>15</defaultValue>
             <label>HST</label>
+            <label lang="zh-CN">HST</label>
+            <label lang="zh-TW">HST</label>
+            <label lang="zh-HK">HST</label>
             <label lang="de-DE">HST</label>
             <label lang="fr-FR">HST</label>
             <label lang="en-US">HST</label>
@@ -215,6 +296,9 @@
 
     <card>
         <title>Tax rates in Nova Scotia(NS)</title>
+        <title lang="zh-CN">新斯科舍省（NS）税率</title>
+        <title lang="zh-TW">新斯科舍省（NS）稅率</title>
+        <title lang="zh-HK">新斯科舍省（NS）税率</title>
         <title lang="de-DE">Steuersätze in Nova Scotia(NS)</title>
         <title lang="fr-FR">Taux d'imposition en Nouvelle-Écosse(NS)</title>
         <title lang="en-US">Tax rates in Nova Scotia(NS)</title>
@@ -223,6 +307,9 @@
             <name>TaxHstNS</name>
             <defaultValue>14</defaultValue>
             <label>HST</label>
+            <label lang="zh-CN">HST</label>
+            <label lang="zh-TW">HST</label>
+            <label lang="zh-HK">HST</label>
             <label lang="de-DE">HST</label>
             <label lang="fr-FR">HST</label>
             <label lang="en-US">HST</label>
@@ -231,6 +318,9 @@
 
     <card>
         <title>Tax rates in Newfoundland(NL)</title>
+        <title lang="zh-CN">纽芬兰与拉布拉多省（NL）税率</title>
+        <title lang="zh-TW">紐芬蘭與拉布拉多省（NL）稅率</title>
+        <title lang="zh-HK">紐芬蘭與拉布拉多省（NL）税率</title>
         <title lang="de-DE">Steuersätze in Newfoundland(NL)</title>
         <title lang="fr-FR">Taux d'imposition à Terre-Neuve(NL)</title>
         <title lang="en-US">Tax rates in Newfoundland(NL)</title>
@@ -239,6 +329,9 @@
             <name>TaxHstNL</name>
             <defaultValue>15</defaultValue>
             <label>HST</label>
+            <label lang="zh-CN">HST</label>
+            <label lang="zh-TW">HST</label>
+            <label lang="zh-HK">HST</label>
             <label lang="de-DE">HST</label>
             <label lang="fr-FR">HST</label>
             <label lang="en-US">HST</label>
@@ -247,6 +340,9 @@
 
     <card>
         <title>Tax rates in Yukon(YT)</title>
+        <title lang="zh-CN">育空地区（YT）税率</title>
+        <title lang="zh-TW">育空地區（YT）稅率</title>
+        <title lang="zh-HK">育空地區（YT）税率</title>
         <title lang="de-DE">Steuersätze in Yukon(YT)</title>
         <title lang="fr-FR">Taux d'imposition au Yukon(YT)</title>
         <title lang="en-US">Tax rates in Yukon(YT)</title>
@@ -255,6 +351,9 @@
             <name>TaxGstYT</name>
             <defaultValue>5</defaultValue>
             <label>GST</label>
+            <label lang="zh-CN">GST</label>
+            <label lang="zh-TW">GST</label>
+            <label lang="zh-HK">GST</label>
             <label lang="de-DE">GST</label>
             <label lang="fr-FR">GST</label>
             <label lang="en-US">GST</label>
@@ -264,6 +363,9 @@
             <name>TaxPstYT</name>
             <defaultValue>0</defaultValue>
             <label>PST</label>
+            <label lang="zh-CN">PST</label>
+            <label lang="zh-TW">PST</label>
+            <label lang="zh-HK">PST</label>
             <label lang="de-DE">PST</label>
             <label lang="fr-FR">PST</label>
             <label lang="en-US">PST</label>
@@ -272,6 +374,9 @@
 
     <card>
         <title>Tax rates in Northwest Territories(NT)</title>
+        <title lang="zh-CN">西北地区（NT）税率</title>
+        <title lang="zh-TW">西北地區（NT）稅率</title>
+        <title lang="zh-HK">西北地區（NT）税率</title>
         <title lang="de-DE">Steuersätze in Northwest Territories(NT)</title>
         <title lang="fr-FR">Taux d'imposition dans les Territoires du Nord-Ouest(NT)</title>
         <title lang="en-US">Tax rates in Northwest Territories(NT)</title>
@@ -280,6 +385,9 @@
             <name>TaxGstNT</name>
             <defaultValue>5</defaultValue>
             <label>GST</label>
+            <label lang="zh-CN">GST</label>
+            <label lang="zh-TW">GST</label>
+            <label lang="zh-HK">GST</label>
             <label lang="de-DE">GST</label>
             <label lang="fr-FR">GST</label>
             <label lang="en-US">GST</label>
@@ -289,6 +397,9 @@
             <name>TaxPstNT</name>
             <defaultValue>0</defaultValue>
             <label>PST</label>
+            <label lang="zh-CN">PST</label>
+            <label lang="zh-TW">PST</label>
+            <label lang="zh-HK">PST</label>
             <label lang="de-DE">PST</label>
             <label lang="fr-FR">PST</label>
             <label lang="en-US">PST</label>
@@ -297,6 +408,9 @@
 
     <card>
         <title>Tax rates in Nunavut(NU)</title>
+        <title lang="zh-CN">努纳武特地区（NU）税率</title>
+        <title lang="zh-TW">努納武特地區（NU）稅率</title>
+        <title lang="zh-HK">努納武特地區（NU）税率</title>
         <title lang="de-DE">Steuersätze in Nunavut(NU)</title>
         <title lang="fr-FR">Taux d'imposition au Nunavut(NU)</title>
         <title lang="en-US">Tax rates in Nunavut(NU)</title>
@@ -305,6 +419,9 @@
             <name>TaxGstNU</name>
             <defaultValue>5</defaultValue>
             <label>GST</label>
+            <label lang="zh-CN">GST</label>
+            <label lang="zh-TW">GST</label>
+            <label lang="zh-HK">GST</label>
             <label lang="de-DE">GST</label>
             <label lang="fr-FR">GST</label>
             <label lang="en-US">GST</label>
@@ -314,6 +431,9 @@
             <name>TaxPstNU</name>
             <defaultValue>0</defaultValue>
             <label>PST</label>
+            <label lang="zh-CN">PST</label>
+            <label lang="zh-TW">PST</label>
+            <label lang="zh-HK">PST</label>
             <label lang="de-DE">PST</label>
             <label lang="fr-FR">PST</label>
             <label lang="en-US">PST</label>

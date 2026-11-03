@@ -1,0 +1,44 @@
+{
+  "sw-order": {
+    "createBase": {
+      "columnTax": "稅費",
+      "summaryLabelAmountWithoutTaxes": "不含稅合計",
+      "summaryLabelAmountTotal": "含稅合計",
+      "summaryLabelAmountTotalRounded": "含稅合計（取整）",
+      "summaryLabelTaxes": "另加 {taxRate}% 稅"
+    },
+    "detailBase": {
+      "columnTax": "稅費",
+      "summaryLabelAmountWithoutTaxes": "不含稅合計",
+      "summaryLabelAmountTotal": "含稅合計",
+      "summaryLabelAmountTotalRounded": "含稅合計（取整）",
+      "summaryLabelTaxes": "另加 {taxRate}% 稅"
+    },
+    "nestedLineItemsModal": {
+      "headerTax": "稅費"
+    }
+  },
+  "salseTaxCanada": {
+    "order": {
+      "lineItem": {
+        "tax": "稅費"
+      },
+      "summary": {
+        "subtotal": "不含稅合計",
+        "groundTotal": "含稅合計",
+        "totalRounded": "含稅合計（取整）",
+        "taxGST": "+ GST（{taxRate}%）",
+        "taxPST": "+ PST（{taxRate}%）",
+        "taxQST": "+ QST（{taxRate}%）",
+        "taxHST": "+ HST（{taxRate}%）",
+        "taxTAX": "+ 稅（{taxRate}%）",
+        "taxTAX-FREE": "免稅",
+        "shippingTaxGST": "+ 運費 GST（{taxRate}%）",
+        "shippingTaxPST": "+ 運費 PST（{taxRate}%）",
+        "shippingTaxQST": "+ 運費 QST（{taxRate}%）",
+        "shippingTaxHST": "+ 運費 HST（{taxRate}%）",
+        "shippingTaxTAX": "+ 運費稅（{taxRate}%）"
+      }
+    }
+  }
+}
